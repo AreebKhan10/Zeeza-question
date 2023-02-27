@@ -3878,10 +3878,6 @@ export default function Questions() {
   const [FormReady, setFormReady] = useState(true);
 
 
-  // if(stuDetails){
-  //   setData(initialData);
-  // }
-
 
   const goToQuestion = (data) => {
 

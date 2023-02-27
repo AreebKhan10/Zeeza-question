@@ -785,12 +785,13 @@ export default function Footer({
         alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
         if (allChecked.length == 1 && allChecked[0].value == "none") {
+          console.log(Data[id].questions[4], "<----answered")
+          nextQuestion(id, Data[id].questions.length - 1);
           Data[id].questions[1].answered = false;
           Data[id].questions[2].answered = false;
           Data[id].questions[3].answered = false;
           Data[id].questions[4].answered = false;
           setData(Data);
-          nextQuestion(id, Data[id].questions.length - 1);
         } else {
           nextQuestion(id, QuesID);
         }
