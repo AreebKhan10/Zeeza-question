@@ -300,17 +300,38 @@ footer .backBtnWrapper button {
     border-color: #002B48;
     padding: 8px 20px;
     font-family: 'Bold-rubikFont';
+    transition: .2s;
 }
+
+footer .backBtnWrapper button:hover {
+    background: #002B48;
+}
+
 
 footer .backBtnWrapper button p {
     color: #002B48;
 }
+footer .backBtnWrapper button:hover p {
+    color: #fff;
+}
 
 footer .backBtnWrapper button svg {fill: #002B48;}
+
+footer .backBtnWrapper button:hover svg {
+    fill: #fff;
+}
 
 footer .nextBtnWrapper button {
     padding: 8px 20px;
     font-family: 'Bold-rubikFont';
+    transition: .2s;
+    border: 1px solid #DE706C;
+}
+
+footer .nextBtnWrapper button:hover {
+    background: transparent;
+    border: 1px solid #DE706C;
+    color: #DE706C;
 }
 
 @media screen and (max-width:767px) {
