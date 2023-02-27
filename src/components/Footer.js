@@ -1080,24 +1080,33 @@ export default function Footer({
   };
 
   return (
-    <footer className="fixed drop-shadow-2xl border-t-4 border-gray-200 inset-x-0 bottom-0 h-24 w-full bg-white">
-      <div className="flex flex-row justify-around align-center mt-4">
-       
-
+    <footer className="fixed drop-shadow-2xl border-t-4 border-gray-200 inset-x-0 bottom-0 w-full bg-white">
+      <div className="flex flex-row items-center">
+      <div className="bg-[#EFEEF5] percentageRatio">
+          <p className="text-[#47529B] text-md">8% Complete</p>
+          <div class="overflow-hidden h-2 mb-2 text-xs flex rounded bg-white">
+            <div class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#47529B] w-1/4"></div>
+          </div>
+        </div>
+        
+        <div className="backBtnWrapper">
         <button
           onClick={handleBack}
-          className="border-[#002B48] border-2 h-10 w-24 mt-2  p-2  rounded-md   font-medium flex flex-row"
+          className="rounded-md font-medium flex flex-row"
         >
-          <FaArrowLeft className="text-center m-1 " />
-          <p className="text-center ml-1">BACK</p>
+          <FaArrowLeft className="text-center m-1 ml-0" />
+          <p className="text-center ml-1">Back</p>
         </button>
+        </div>
+        <div className="nextBtnWrapper">
         <button
           onClick={handleNext}
-          className="bg-[#DE706C] w-24 mt-2 h-10 p-2  rounded-md justify-center text-white font-medium flex flex-row "
+          className="bg-[#DE706C] h-10 rounded-md justify-center text-white font-medium flex flex-row"
         >
-          <p className="text-center ml-1">NEXT</p>
-          <FaArrowRight className="text-center m-1 " />
+          <p className="text-center mr-1">Next</p>
+          <FaArrowRight className="text-center m-1 mr-0" />
         </button>
+        </div>
       </div>
     </footer>
   );
