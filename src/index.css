@@ -2,6 +2,387 @@
 @tailwind components;
 @tailwind utilities;
 
-.answred{
-    color: blue !important;
+
+.answred {
+    color: #189B3D !important;
+}
+
+@font-face {
+    font-family: rubikFont;
+    src: url(../src/Rubik/static/Rubik-Regular.ttf);
+}
+
+@font-face {
+    font-family: Medium-rubikFont;
+    src: url(../src/Rubik/static/Rubik-Medium.ttf);
+}
+
+@font-face {
+    font-family: Bold-rubikFont;
+    src: url(../src/Rubik/static/Rubik-SemiBold.ttf);
+}
+
+body {
+    font-family: rubikFont;
+}
+
+.logoImage {
+    padding: 21px 19px;
+}
+
+.acdemicReport {
+    padding: 16px 32px;
+}
+
+.acdemicReport .percentageRatio {
+    background: white;
+    border-radius: 8px;
+    padding: 0px 12px;
+}
+
+.acdemicReport .percentageRatio p {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 36px;
+    color: #47529B;
+}
+
+.acdemicReport h3 {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 36px;
+    color: #1C3E57;
+    font-family: rubikFont;
+}
+
+.studentTableWrapper {
+    padding: 24px 32px;
+    text-align: left;
+    border-bottom: 1px solid #E9E9E9;
+    z-index: 999;
+    overflow: auto;
+}
+
+.studentTableWrapper table.studentTable thead tr th {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    font-family: Medium-rubikFont;
+    color: #607889;
+    padding-right: 40px;
+}
+
+.studentTableWrapper table.studentTable tbody tr td {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #1C3E57;
+    padding-right: 40px;
+}
+
+.studentContent {
+    padding: 32px;
+    width: 100%;
+    margin-bottom: 96px;
+}
+
+.studentContent .studentContent-Left {
+    border: 1px solid;
+    border-color: #DBE0E3;
+    border-radius: 16px;
+    align-self: flex-start;
+    width: 100%;
+    max-width: 440px;
+    transition: .3s;
+    margin-right: 32px;
+}
+
+.studentContent .studentContent-Left.closeMenu {
+    max-width: 140px;
+}
+
+.studentContent .studentContent-Left>ul.navTop {
+    padding: 24px;
+    border-top: 1px solid;
+    border-color: #DBE0E3;
+}
+
+.studentContent .studentContent-Left>ul.navTop>li {
+    background: #F7F8F9;
+    padding: 12px 24px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 27px;
+    margin-left: 0;
+    border-radius: 12px;
+    font-family: Bold-rubikFont;
+    color: #212123;
+    margin-bottom: 10px;
+}
+
+.studentContent .studentContent-Left>ul.navTop>li .nav-Wrapper {
+    display: flex;
+}
+
+.studentContent .studentContent-Left>ul.navTop>li .nav-Wrapper span:first-child {
+    flex: 1 1 auto;
+}
+
+.studentContent .studentContent-Left>ul.navTop>li ul li {
+    font-family: rubikFont;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.studentContent .studentContent-Left ul.navTop li .rightIcon {
+    padding-top: 4px;
+}
+
+.studentContent .studentContent-Left ul.navTop li .rightIcon svg {
+    width: 25px;
+    height: 20px;
+}
+
+.studentContent .studentContent-Left .menuTop {
+    padding: 24px;
+    /* border-bottom: 1px solid;
+    border-color: #DBE0E3; */
+}
+
+.studentContent .studentContent-Left .menuTop .menuIcon .menuInner {
+    display: flex;
+    align-items: center;
+}
+
+.studentContent .studentContent-Left .menuTop .menuIcon .menuInner p {
+    padding-left: 10px;
+    font-family: Bold-rubikFont;
+}
+
+.studentContent .studentContent-right {
+    border: 1px solid;
+    border-color: #DBE0E3;
+    border-radius: 16px;
+    width: 100%;
+}
+
+.studentContent .studentContent-right .studentContentTop {
+    padding: 22px;
+    display: flex;
+    align-items: center;
+}
+
+.studentContent .studentContent-right .studentContentTop p {
+    display: inline-block;
+}
+
+.studentContent .studentContent-right .studentContentTop .menuIcon {
+    display: none;
+}
+
+.studentContent .studentContent-right .studentContentTop .menuIcon+p {
+    font-weight: 500;
+    font-size: 24px;
+    color: #002B48;
+    line-height: 36px;
+    font-family: Bold-rubikFont;
+    flex: 1 1 auto;
+}
+
+.studentContent .studentContent-right .studentContentTop p:last-child {
+    float: right;
+    line-height: 38px;
+}
+
+.studentContent .studentContent-right .studentContentBottom {
+    padding: 24px;
+    border-top: 1px solid;
+    border-color: #DBE0E3;
+}
+
+.studentContent .studentContent-right .studentContentBottom {
+    padding: 24px;
+    border-top: 1px solid;
+    border-color: #DBE0E3;
+}
+
+.studentContent .studentContent-right .studentContentBottom p:first-child {
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 36px;
+}
+
+.studentContent .studentContent-right .studentContentBottom p:nth-child(2) {
+    padding-top: 36px;
+    color: #607889;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 24px;
+}
+
+/* .studentContent .studentContent-right .studentContentBottom li {
+        padding-top: 20px;
+    } */
+
+.studentContent .studentContent-right .studentContentBottom li img.checkImg {
+    width: 32px;
+    height: 32px;
+    margin-right: 20px;
+}
+
+.studentContent .studentContent-right .studentContentBottom .selectWrapper {
+    padding-top: 24px;
+}
+
+.studentContent .studentContent-right .studentContentBottom .selectWrapper button {
+    border-color: #1D4D70;
+    padding-top: 13px;
+    padding-bottom: 13px;
+}
+
+.studentContent .studentContent-right .studentContentBottom .selectWrapper .selectBorder {
+    border: 1px solid;
+    border-color: #DBE0E3;
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.studentContent .studentContent-right .studentContentBottom .selectWrapper .selectBorder .innerBoxes img {
+    width: 32px;
+    height: 32px;
+}
+
+.studentContent .studentContent-right .studentContentBottom .selectWrapper .selectBorder .outboxes img {
+    width: 32px;
+    height: 32px;
+}
+
+.studentContent .studentContent-right .studentContentBottom .selectWrapper .selectBorder .innerBoxes li {
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 24px;
+    color: #002B48;
+}
+
+.studentContent .studentContent-right .studentContentBottom .selectWrapper .selectBorder .innerBoxes {
+    padding: 15px 64px;
+}
+
+.studentContent .studentContent-right .studentContentBottom .selectWrapper .selectBorder .outboxes+.innerBoxes {
+    background-image: url(./assets/arrow_top_right.png);
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: 10px 13px;
+}
+
+@media screen and (max-width:767px) {
+    .logoImage {
+        padding: 16px 6px;
+    }
+
+    .logoImage img {
+        width: 175px;
+    }
+
+    .acdemicReport {
+        padding: 16px;
+    }
+
+    .acdemicReport h3 {
+        font-size: 20px;
+    }
+
+    .acdemicReport .percentageRatio p {
+        font-size: 16px;
+    }
+
+    .studentTableWrapper {
+        padding: 16px;
+    }
+
+    .studentTableWrapper table.studentTable thead tr th {
+        padding-right: 24px;
+        min-width: 115px;
+    }
+
+    .studentContent {
+        display: block;
+        padding: 0;
+    }
+
+    .studentContent .studentContent-right .studentContentTop .menuIcon {
+        display: block;
+    }
+
+    .studentContent .studentContent-right .studentContentTop .menuIcon+p {
+        padding-left: 20px;
+        font-size: 18px;
+        line-height: 30px;
+    }
+
+    .studentContent .studentContent-Left {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        border: none;
+        background: #fff;
+        border-radius: 0;
+        border-right: 1px solid #DBE0E3;
+        width: 0;
+        max-width: 0;
+        overflow: hidden;
+    }
+
+    .studentContent .studentContent-Left.closeMenu {
+        max-width: inherit;
+        width: 90%;
+        overflow: auto;
+        height: 100%;
+        transition: .3s;
+    }
+
+    .studentContent .studentContent-right {
+        border: none;
+    }
+
+    .studentContent .studentContent-right .studentContentBottom p:first-child {
+        font-size: 24px;
+        line-height: 28px;
+    }
+
+    .studentContent .studentContent-Left.closeMenu ul.navTop {
+        display: block !important;
+    }
+}
+
+.singlecheckradio label {
+    position: relative;
+    padding-left: 50px;
+}
+
+.singlecheckradio label::before {
+    content: '';
+    width: 32px;
+    height: 32px;
+    background-image: url("./assets/uncheck.png");
+    background-repeat: no-repeat;
+    background-size: 35px;
+    background-position: center center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-radius: 5px;
+}
+
+.singlecheckradio input {
+    display: none;
+}
+
+.singlecheckradio input:checked + label::before {
+    /* background-color: red; */
+    background-image: url("./assets/check.png");
+    background-repeat: no-repeat;
+    background-size: 35px;
+    background-position: center center;
 }

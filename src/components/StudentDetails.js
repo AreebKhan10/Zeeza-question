@@ -15,7 +15,7 @@ useEffect(()=>{
     axios
       .get(url)
       .then((res) => {
-        setStuDetails(res.data[0])
+        setStuDetails(res.data)
         console.log(res, "Responce")})
       .catch((err) => console.log(err));
 
@@ -24,8 +24,8 @@ useEffect(()=>{
 console.log(stuDetails)
 
   return (
-    <div className="sticky top-0 bg-white">
-      <table class="table-auto border-2  border-b-[#EFEEF5] w-full  text-medium text-[#1C3E57]">
+    <div className="studentTableWrapper sticky top-0 bg-white">
+      <table class="studentTable table-auto text-medium text-[#1C3E57]">
         <thead>
           <tr>
             <th>Student Name</th>
@@ -39,9 +39,9 @@ console.log(stuDetails)
         </thead>
         <tbody>
             
-          <tr className="text-normal text-[#1C3E57] text-center">
+          <tr className="text-normal text-[#1C3E57]">
           
-            <td className="flex justify-center">
+            <td>
               {stuDetails.FirstName ? stuDetails.FirstName :
               <svg class="animate-spin h-5 w-5  bg-indigo-500" viewBox="0 0 24 24"> </svg> 
                 }

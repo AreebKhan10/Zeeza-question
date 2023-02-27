@@ -3,6 +3,7 @@ import check from "../assets/check.png";
 import uncheck from "../assets/uncheck.png";
 import axios from "axios";
 import AccordianComponent from "../components/Accordian";
+import menu from "../assets/menu.png";
 
 export default function SingleQuestion({
   setgoalLevel,
@@ -36,7 +37,7 @@ export default function SingleQuestion({
 
   useEffect(() => {
     setData(Data);
-    console.log(Data,'---helloooo')
+    console.log(Data, '---helloooo')
   }, [Data, MultiLimit, MultiLimitSub]);
 
   const handleCheck = (index) => {
@@ -570,13 +571,21 @@ export default function SingleQuestion({
   };
 
   return (
-    <div className="my-14 ml-40 mb-32">
-      <p className="text-5xl">{singleQuestion?.title}</p>
-      <p className="p-2 text-blue-800">
-        {QuesID + 1} of {Data[ID].questions.length}
-      </p>
+    <div className="studentContent-right">
+      <div className="studentContentTop">
+      <div className="menuIcon">
+                <a href="#" className="menuInner" onClick={menuFunction}>
+                  <img src={menu} />
+                </a>
+              </div>
+        <p className="text-5xl">{singleQuestion?.title}</p>
+        <p className="text-blue-800">
+          {QuesID + 1} of {Data[ID].questions.length}
+        </p>
+      </div>
+      <div className="studentContentBottom">
       <p className="text-xl text-[#002B48]">{value[QuesID]?.replace("[name]", `${stuDetails.FirstName}'s`)}</p>
-      <p className="p-2 text-blue-800">
+      <p className="text-blue-800">
         {Data[ID].questions[QuesID].description}
       </p>
 
@@ -588,23 +597,25 @@ export default function SingleQuestion({
                 (option, index) => {
                   if (!("isHidden" in option) || option.isHidden === false) {
                     return (
-                      <li className="flex flex-row mt-4 m-2">
+                      <div className="selectWrapper">
+                      <li className="flex flex-row items-center">
                         {option.check === true ? (
                           <img
                             src={check}
-                            className={"h-8 mr-2"}
+                            className={"checkImg"}
                             onClick={() => handleCheck(index)}
                           />
                         ) : (
                           <img
                             src={uncheck}
-                            className={"h-8 mr-2"}
+                            className={"checkImg"}
                             onClick={() => handleCheck(index)}
                           />
                         )}
 
                         {option.value}
                       </li>
+                      </div>
                     );
                   }
                 }
@@ -612,6 +623,36 @@ export default function SingleQuestion({
             </>
           ) : (
             <>
+              <>
+              {singleQuestion?.question[QuesID]?.options?.map(
+                (option, index) => {
+                  if (!("isHidden" in option) || option.isHidden === false) {
+                    return (
+                      <div className="selectWrapper">
+                      <li className="flex flex-row items-center">
+                        {option.check === true ? (
+                          <img
+                            src={check}
+                            className={"checkImg"}
+                            onClick={() => handleCheck(index)}
+                          />
+                        ) : (
+                          <img
+                            src={uncheck}
+                            className={"checkImg"}
+                            onClick={() => handleCheck(index)}
+                          />
+                        )}
+
+                        {option.value}
+                      </li>
+                      </div>
+                    );
+                  }
+                }
+              )}
+            </>
+
               {singleQuestion?.question[QuesID]?.options?.map(
                 (option, index) => (
                   <li className="block px-4 py-2 hover:bg-gray-100">
@@ -651,7 +692,7 @@ export default function SingleQuestion({
           />
         </>
       ) : (
-        <div class="p-5">
+        <div class="selectWrapper">
           <div class="group relative">
             <button
               type="button"
@@ -680,7 +721,7 @@ export default function SingleQuestion({
             </button>
             <nav
               tabindex="0"
-              class="b w-full b-2 bg-white invisible border-gray-300 rounded absolute left-0 top-full transition-all opacity-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1"
+              class="invisible opacity-0 w-full b-2 bg-white border-gray-300 rounded absolute left-0 top-full transition-all group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1"
             >
               <ul class="py-1">
                 {
@@ -692,25 +733,24 @@ export default function SingleQuestion({
                           option.isHidden === false
                         ) {
                           return (
-                            <li className="block px-4 py-2 hover:bg-gray-100">
-                              <div onClick={() => handleCheck(index)}>
-                                <label
-                                  class="flex items-center p-2 block"
-                                  for={"accountType" + index}
-                                >
-                                  <input
-                                    type="radio"
-                                    class="form-radio"
-                                    name={"accountType"}
-                                    id={"accountType" + index}
-                                    value="personal"
-                                    checked={index == checkindex}
-                                  />
-                                  {/* <span class="ml-2">{option.value}</span> */}
-                                  {option.value}
-                                </label>
-                              </div>
-                            </li>
+                            <>
+                           <li className="block px-4 py-2 hover:bg-gray-100">
+                    <div className="singlecheckradio" onClick={() => handleCheck(index)}>
+                       <input
+                          type="radio"
+                          class="form-radio"
+                          name="accountType"
+                          value="personal"
+                          id={`singlecheckradio${index}`}
+                        />
+                      <label class="inline-flex items-center p-2" for={`singlecheckradio${index}`}>
+                        
+                        {/* <span class="ml-2">{option.value}</span> */}
+                        {option.value}
+                      </label>
+                    </div>
+                  </li>
+            </>
                           );
                         }
                       }
@@ -721,7 +761,24 @@ export default function SingleQuestion({
             </nav>
           </div>
         </div>
+        
       )}
     </div>
+    </div>
   );
+}
+
+function menuFunction() {
+  var x = document.getElementById("menuItems");
+  var y = document.getElementById("MenuQuestion");
+  var z = document.getElementById("studentContentLeft");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    y.style.display = "block";
+    z.classList.remove("closeMenu");
+  } else {
+    x.style.display = "none";
+    y.style.display = "none";
+    z.classList.add("closeMenu");
+  }
 }

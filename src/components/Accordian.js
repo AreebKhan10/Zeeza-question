@@ -613,12 +613,13 @@ export default function Accordian({
   return (
     <>
       {title?.goalQues?.map((record, index) => (
+        <div className="selectWrapper">
         <div
           onClick={() => HandleOpening(index)}
-          className="border border-indigo-400"
+          className="selectBorder"
         >
-          <div className={"bg-indigo-300 p-4 flex justify-between text-white"}>
-            <li className="flex flex-row mt-4 m-2">
+          <div className={"outboxes flex justify-between items-center"}>
+            <li className="flex flex-row">
               {record.check === true ? (
                 <img
                   src={check}
@@ -636,19 +637,19 @@ export default function Accordian({
               {record.value}
             </li>
             {/* {isOpened ? <ChevronOpen /> : <ChevronClosed />} */}
-          </div>
+          </div>  
           <>
             {subgoal === index &&
               record.text?.map((rec, i) => (
                 <div
                   ref={contentElement}
                   // style=  {{ height: height }}
-                  className="bg-gray-200 overflow-hidden transition-all duration-200"
+                  className="innerBoxes overflow-hidden transition-all duration-200 items-center"
                 >
-                  <p className="p-4">
-                    <label class="inline-flex items-center p-2"></label>
+                  <p>
+                    {/* <label class="inline-flex items-center p-2"></label> */}
 
-                    <li className="flex flex-row mt-4 m-2">
+                    <li className="flex flex-row">
                       {rec.check === true ? (
                         <img
                           src={check}
@@ -668,6 +669,7 @@ export default function Accordian({
                 </div>
               ))}
           </>
+        </div>
         </div>
       ))}
     </>

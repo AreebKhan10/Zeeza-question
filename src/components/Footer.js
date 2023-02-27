@@ -785,6 +785,11 @@ export default function Footer({
         alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
         if (allChecked.length == 1 && allChecked[0].value == "none") {
+          Data[id].questions[1].answered = false;
+          Data[id].questions[2].answered = false;
+          Data[id].questions[3].answered = false;
+          Data[id].questions[4].answered = false;
+          setData(Data);
           nextQuestion(id, Data[id].questions.length - 1);
         } else {
           nextQuestion(id, QuesID);
@@ -945,6 +950,9 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
+        Data[id].questions[QuesID].answered = true
+        setData(Data)
+        PostData(id,QuesID)
       }
     }
   };
@@ -971,7 +979,7 @@ export default function Footer({
 
     changeQuestionToGender(parentId, questionId);
 
-    PostData();
+    PostData(parentId,questionId);
 
 
 
@@ -980,7 +988,7 @@ export default function Footer({
   };
 
 
-  const PostData = ()=>{
+  const PostData = (parent,ques)=>{
     const searchParams = new URLSearchParams(document.location.search)
    
     const body = JSON.stringify({
@@ -991,7 +999,7 @@ export default function Footer({
   
   var config = {
     method: 'POST',
-  maxBodyLength: Infinity,
+    maxBodyLength: Infinity,
     url: `https://31zctjiomj.execute-api.us-east-1.amazonaws.com/default/enhacereport?StudentID=${searchParams.get('StudentID')}&Token=${searchParams.get('Token')}`,
     headers: { 
       'Content-Type': 'application/json',
@@ -1005,9 +1013,26 @@ export default function Footer({
     crossdomain: true,
     data : body
   };
+  var confighook = {
+    method: 'POST',
+    maxBodyLength: Infinity,
+    url: `https://flow.zoho.com/757006726/flow/webhook/incoming?zapikey=1001.cbd7c1430b822b6095ff480574884c79.c99c458abe4b2a926e9f02c7174be7ae&isdebug=false`,
+    
+   
+    data : body
+  };
+    
+  
+
   
   axios(config)
   .then(function (response) {
+
+    if(response.data.questions[parent].questions[ques].answered === true && parent == 6 && ques == 0){
+      
+      axios(confighook)
+    }
+
     console.log(JSON.stringify(response.data));
   })
   .catch(function (error) {
@@ -1055,15 +1080,9 @@ export default function Footer({
   };
 
   return (
-    <footer className="drop-shadow-2xl fixed border-t-4 border-gray-200 inset-x-0 bottom-0 h-24 w-full bg-white">
+    <footer className="fixed drop-shadow-2xl border-t-4 border-gray-200 inset-x-0 bottom-0 h-24 w-full bg-white">
       <div className="flex flex-row justify-around align-center mt-4">
-        <div className="bg-[#EFEEF5] w-96 h-16 rounded-xl  p-2 ">
-          <p className="text-[#47529B] text-md ml-2 mb-3">8% Complete</p>
-
-          <div class="overflow-hidden h-2 mb-2 text-xs flex rounded bg-white m-1">
-            <div class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#47529B] w-1/4"></div>
-          </div>
-        </div>
+       
 
         <button
           onClick={handleBack}

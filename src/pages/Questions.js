@@ -5,6 +5,7 @@ import { MdOutlineCheck } from "react-icons/md";
 import Footer from "../components/Footer";
 import SingleQuestion from "./SingleQuestion";
 import axios from "axios";
+import menu from "../assets/menu.png";
 
 export default function Questions() {
   const [id, setID] = useState(0);
@@ -1140,11 +1141,6 @@ export default function Questions() {
             {
               id: 3,
               value: "Questioning techniques",
-              check: false,
-            },
-            {
-              id: 3,
-              value: "Story maps",
               check: false,
             },
             {
@@ -3886,57 +3882,66 @@ export default function Questions() {
   //   setData(initialData);
   // }
 
-   
+
   const goToQuestion = (data) => {
 
-  if(data){
-    
-    var mainQues = 0 ;
-    var subques = 0;
-    data.every((val,index) => {
-      mainQues = index;
-      var isfind = false;
-      val.questions.every((value,point) => {
-        if(value.answered == false) {
-          subques = point;
-          isfind = true;
-          return false;
-        }
+    if (data) {
+
+      var mainQues = 0;
+      var subques = 0;
+      data.every((val, index) => {
+        mainQues = index;
+        var isfind = false;
+        val.questions.every((value, point) => {
+          if (value.answered == false) {
+            subques = point;
+            isfind = true;
+            return false;
+          }
+          return true;
+        })
+        if (isfind) return false;
         return true;
       })
-      if(isfind) return false;
-      return true;
-    })
-    console.log(mainQues,subques , "<----subquessubques" )
-    
+
+      if(mainQues == 5 && subques == 1){
+        var allChecked = data[mainQues].questions[0].options.filter(
+          (x) => x.check === true
+        );
+        if(allChecked.length == 1 && allChecked[0].value == "none"){
+          mainQues = mainQues + 1;
+          subques = 0;
+        }
+      }
+
       setID(mainQues);
       setQuesID(subques);
 
+    }
   }
-  }
-  
 
-  
+
+
 
   useEffect(() => {
     const searchParams = new URLSearchParams(document.location.search)
 
     const url =
-        `https://31zctjiomj.execute-api.us-east-1.amazonaws.com/default/enhacereport?StudentID=${searchParams.get('StudentID')}&Token=${searchParams.get('Token')}`;
+      `https://31zctjiomj.execute-api.us-east-1.amazonaws.com/default/enhacereport?StudentID=${searchParams.get('StudentID')}&Token=${searchParams.get('Token')}`;
 
     axios
       .get(url)
       .then((res) => {
         console.log("asdsadasdasdsadasdasdsadheloooo2");
-        setStuDetails(res.data[0]);
-        console.log(res.data[0], "<---- res.data[0]")
+        setStuDetails(res.data);
+        console.log(res.data, "<---- res.data")
         //initialData[0].questions[0].question.replace("[name]", `${res.data[0].FirstName}'s`); 
         //res.data[0].questions[0].question.replace("[name]", `${res.data[0].FirstName}'s`);
-        if('questions' in res.data[0] ){
-          goToQuestion(res.data[0].questions);
-          if(res.data[0].questions.length){
-            setData(res.data[0].questions);
-          }else{
+        if ('questions' in res.data) {
+          goToQuestion(res.data.questions);
+          if (res.data.questions.length) {
+            setData(res.data.questions);
+          } else {
 
             setData(initialData);
           }
@@ -3946,7 +3951,7 @@ export default function Questions() {
       .catch((err) => console.log(err));
   }, []);
 
-  
+
 
   useEffect(() => {
     console.log(Data[1]?.questions[8]?.goalQues, "<---- DATA GOALS");
@@ -3965,7 +3970,7 @@ export default function Questions() {
     });
 
 
-   
+
 
     //  const gradeUpdate = Data[1].questions[2].options.filter(x => x.level < grade)
     //  Data[1].questions[2].options = gradeUpdate
@@ -3993,20 +3998,36 @@ export default function Questions() {
   if (FormReady) {
     return (
       <>
-        <div className="flex flex-row h-screen">
-          <div className="flex flex-col w-1/4">
-            <ul className="list-none mt-20 h-screen ">
+        <div className="flex flex-row studentContent">
+          <div className="flex flex-col studentContent-Left" id="studentContentLeft">
+            <div className="menuTop flex justify-between items-center">
+              <div className="menuIcon">
+                <a href="#" className="menuInner" onClick={menuFunction}>
+                  <img src={menu} />
+                  <p>Menu </p>
+                </a>
+              </div>
+              <div className="menuText" id="MenuQuestion">
+                <p>57 questions</p>
+              </div>
+            </div>
+            <ul className="list-none navTop" id="menuItems">
               {Data?.map((titles, index) => (
                 <li
-                  className="flex flex-col justify-between font-medium ml-32 m-3 w-80"
+                  className=""
                   onClick={() => handleOpen(index)}
                 >
-                  {titles?.title}
-                  <div className="flex flex-row-reverse border-l-4">
-                    <IoIosArrowDown className="-m-4" />
-                  </div>
+                  <div className="nav-Wrapper">
+                    <span>
+                      {titles?.title}
+                    </span>
+                    <span>{titles?.questions.length}</span>
+                    <div className="inline-block float-right rightIcon" >
+                      <IoIosArrowDown className="" />
+                    </div>
+                  </div>  
                   {/* <p className="flex flex-row-reverse -m-4">5</p> */}
-                  <div className="mt-4 w-92">
+                  <div className="">
                     {id === index &&
                       Data[id]?.questions?.map((questions, i) => {
                         if (!questions.isRandom) {
@@ -4015,8 +4036,8 @@ export default function Questions() {
                               <li
                                 className={
                                   QuesID === i
-                                    ? "text-xs text-[#47529B] border-l-2 border-[#D9D9D9]  pl-2"
-                                    : "text-xs text-[#607889] border-l-2 border-[#D9D9D9]  pl-2"
+                                    ? "text-xs text-[#47529B] leading-8"
+                                    : "text-xs text-[#607889] leading-8"
                                 }
                                 onClick={() => handleSingleQuestion(i)}
                               >
@@ -4025,11 +4046,11 @@ export default function Questions() {
                                 <div
                                   className={
                                     questions.answered === true
-                                      ? `flex flex-row-reverse answred`
-                                      : `flex flex-row-reverse`
+                                      ? `inline-block float-right answred rightIcon`
+                                      : `inline-block float-right rightIcon`
                                   }
                                 >
-                                  <MdOutlineCheck className="-m-4 " />
+                                  <MdOutlineCheck className="" />
                                 </div>
                               </li>
                             </ul>
@@ -4080,5 +4101,21 @@ export default function Questions() {
     );
   } else {
     return <></>;
+  }
+}
+
+
+function menuFunction() {
+  var x = document.getElementById("menuItems");
+  var y = document.getElementById("MenuQuestion");
+  var z = document.getElementById("studentContentLeft");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    y.style.display = "block";
+    z.classList.remove("closeMenu");
+  } else {
+    x.style.display = "none";
+    y.style.display = "none";
+    z.classList.add("closeMenu");
   }
 }
