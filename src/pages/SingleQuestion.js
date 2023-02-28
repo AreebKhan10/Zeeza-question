@@ -21,7 +21,7 @@ export default function SingleQuestion({
   stuDetails,
 }) {
   const [status, setStatus] = useState(false);
-
+console.log(Data, "<----Data")
   const Option = singleQuestion?.question[QuesID]?.options?.map(
     (option) => option?.value
   );
@@ -31,8 +31,8 @@ export default function SingleQuestion({
     (goal) => goal?.text
   );
   const checkindex =
-    "options" in Data[ID].questions[QuesID]
-      ? Data[ID].questions[QuesID].options.findIndex((p) => p.check == true)
+    "options" in Data[ID]?.questions[QuesID]
+      ? Data[ID]?.questions[QuesID].options.findIndex((p) => p.check == true)
       : -1;
 
   useEffect(() => {

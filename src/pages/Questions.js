@@ -3916,7 +3916,27 @@ export default function Questions() {
     }
   }
 
+  const setQuestions = (Responsedata) =>{
+    var lastitem = Responsedata[Responsedata.length - 1]
+      setID(lastitem?.questionId);
+      setQuesID(lastitem?.groupID);
 
+      for (const questionObj of Responsedata) {
+        let getQuestionsArrByGroupName = initialData.findIndex(x => x.title.toLowerCase() === questionObj.groupName.toLowerCase());
+        console.log('getQuestionsArrByGroupName', getQuestionsArrByGroupName)
+        for (const answer of questionObj.answeres) {
+          let findOptionIndex = initialData[getQuestionsArrByGroupName].questions[questionObj.questionId].options.findIndex(x => x.value.toLowerCase() === answer.toLowerCase());
+          initialData[getQuestionsArrByGroupName].questions[questionObj.questionId].answered = true;
+          initialData[getQuestionsArrByGroupName].questions[questionObj.questionId].options[findOptionIndex].check = true;
+          console.log('initialData', initialData)
+        }
+
+      }
+
+    setData(initialData);
+      
+  }
+console.log(Data, "<------findAnswerFromOption")
 
 
   useEffect(() => {
@@ -3931,17 +3951,24 @@ export default function Questions() {
         console.log("asdsadasdasdsadasdasdsadheloooo2");
         setStuDetails(res.data);
         console.log(res.data, "<---- res.data")
+        if(res.data.questions.length){
+          setQuestions(res.data.questions);
+
+        }else{
+          setData(initialData);
+
+        }
         //initialData[0].questions[0].question.replace("[name]", `${res.data[0].FirstName}'s`); 
         //res.data[0].questions[0].question.replace("[name]", `${res.data[0].FirstName}'s`);
-        if ('questions' in res.data) {
-          goToQuestion(res.data.questions);
-          if (res.data.questions.length) {
-            setData(res.data.questions);
-          } else {
-
-            setData(initialData);
-          }
-        }
+        // if ('questions' in res.data) {
+          //goToQuestion(res.data.questions);
+          //if (res.data.questions.length) {
+          //} else {
+            // setQuestions(res.data.questions)
+            
+          //}
+        // }else{
+        // }
         console.log(res, "Responce");
       })
       .catch((err) => console.log(err));

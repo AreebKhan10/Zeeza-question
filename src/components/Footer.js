@@ -1,6 +1,6 @@
 import { data } from "autoprefixer";
 import PreviousMap from "postcss/lib/previous-map";
-import React from "react";
+import React, { useState } from "react";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import axios from "axios";
 
@@ -22,6 +22,10 @@ export default function Footer({
   setMultiLimitSub,
   stuDetails,
 }) {
+
+  const [filteredJSON, setFilter ] = useState([])
+  console.log(filteredJSON,"<----12")
+  const groupNameArray =["Background","Decoding","Reading Comprehension","Math","Speech and Language","Social-emotional","Summary"]
   const uniqueArray = (array) => {
     var a = array.concat();
     for (var i = 0; i < a.length; ++i) {
@@ -988,16 +992,63 @@ export default function Footer({
     setQuesID(questionId);
   };
 
+  
+  const getFilteredJSONData = (groupId, questionId) => {
+    const groupName = groupNameArray[groupId];
+    const checkIfQuestionExistsInFilteredArr = filteredJSON.filter(x => x.groupName.toLowerCase() === groupName.toLowerCase() && x.QuesID === questionId);
+    if (!checkIfQuestionExistsInFilteredArr.length) {
+      let filteredJSONQuestionObj = {groupName: groupName};
+      const getGroupObjFromParent = Data.find(x => x.title.toLowerCase() === groupName.toLowerCase());
+      const getCompletedQuestionFromGroup = getGroupObjFromParent.questions[questionId];
+      
+      filteredJSONQuestionObj.questionId = QuesID;
+      filteredJSONQuestionObj.groupID = groupId;
+      filteredJSONQuestionObj.question = getCompletedQuestionFromGroup.question;
+      console.log('getCompletedQuestionFromGroup.question.select', getCompletedQuestionFromGroup)
+      if(getCompletedQuestionFromGroup.select === "Accordian") {
+        filteredJSONQuestionObj.question = filteredJSONQuestionObj.question.replace('[name]', stuDetails.FirstName);
+        const getSelectedGoals = getCompletedQuestionFromGroup.goalQues.filter(x => x.check === true);
+        filteredJSONQuestionObj.answeres = [];
+        for (const goal of getSelectedGoals) {
+          const tempObj = {};
+          tempObj.value = goal.value;
+          tempObj.subAnswers = goal.text.filter(x => x.check === true).map(x => x.text);
+          filteredJSONQuestionObj.answeres.push(tempObj);
+          goal.text = goal.text.filter(x => x.check === true);
+        }
+        console.log('filteredJSONQuestionObj', filteredJSONQuestionObj)
+
+      }else{
+
+        filteredJSONQuestionObj.answeres = getCompletedQuestionFromGroup.options.filter(x => x.check === true).map(x => x.value);
+        filteredJSONQuestionObj.question = filteredJSONQuestionObj.question.replace('[name]', stuDetails.FirstName)
+      }
+
+      setFilter(filteredJSON.concat(filteredJSONQuestionObj));
+    }else{
+      const getGroupObjFromParent = Data.find(x => x.title.toLowerCase() === groupName.toLowerCase());
+      const getCompletedQuestionFromGroup = getGroupObjFromParent.questions[questionId];
+      const getquestions = filteredJSON.findIndex(x => x.groupName.toLowerCase() === groupName.toLowerCase() && x.QuesID === questionId );
+      
+      filteredJSON[getquestions].questionId = QuesID;
+      filteredJSON[getquestions].question = getCompletedQuestionFromGroup.question;
+      filteredJSON[getquestions].answeres = getCompletedQuestionFromGroup.options.filter(x => x.check === true).map(x => x.value);
+      filteredJSON[getquestions].question = getGroupObjFromParent.question.replace('[name]', stuDetails.FirstName)
+      setFilter(filteredJSON);
+    }
+  } 
+
 
   const PostData = (parent,ques)=>{
+    getFilteredJSONData(id, QuesID)
     const searchParams = new URLSearchParams(document.location.search)
-   
+    const updatedData = filteredJSON;
+    console.log(updatedData, "VALSUESS")
     const body = JSON.stringify({
       ...stuDetails,
-      "questions": Data
+      "questions": updatedData
     });
 
-  
   var config = {
     method: 'POST',
     maxBodyLength: Infinity,
@@ -1017,13 +1068,9 @@ export default function Footer({
   var confighook = {
     method: 'POST',
     maxBodyLength: Infinity,
-    url: `https://flow.zoho.com/757006726/flow/webhook/incoming?zapikey=1001.cbd7c1430b822b6095ff480574884c79.c99c458abe4b2a926e9f02c7174be7ae&isdebug=false`,
-    
-   
+    url: `https://eo1uo5aa7h7sqbm.m.pipedream.net`,
     data : body
   };
-    
-  
 
   
   axios(config)
@@ -1033,7 +1080,7 @@ export default function Footer({
       
       axios(confighook)
     }
-
+   
     console.log(JSON.stringify(response.data));
   })
   .catch(function (error) {
