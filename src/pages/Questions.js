@@ -4003,6 +4003,10 @@ export default function Questions() {
                   <p>Menu </p>
                 </a>
               </div>
+              <div className="CloseIcon-Wrap">
+                <a href="#" className="CloseIcon" onClick={closeFunction}>
+                </a>
+              </div>
               <div className="menuText" id="MenuQuestion">
                 <p>57 questions</p>
               </div>
@@ -4038,8 +4042,9 @@ export default function Questions() {
                                 onClick={() => handleSingleQuestion(i)}
                               >
                                 {questions.subTitle}
-
+                                   
                                 <div
+                                id="answeredOption"
                                   className={
                                     questions.answered === true
                                       ? `inline-block float-right answred rightIcon`
@@ -4108,10 +4113,19 @@ function menuFunction() {
   if (x.style.display === "none") {
     x.style.display = "block";
     y.style.display = "block";
-    z.classList.remove("closeMenu");
+    z.classList.remove("openMenu");
   } else {
     x.style.display = "none";
     y.style.display = "none";
-    z.classList.add("closeMenu");
+    z.classList.add("openMenu");
   }
+}
+
+function closeFunction() {
+  var x = document.getElementById("menuItems");
+  var y = document.getElementById("MenuQuestion");
+  var z = document.getElementById("studentContentLeft");
+    x.style.display = "block";
+    y.style.display = "block";
+    z.classList.remove("openMenu");
 }

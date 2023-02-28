@@ -721,7 +721,7 @@ export default function SingleQuestion({
             </button>
             <nav
               tabindex="0"
-              class="invisible opacity-0 w-full b-2 bg-white border-gray-300 rounded absolute left-0 top-full transition-all group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1"
+              class="invisible opacity-0 w-full b-2 bg-white border-gray-300 rounded top-full transition-all group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1"
             >
               <ul class="py-1">
                 {
@@ -772,13 +772,14 @@ function menuFunction() {
   var x = document.getElementById("menuItems");
   var y = document.getElementById("MenuQuestion");
   var z = document.getElementById("studentContentLeft");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-    y.style.display = "block";
-    z.classList.remove("closeMenu");
-  } else {
     x.style.display = "none";
     y.style.display = "none";
-    z.classList.add("closeMenu");
-  }
+    z.classList.add("openMenu");
 }
+
+// function menuFunction() {
+//   var openLeftMenu = document.getElementById("studentContentLeft");
+//   var menuQuestion = document.getElementById("MenuQuestion");
+//   openLeftMenu.style.width = "90%";
+//   menuQuestion.style.display = "none";
+// }
