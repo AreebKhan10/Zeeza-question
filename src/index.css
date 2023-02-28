@@ -97,8 +97,34 @@ body {
     margin-right: 32px;
 }
 
-.studentContent .studentContent-Left.closeMenu {
-    max-width: 140px;
+.studentContent .studentContent-Left.openMenu {
+    max-width: 82px;
+}
+
+.CloseIcon-Wrap a.CloseIcon {
+    position: absolute;
+    right: 17px;
+    top: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.CloseIcon-Wrap a.CloseIcon:before,
+.CloseIcon-Wrap a.CloseIcon:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 20px;
+    width: 3px;
+    background-color: #47529b;
+}
+
+.CloseIcon-Wrap a.CloseIcon:before {
+    transform: rotate(45deg);
+}
+
+.CloseIcon-Wrap a.CloseIcon:after {
+    transform: rotate(-45deg);
 }
 
 .studentContent .studentContent-Left>ul.navTop {
@@ -122,10 +148,20 @@ body {
 
 .studentContent .studentContent-Left>ul.navTop>li .nav-Wrapper {
     display: flex;
+    align-items: center;
 }
 
 .studentContent .studentContent-Left>ul.navTop>li .nav-Wrapper span:first-child {
     flex: 1 1 auto;
+}
+
+.studentContent .studentContent-Left>ul.navTop>li .nav-Wrapper span:nth-child(2) {
+    color: rgba(33, 33, 35, 0.5);
+    font-weight: 400;
+    font-family: 'Medium-rubikFont';
+    font-size: 17px;
+    line-height: 24px;
+    padding-right: 10px;
 }
 
 .studentContent .studentContent-Left>ul.navTop>li ul li {
@@ -136,9 +172,16 @@ body {
 
 .studentContent .studentContent-Left ul.navTop li .rightIcon {
     padding-top: 4px;
+    color: #E5E5E5;
 }
 
-.studentContent .studentContent-Left ul.navTop li .rightIcon svg {
+.studentContent .studentContent-Left>ul.navTop>li .nav-Wrapper svg {
+    fill: rgba(33, 33, 35, 0.5);
+    width: 30px;
+    height: 25px;
+}
+
+.studentContent .studentContent-Left ul.navTop li ul li svg {
     width: 25px;
     height: 20px;
 }
@@ -157,6 +200,10 @@ body {
 .studentContent .studentContent-Left .menuTop .menuIcon .menuInner p {
     padding-left: 10px;
     font-family: Bold-rubikFont;
+}
+
+.studentContent .studentContent-Left.openMenu .menuTop .menuIcon .menuInner p {
+    display: none;
 }
 
 .studentContent .studentContent-right {
@@ -311,11 +358,14 @@ footer .backBtnWrapper button:hover {
 footer .backBtnWrapper button p {
     color: #002B48;
 }
+
 footer .backBtnWrapper button:hover p {
     color: #fff;
 }
 
-footer .backBtnWrapper button svg {fill: #002B48;}
+footer .backBtnWrapper button svg {
+    fill: #002B48;
+}
 
 footer .backBtnWrapper button:hover svg {
     fill: #fff;
@@ -355,6 +405,10 @@ footer .nextBtnWrapper button:hover {
         font-size: 16px;
     }
 
+    .studentContent .studentContent-Left .menuTop .menuIcon {
+        opacity: 0;
+    }
+
     .studentTableWrapper {
         padding: 16px;
     }
@@ -389,11 +443,11 @@ footer .nextBtnWrapper button:hover {
         border-radius: 0;
         border-right: 1px solid #DBE0E3;
         width: 0;
-        max-width: 0;
         overflow: hidden;
+        margin: 0;
     }
 
-    .studentContent .studentContent-Left.closeMenu {
+    .studentContent .studentContent-Left.openMenu {
         max-width: inherit;
         width: 90%;
         overflow: auto;
@@ -410,8 +464,16 @@ footer .nextBtnWrapper button:hover {
         line-height: 28px;
     }
 
-    .studentContent .studentContent-Left.closeMenu ul.navTop {
+    .studentContent .studentContent-Left.openMenu ul.navTop {
         display: block !important;
+    }
+
+    footer .percentageRatio {
+        display: none;
+    }
+
+    footer .backBtnWrapper {
+        margin-left: 0;
     }
 }
 
@@ -438,7 +500,7 @@ footer .nextBtnWrapper button:hover {
     display: none;
 }
 
-.singlecheckradio input:checked + label::before {
+.singlecheckradio input:checked+label::before {
     /* background-color: red; */
     background-image: url("./assets/check.png");
     background-repeat: no-repeat;
