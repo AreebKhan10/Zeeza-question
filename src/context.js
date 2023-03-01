@@ -17,7 +17,6 @@ const AppProvider = ({ children }) => {
           axios
             .get(url)
             .then((res) => {
-                console.log(res, "<----IN CONTEXT")
                 setStuDetails(res.data)
               console.log(res, "Responce")})
             .catch((err) => console.log(err));
@@ -27,6 +26,7 @@ const AppProvider = ({ children }) => {
 
     return <AppContext.Provider value= {{
         stuDetails
+        
       }} 
       >{children}</AppContext.Provider>
 }

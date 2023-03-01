@@ -9,7 +9,6 @@ export default function Navbar() {
   var total_question = 35;
   var total_answered = 0;
   stuDetails?.questions?.forEach((val,index) => {
-   
     var answred_q = val.answeres
     total_answered += answred_q.length;
   });

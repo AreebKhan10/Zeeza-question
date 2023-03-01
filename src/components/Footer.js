@@ -37,6 +37,15 @@ export default function Footer({
     return a;
   };
 
+  var total_question = 35;
+  var total_answered = 0;
+  stuDetails?.questions?.forEach((val,index) => {
+    var answred_q = val.answeres
+    total_answered += answred_q.length;
+  });
+
+  const percentage = (total_answered/ total_question) * 100
+
   const handleNext = () => {
     console.log(stuDetails);
     const grade = stuDetails.Grade;
@@ -1128,7 +1137,7 @@ export default function Footer({
     <footer className="fixed drop-shadow-2xl border-t-4 border-gray-200 inset-x-0 bottom-0 w-full bg-white">
       <div className="flex flex-row items-center">
       <div className="bg-[#EFEEF5] percentageRatio">
-          <p className="text-[#47529B] text-md">8% Complete</p>
+          <p className="text-[#47529B] text-md">{percentage ? Math.floor(percentage) : 0}% Complete</p>
           <div class="overflow-hidden h-2 mb-2 text-xs flex rounded bg-white">
             <div class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#47529B] w-1/4"></div>
           </div>

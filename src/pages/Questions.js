@@ -7,6 +7,8 @@ import SingleQuestion from "./SingleQuestion";
 import axios from "axios";
 import menu from "../assets/menu.png";
 
+
+
 export default function Questions() {
   const [id, setID] = useState(0);
   const [QuesID, setQuesID] = useState(0);
@@ -14,15 +16,16 @@ export default function Questions() {
   const [MultiLimitSub, setMultiLimitSub] = useState([]);
   const [CheckID, setUpdateCheck] = useState();
   const [goalLevel, setgoalLevel] = useState();
-  const [stuDetails, setStuDetails] = useState({});
+  const [stuDetails, setStuDetails] = useState({})
   const [singleQuestion, setSingleQuestion] = useState({
     title: "",
     question: [],
     select: "",
   });
-  const grade = 6;
-  const name = stuDetails?.FirstName
-  console.log(name, "<------")
+  
+
+
+
 
   let initialData = [
     {
@@ -3916,26 +3919,613 @@ export default function Questions() {
     }
   }
 
+  const setNextQuestion = (id,QuesID) => {
+    const grade = stuDetails.grade
+    if (id == 0 && QuesID == 0) {
+        var toShowOptions = [];
+        initialData[id].questions[QuesID].options.forEach((value, index) => {
+          if (value.check === true) {
+            toShowOptions = toShowOptions.concat(value.show);
+          }
+        });
+        initialData[id].questions[QuesID + 2].options.forEach((value, index) => {
+          initialData[id].questions[QuesID + 2].options[index].check = false;
+          if (toShowOptions.includes(index)) {
+            initialData[id].questions[QuesID + 2].options[index].isHidden = false;
+          } else {
+            initialData[id].questions[QuesID + 2].options[index].isHidden = true;
+          }
+        });
+    }
+    if (id == 1 && QuesID == 1) {
+      
+      initialData[id].questions[QuesID + 1].options.forEach((value, index) => {
+          if (initialData[id].questions[QuesID + 1].options[index].level <= grade) {
+            initialData[id].questions[QuesID + 1].options[index].isHidden = false;
+            
+          } else {
+            initialData[id].questions[QuesID + 1].options[index].isHidden = true;
+            
+          }
+        });
+      
+      
+    }
+
+    if (id == 1 && QuesID == 4){
+      var option = [];
+      var dependentLevel = initialData[id].questions[
+        initialData[id].questions[QuesID + 1].dependQuestion
+      ].options.filter((x) => x.check === true);
+      initialData[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+        if (
+          value.level < grade + 1 &&
+          value.level >= dependentLevel[0].level
+        ) {
+          var isPresenrt = option.filter((x) => x.value == value.title);
+          if (!isPresenrt.length > 0) {
+            var subGoals = [];
+            value.subGoals.forEach((x) => {
+              subGoals.push({
+                text: x,
+                check: false,
+              });
+            });
+            option.push({
+              value: value.title,
+              text: subGoals,
+              check: false,
+            });
+          } else {
+            var superGoalIndex = option.findIndex(
+              (p) => p.value == value.title
+            );
+            value.subGoals.forEach((x) => {
+              var exsitdGoal = option[superGoalIndex].text.filter(
+                (goal) => goal.text == x
+              );
+              if (!exsitdGoal.length > 0) {
+                option[superGoalIndex].text.push({
+                  text: x,
+                  check: false,
+                });
+              }
+            });
+          }
+        }
+      });
+      initialData[id].questions[QuesID + 1].goalQues = option;
+    
+    }
+    
+    if (id == 1 && QuesID == 5){
+      var allCheckded = Data[id].questions[QuesID].goalQues.filter(
+        (x) => x.check === true
+      );
+      var allAnsers = [];
+      allCheckded.forEach((value, index) => {
+        value.text.forEach((texval, point) => {
+          if (texval.check === true) allAnsers.push(texval.text);
+        });
+      });
+      var option = [];
+      var dependentLevel = initialData[id].questions[
+        initialData[id].questions[QuesID + 1].dependQuestion
+      ].options.filter((x) => x.check === true);
+      initialData[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+        var isPresenrt = option.filter((x) => x.value == value.title);
+        if (!isPresenrt.length > 0) {
+          var subGoals = [];
+          value.subGoals.forEach((x) => {
+            var exsitdGoal = subGoals.filter((goal) => goal.text == x.title);
+            if (!exsitdGoal.length > 0) {
+              if (
+                x.level <= grade + 1 &&
+                x.level >= dependentLevel[0].level
+              ) {
+                if (!allAnsers.includes(x.title)) {
+                  subGoals.push({
+                    text: x.title,
+                    check: false,
+                  });
+                }
+              }
+            }
+          });
+          option.push({
+            value: value.title,
+            text: subGoals,
+            check: false,
+          });
+        } else {
+          var superGoalIndex = option.findIndex(
+            (p) => p.value == value.title
+          );
+          value.subGoals.forEach((x) => {
+            var exsitdGoal = option[superGoalIndex].text.filter(
+              (goal) => goal.text == x.title
+            );
+            if (!exsitdGoal.length > 0) {
+              if (
+                x.level <= grade + 1 &&
+                x.level >= dependentLevel[0].level
+              ) {
+                if (!allAnsers.includes(x.title)) {
+                  option[superGoalIndex].text.push({
+                    text: x.title,
+                    check: false,
+                  });
+                }
+              }
+            }
+          });
+        }
+      });
+
+      initialData[id].questions[QuesID + 1].goalQues = option;
+     
+    }
+    
+    if (id == 2 && QuesID == 1) {
+      initialData[id].questions[QuesID + 1].options.forEach((value, index) => {
+        if (initialData[id].questions[QuesID + 1].options[index].level <= grade) {
+          initialData[id].questions[QuesID + 1].options[index].isHidden = false;
+          
+        } else {
+          initialData[id].questions[QuesID + 1].options[index].isHidden = true;
+        }
+      });
+    }
+
+    if (id == 2 && QuesID == 4) {
+      var option = [];
+      var dependentLevel = initialData[id].questions[
+        initialData[id].questions[QuesID + 1].dependQuestion
+      ].options.filter((x) => x.check === true);
+      initialData[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+        if (
+          value.level < grade + 1 &&
+          value.level >= dependentLevel[0].level
+        ) {
+          var isPresenrt = option.filter((x) => x.value == value.title);
+          if (!isPresenrt.length > 0) {
+            var subGoals = [];
+            value.subGoals.forEach((x) => {
+              subGoals.push({
+                text: x,
+                check: false,
+              });
+            });
+            option.push({
+              value: value.title,
+              text: subGoals,
+              check: false,
+            });
+          } else {
+            var superGoalIndex = option.findIndex(
+              (p) => p.value == value.title
+            );
+            value.subGoals.forEach((x) => {
+              var exsitdGoal = option[superGoalIndex].text.filter(
+                (goal) => goal.text == x
+              );
+              if (!exsitdGoal.length > 0) {
+                option[superGoalIndex].text.push({
+                  text: x,
+                  check: false,
+                });
+              }
+            });
+          }
+        }
+      });
+      initialData[id].questions[QuesID + 1].goalQues = option;
+      
+    }
+
+    if (id == 2 && QuesID == 5){
+      var allAnsers = [];
+      allCheckded.forEach((value, index) => {
+        value.text.forEach((texval, point) => {
+          if (texval.check === true) allAnsers.push(texval.text);
+        });
+      });
+      var option = [];
+      var dependentLevel = initialData[id].questions[
+        initialData[id].questions[QuesID + 1].dependQuestion
+      ].options.filter((x) => x.check === true);
+      initialData[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+        if (
+          value.level <= grade + 1 &&
+          value.level >= dependentLevel[0].level
+        ) {
+          var isPresenrt = option.filter((x) => x.value == value.title);
+          if (!isPresenrt.length > 0) {
+            var subGoals = [];
+            value.subGoals.forEach((x) => {
+              var exsitdGoal = subGoals.filter((goal) => goal.text == x);
+              if (!exsitdGoal.length > 0) {
+                if (!allAnsers.includes(x)) {
+                  subGoals.push({
+                    text: x,
+                    check: false,
+                  });
+                }
+              }
+            });
+            option.push({
+              value: value.title,
+              text: subGoals,
+              check: false,
+            });
+          } else {
+            var superGoalIndex = option.findIndex(
+              (p) => p.value == value.title
+            );
+            value.subGoals.forEach((x) => {
+              var exsitdGoal = option[superGoalIndex].text.filter(
+                (goal) => goal.text == x
+              );
+              if (!exsitdGoal.length > 0) {
+                if (!allAnsers.includes(x)) {
+                  option[superGoalIndex].text.push({
+                    text: x,
+                    check: false,
+                  });
+                }
+              }
+            });
+          }
+        }
+      });
+      initialData[id].questions[QuesID + 1].goalQues = option;
+    
+    }
+
+    if (id == 3 && QuesID == 0) {
+      initialData[id].questions[QuesID + 1].options.forEach((value, index) => {
+        if (initialData[id].questions[QuesID + 1].options[index].level <= grade) {
+          initialData[id].questions[QuesID + 1].options[index].isHidden = false;
+          
+        } else {
+          initialData[id].questions[QuesID + 1].options[index].isHidden = true;
+          
+        }
+      });
+     
+    }
+    if (id == 3 && QuesID == 3) {
+      var option = [];
+      var dependentLevel = initialData[id].questions[
+        initialData[id].questions[QuesID + 1].dependQuestion
+      ].options.filter((x) => x.check === true);
+      initialData[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+        if (
+          value.level < grade + 1 &&
+          value.level >= dependentLevel[0].level
+        ) {
+          var isPresenrt = option.filter((x) => x.value == value.title);
+          if (!isPresenrt.length > 0) {
+            var subGoals = [];
+            value.subGoals.forEach((x) => {
+              subGoals.push({
+                text: x,
+                check: false,
+              });
+            });
+            option.push({
+              value: value.title,
+              text: subGoals,
+              check: false,
+            });
+          } else {
+            var superGoalIndex = option.findIndex(
+              (p) => p.value == value.title
+            );
+            value.subGoals.forEach((x) => {
+              var exsitdGoal = option[superGoalIndex].text.filter(
+                (goal) => goal.text == x
+              );
+              if (!exsitdGoal.length > 0) {
+                option[superGoalIndex].text.push({
+                  text: x,
+                  check: false,
+                });
+              }
+            });
+          }
+        }
+      });
+      initialData[id].questions[QuesID + 1].goalQues = option;
+    }
+
+    if (id == 3 && QuesID == 4){
+      var allAnsers = [];
+      allCheckded.forEach((value, index) => {
+        value.text.forEach((texval, point) => {
+          if (texval.check === true) allAnsers.push(texval.text);
+        });
+      });
+      var option = [];
+      var dependentLevel = initialData[id].questions[
+        initialData[id].questions[QuesID + 1].dependQuestion
+      ].options.filter((x) => x.check === true);
+      initialData[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+        var checkInHide = initialData[id].questions[
+          QuesID + 1
+        ].removeSuperGoals.filter((x) => x.hide == value.title);
+        var toAdd = true;
+        if (checkInHide.length > 0) {
+          allAnsers.every((x) => {
+            if (checkInHide[0].titles.includes(x)) {
+              toAdd = false;
+              return false;
+            }
+            return true;
+          });
+        }
+        if (
+          value.level <= grade + 1 &&
+          value.level >= dependentLevel[0].level &&
+          toAdd
+        ) {
+          var isPresenrt = option.filter((x) => x.value == value.title);
+          if (!isPresenrt.length > 0) {
+            var subGoals = [];
+            value.subGoals.forEach((x) => {
+              var exsitdGoal = subGoals.filter((goal) => goal.text == x);
+              if (!exsitdGoal.length > 0) {
+                if (!allAnsers.includes(x)) {
+                  subGoals.push({
+                    text: x,
+                    check: false,
+                  });
+                }
+              }
+            });
+            option.push({
+              value: value.title,
+              text: subGoals,
+              check: false,
+            });
+          } else {
+            var superGoalIndex = option.findIndex(
+              (p) => p.value == value.title
+            );
+            value.subGoals.forEach((x) => {
+              var exsitdGoal = option[superGoalIndex].text.filter(
+                (goal) => goal.text == x
+              );
+              if (!exsitdGoal.length > 0) {
+                if (!allAnsers.includes(x)) {
+                  option[superGoalIndex].text.push({
+                    text: x,
+                    check: false,
+                  });
+                }
+              }
+            });
+          }
+        }
+      });
+      option = option.filter((x) => x.text.length > 0);
+      initialData[id].questions[QuesID + 1].goalQues = option;
+    }
+
+    if (id == 4 && QuesID == 3){
+      var allChecked = initialData[id].questions[QuesID].options.filter(
+        (x) => x.check === true
+      );
+      var toHideOptions = [];
+      allChecked.forEach((value, index) => {
+        toHideOptions = toHideOptions.concat(value.doHide);
+      });
+      initialData[id].questions[QuesID + 1].options.forEach((value, index) => {
+        initialData[id].questions[QuesID + 1].options[index].check = false;
+        if (toHideOptions.includes(index)) {
+          initialData[id].questions[QuesID + 1].options[index].isHidden = true;
+        } else {
+          initialData[id].questions[QuesID + 1].options[index].isHidden = false;
+        }
+ 
+      });
+
+    }
+
+    if (id == 4 && QuesID == 5){
+      var toHideOptions = [];
+      allChecked.forEach((value, index) => {
+        toHideOptions = toHideOptions.concat(value.doHide);
+      });
+      initialData[id].questions[QuesID + 1].options.forEach((value, index) => {
+        initialData[id].questions[QuesID + 1].options[index].check = false;
+        if (toHideOptions.includes(index)) {
+          initialData[id].questions[QuesID + 1].options[index].isHidden = true;
+        } else {
+          initialData[id].questions[QuesID + 1].options[index].isHidden = false;
+        }
+       
+      });
+
+    }
+
+    if (id == 5 && QuesID == 0){
+      if (allChecked.length == 1 && allChecked[0].value == "none") {
+       
+       
+        initialData[id].questions[1].answered = false;
+        initialData[id].questions[2].answered = false;
+        initialData[id].questions[3].answered = false;
+        initialData[id].questions[4].answered = false;
+        
+      } else {
+       
+      }
+    }
+
+    if (id == 5 && QuesID == 1){
+      var allChecked = initialData[id].questions[QuesID].options.filter(
+        (x) => x.check === true
+      );
+      var option = [];
+      var checkedLevel = initialData[id].questions[
+        initialData[id].questions[QuesID + 1].dependQuestion
+      ].options.filter((x) => x.check === true);
+
+      var DependentLevel = [];
+      checkedLevel.forEach((value, index) => {
+        if (value.check === true) DependentLevel.push(value.level);
+      });
+
+      initialData[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+        if (DependentLevel.includes(value.level)) {
+          var subGoals = [];
+          value.subGoals.forEach((x) => {
+            subGoals.push({
+              text: x,
+              check: false,
+            });
+          });
+          option.push({
+            value: value.title,
+            text: subGoals,
+            check: false,
+          });
+        }
+      });
+
+      initialData[id].questions[QuesID + 1].goalQues = option;
+      
+      
+    }
+
+    if (id == 5 && QuesID == 2) {
+      var option = [];
+      var checkedLevel = initialData[id].questions[
+        initialData[id].questions[QuesID + 1].dependQuestion
+      ].options.filter((x) => x.check === true);
+
+      var DependentLevel = [];
+      checkedLevel.forEach((value, index) => {
+        if (value.check === true) DependentLevel.push(value.level);
+      });
+
+      initialData[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+        if (DependentLevel.includes(value.level)) {
+          var subGoals = [];
+          value.subGoals.forEach((x) => {
+            subGoals.push({
+              text: x,
+              check: false,
+            });
+          });
+          option.push({
+            value: value.title,
+            text: subGoals,
+            check: false,
+          });
+        }
+      });
+
+      initialData[id].questions[QuesID + 1].goalQues = option;
+     
+    }
+
+    if (id == 5 && QuesID == 3){
+      var allCheckded = initialData[id].questions[QuesID].goalQues.filter(
+        (x) => x.check === true
+      );
+      var option = [];
+      var checkedLevel = initialData[id].questions[
+        initialData[id].questions[QuesID + 1].dependQuestion
+      ].options.filter((x) => x.check === true);
+
+      var DependentLevel = [];
+      var allanswer = [];
+      allCheckded.forEach((value, index) => {
+        value.text.forEach((val, point) => {
+          if (val.check === true) allanswer.push(val.text);
+        });
+        //if (value.check === true) DependentLevel.push(value.level);
+      });
+
+      checkedLevel.forEach((value, index) => {
+        if (value.check === true) DependentLevel.push(value.level);
+      });
+
+      initialData[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+        if (DependentLevel.includes(value.level)) {
+          var subGoals = [];
+          value.subGoals.forEach((x) => {
+            if (x.hideIf.length > 0) {
+              if (!allanswer.includes(x.hideIf[0])) {
+                subGoals.push({
+                  text: x.title,
+                  check: false,
+                });
+              }
+            } else {
+              subGoals.push({
+                text: x.title,
+                check: false,
+              });
+            }
+          });
+          option.push({
+            value: value.title,
+            text: subGoals,
+            check: false,
+          });
+        }
+      });
+
+      initialData[id].questions[QuesID + 1].goalQues = option;
+      
+    }
+    
+
+  }
+
   const setQuestions = (Responsedata) =>{
     var lastitem = Responsedata[Responsedata.length - 1]
-      setID(lastitem?.questionId);
-      setQuesID(lastitem?.groupID);
+    let parent_id  = initialData.findIndex(x => x.title.toLowerCase() === lastitem.groupName.toLowerCase());
+      setID(parent_id);
+      setQuesID(lastitem?.questionId);
 
       for (const questionObj of Responsedata) {
-        let getQuestionsArrByGroupName = initialData.findIndex(x => x.title.toLowerCase() === questionObj.groupName.toLowerCase());
-        for (const answer of questionObj.answeres) {
-          let findOptionIndex = initialData[getQuestionsArrByGroupName].questions[questionObj.questionId].options.findIndex(x => x.value.toLowerCase() === answer.toLowerCase());
-          initialData[getQuestionsArrByGroupName].questions[questionObj.questionId].answered = true;
-          initialData[getQuestionsArrByGroupName].questions[questionObj.questionId].options[findOptionIndex].check = true;
+        let parent  = initialData.findIndex(x => x.title.toLowerCase() === questionObj.groupName.toLowerCase());
+        let quesId  = questionObj.questionId;
+
+        
+        if(initialData[parent].questions[questionObj.questionId].select !== 'Accordisn'){
+          for (const answer of questionObj.answeres) {
+            let findOptionIndex = initialData[parent].questions[questionObj.questionId].options.findIndex(x => x.value.toLowerCase() === answer.toLowerCase());
+            initialData[parent].questions[questionObj.questionId].answered = true;
+            initialData[parent].questions[questionObj.questionId].options[findOptionIndex].check = true;
+          }
+        }else{
+          for (const answer of questionObj.answeres) {
+            let parent_index = initialData[parent].questions[questionObj.questionId].goalQues.findIndex(x => x.value.toLowerCase() == answer.value.toLowerCase() );
+            initialData[parent].questions[questionObj.questionId].answered = true;
+            initialData[parent].questions[questionObj.questionId].goalQues[parent_index].check = true;
+
+            for ( const subAnswer of answer.subAnswers ){
+              let child_index = initialData[parent].questions[questionObj.questionId].goalQues[parent_index].text.filter(x => x.text.toLowerCase() == subAnswer.toLowerCase() );
+              initialData[parent].questions[questionObj.questionId].goalQues[parent_index].text[child_index].check = true;
+            }
+
+          }
+
         }
+        
+
+        setNextQuestion(parent,quesId);
 
       }
 
     setData(initialData);
       
   }
-console.log(Data, "<------findAnswerFromOption")
-
 
   useEffect(() => {
     const searchParams = new URLSearchParams(document.location.search)
@@ -3946,19 +4536,19 @@ console.log(Data, "<------findAnswerFromOption")
     axios
       .get(url)
       .then((res) => {
+        console.log("asdsadasdasdsadasdasdsadheloooo2");
         setStuDetails(res.data);
+        console.log(res.data, "<---- res.data")
         if(res.data.questions.length){
           setQuestions(res.data.questions);
 
         }else{
           setData(initialData);
-
         }
-       
+        console.log(res, "Responce");
       })
       .catch((err) => console.log(err));
   }, []);
-
 
 
   useEffect(() => {
@@ -3967,8 +4557,6 @@ console.log(Data, "<------findAnswerFromOption")
     const titles = Data.map((Titles) => Titles.title);
     const Questions = Data.map((question) => question.questions);
     const select = Questions[id].map((selectValue) => selectValue.select);
-
-    //Data[0].questions[0].question.replace("[name]", `${stuDetails.FirstName}'s`);
     setData(Data);
     setSingleQuestion({
       ...singleQuestion,
