@@ -441,7 +441,6 @@ footer .nextBtnWrapper button:hover {
         border: none;
         background: #fff;
         border-radius: 0;
-        border-right: 1px solid #DBE0E3;
         width: 0;
         overflow: hidden;
         margin: 0;
@@ -452,6 +451,7 @@ footer .nextBtnWrapper button:hover {
         width: 90%;
         overflow: auto;
         height: 100%;
+        border-right: 1px solid #DBE0E3;
         transition: .3s;
     }
 
