@@ -1,33 +1,10 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import  logo from '../assets/Logo.png'
 import { useGlobalContext } from '../context'
 
 export default function Navbar() {
-  const [stuDetails, setStuDetails] = useState({})
-  const {Details} = useGlobalContext()
-
-  console.log(Details, "<----Details")
-  useEffect(()=>{
-
-    const searchParams = new URLSearchParams(document.location.search)
   
-    const url =
-        `https://31zctjiomj.execute-api.us-east-1.amazonaws.com/default/enhacereport?StudentID=${searchParams.get('StudentID')}&Token=${searchParams.get('Token')}`;
-  
-      axios
-        .get(url)
-        .then((res) => {
-          console.log(res, "aoboadbf")
-          setStuDetails(res.data)
-          console.log(res, "Responce")})
-        .catch((err) => console.log(err));
-  
-  },[])
-
-  console.log(stuDetails, "<---- in nav")
-
-
+  const {stuDetails} = useGlobalContext()
 
   var total_question = 35;
   var total_answered = 0;

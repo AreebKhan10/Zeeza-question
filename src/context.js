@@ -5,9 +5,8 @@ import axios from "axios";
 const AppContext = React.createContext()
 
 const AppProvider = ({ children }) => {
-    const [Details, setDetails] = useState({})
-
-
+    const [stuDetails, setStuDetails] = useState({})
+    
     useEffect(()=>{
 
         const searchParams = new URLSearchParams(document.location.search)
@@ -19,7 +18,7 @@ const AppProvider = ({ children }) => {
             .get(url)
             .then((res) => {
                 console.log(res, "<----IN CONTEXT")
-                setDetails(res.data)
+                setStuDetails(res.data)
               console.log(res, "Responce")})
             .catch((err) => console.log(err));
       
@@ -27,7 +26,7 @@ const AppProvider = ({ children }) => {
 
 
     return <AppContext.Provider value= {{
-        Details
+        stuDetails
       }} 
       >{children}</AppContext.Provider>
 }
