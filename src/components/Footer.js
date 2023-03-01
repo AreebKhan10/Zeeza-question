@@ -1075,11 +1075,8 @@ export default function Footer({
   
   axios(config)
   .then(function (response) {
-
-    if(response.data.questions[parent].questions[ques].answered === true && parent == 6 && ques == 0){
-      
+      console.log(response, "<----response")
       axios(confighook)
-    }
    
     console.log(JSON.stringify(response.data));
   })

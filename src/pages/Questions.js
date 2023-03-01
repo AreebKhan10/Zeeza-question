@@ -3923,12 +3923,10 @@ export default function Questions() {
 
       for (const questionObj of Responsedata) {
         let getQuestionsArrByGroupName = initialData.findIndex(x => x.title.toLowerCase() === questionObj.groupName.toLowerCase());
-        console.log('getQuestionsArrByGroupName', getQuestionsArrByGroupName)
         for (const answer of questionObj.answeres) {
           let findOptionIndex = initialData[getQuestionsArrByGroupName].questions[questionObj.questionId].options.findIndex(x => x.value.toLowerCase() === answer.toLowerCase());
           initialData[getQuestionsArrByGroupName].questions[questionObj.questionId].answered = true;
           initialData[getQuestionsArrByGroupName].questions[questionObj.questionId].options[findOptionIndex].check = true;
-          console.log('initialData', initialData)
         }
 
       }
@@ -3948,9 +3946,7 @@ console.log(Data, "<------findAnswerFromOption")
     axios
       .get(url)
       .then((res) => {
-        console.log("asdsadasdasdsadasdasdsadheloooo2");
         setStuDetails(res.data);
-        console.log(res.data, "<---- res.data")
         if(res.data.questions.length){
           setQuestions(res.data.questions);
 
@@ -3958,18 +3954,7 @@ console.log(Data, "<------findAnswerFromOption")
           setData(initialData);
 
         }
-        //initialData[0].questions[0].question.replace("[name]", `${res.data[0].FirstName}'s`); 
-        //res.data[0].questions[0].question.replace("[name]", `${res.data[0].FirstName}'s`);
-        // if ('questions' in res.data) {
-          //goToQuestion(res.data.questions);
-          //if (res.data.questions.length) {
-          //} else {
-            // setQuestions(res.data.questions)
-            
-          //}
-        // }else{
-        // }
-        console.log(res, "Responce");
+       
       })
       .catch((err) => console.log(err));
   }, []);

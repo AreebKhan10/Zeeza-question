@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import  logo from '../assets/Logo.png'
+import { useGlobalContext } from '../context'
 
 export default function Navbar() {
   const [stuDetails, setStuDetails] = useState({})
+  const {Details} = useGlobalContext()
 
-
+  console.log(Details, "<----Details")
   useEffect(()=>{
 
     const searchParams = new URLSearchParams(document.location.search)
@@ -16,6 +18,7 @@ export default function Navbar() {
       axios
         .get(url)
         .then((res) => {
+          console.log(res, "aoboadbf")
           setStuDetails(res.data)
           console.log(res, "Responce")})
         .catch((err) => console.log(err));
@@ -24,29 +27,18 @@ export default function Navbar() {
 
   console.log(stuDetails, "<---- in nav")
 
-  // const totalanswered = stuDetails?.questions?.map(x => x.questions)
-  // const filteredArray = totalanswered?.filter(obj => obj[0].answered === true);
-  // console.log(filteredArray, "<----filteredArray")
 
-  var total_question = 0;
+
+  var total_question = 35;
   var total_answered = 0;
   stuDetails?.questions?.forEach((val,index) => {
-    total_question += val.questions.length;
-    var answred_q = val.questions.filter(x => x.answered === true);
+   
+    var answred_q = val.answeres
     total_answered += answred_q.length;
   });
 
-  console.log(total_question,'----------total_question');
-  console.log(total_answered,'----------total_answered');
   const percentage = (total_answered/ total_question) * 100
 
-  console.log(percentage, "<----percentage")
-
-  // console.log(totalanswered.map(result=>{
-  //   result = result.answered.filter(course=> )
-  //   return result
-  // }))
-  // console.log(totalanswered.filter(x => x.every(c => c.answered === true)), "<---- totalanswered")
 
   return (
     <>
