@@ -1,6 +1,6 @@
 import { data } from "autoprefixer";
 import PreviousMap from "postcss/lib/previous-map";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import axios from "axios";
 
@@ -21,9 +21,11 @@ export default function Footer({
   MultiLimitSub,
   setMultiLimitSub,
   stuDetails,
+  filteredJSON,
+  setFilter
 }) {
 
-  const [filteredJSON, setFilter ] = useState([])
+  
   console.log(filteredJSON,"<----12")
   const groupNameArray =["Background","Decoding","Reading Comprehension","Math","Speech and Language","Social-emotional","Summary"]
   const uniqueArray = (array) => {
@@ -36,6 +38,8 @@ export default function Footer({
 
     return a;
   };
+
+
 
   var total_question = 35;
   var total_answered = 0;
@@ -1004,7 +1008,7 @@ export default function Footer({
   
   const getFilteredJSONData = (groupId, questionId) => {
     const groupName = groupNameArray[groupId];
-    const checkIfQuestionExistsInFilteredArr = filteredJSON.filter(x => x.groupName.toLowerCase() === groupName.toLowerCase() && x.QuesID === questionId);
+    const checkIfQuestionExistsInFilteredArr = filteredJSON?.filter(x => x.groupName.toLowerCase() === groupName.toLowerCase() && x.QuesID === questionId);
     if (!checkIfQuestionExistsInFilteredArr.length) {
       let filteredJSONQuestionObj = {groupName: groupName};
       const getGroupObjFromParent = Data.find(x => x.title.toLowerCase() === groupName.toLowerCase());

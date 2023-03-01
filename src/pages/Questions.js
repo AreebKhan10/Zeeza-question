@@ -17,6 +17,8 @@ export default function Questions() {
   const [CheckID, setUpdateCheck] = useState();
   const [goalLevel, setgoalLevel] = useState();
   const [stuDetails, setStuDetails] = useState({})
+  const [responceData, setResponceData] = useState([])
+  const [filteredJSON, setFilter ] = useState([])
   const [singleQuestion, setSingleQuestion] = useState({
     title: "",
     question: [],
@@ -3919,8 +3921,8 @@ export default function Questions() {
     }
   }
 
-  const setNextQuestion = (id,QuesID) => {
-    const grade = stuDetails.grade
+  const setNextQuestion = (id,QuesID,grade) => {
+   
     if (id == 0 && QuesID == 0) {
         var toShowOptions = [];
         initialData[id].questions[QuesID].options.forEach((value, index) => {
@@ -4486,7 +4488,9 @@ export default function Questions() {
 
   }
 
-  const setQuestions = (Responsedata) =>{
+  const setQuestions = (response) =>{
+    setFilter(response.questions)
+    let Responsedata = response.questions
     var lastitem = Responsedata[Responsedata.length - 1]
     let parent_id  = initialData.findIndex(x => x.title.toLowerCase() === lastitem.groupName.toLowerCase());
       setID(parent_id);
@@ -4497,8 +4501,11 @@ export default function Questions() {
         let quesId  = questionObj.questionId;
 
         
-        if(initialData[parent].questions[questionObj.questionId].select !== 'Accordisn'){
+        if(initialData[parent].questions[questionObj.questionId].select !== 'Accordian'){
           for (const answer of questionObj.answeres) {
+            initialData[parent].questions[questionObj.questionId].options.forEach((val,ind)=> {
+              initialData[parent].questions[questionObj.questionId].options[ind].value =  val.value.replace('[name]', response.FirstName+"'s");
+            } );
             let findOptionIndex = initialData[parent].questions[questionObj.questionId].options.findIndex(x => x.value.toLowerCase() === answer.toLowerCase());
             initialData[parent].questions[questionObj.questionId].answered = true;
             initialData[parent].questions[questionObj.questionId].options[findOptionIndex].check = true;
@@ -4510,7 +4517,7 @@ export default function Questions() {
             initialData[parent].questions[questionObj.questionId].goalQues[parent_index].check = true;
 
             for ( const subAnswer of answer.subAnswers ){
-              let child_index = initialData[parent].questions[questionObj.questionId].goalQues[parent_index].text.filter(x => x.text.toLowerCase() == subAnswer.toLowerCase() );
+              let child_index = initialData[parent].questions[questionObj.questionId].goalQues[parent_index].text.findIndex(x => x.text.toLowerCase() == subAnswer.toLowerCase() );
               initialData[parent].questions[questionObj.questionId].goalQues[parent_index].text[child_index].check = true;
             }
 
@@ -4519,7 +4526,7 @@ export default function Questions() {
         }
         
 
-        setNextQuestion(parent,quesId);
+        setNextQuestion(parent,quesId,response.Grade);
 
       }
 
@@ -4528,6 +4535,7 @@ export default function Questions() {
   }
 
   useEffect(() => {
+
     const searchParams = new URLSearchParams(document.location.search)
 
     const url =
@@ -4538,9 +4546,10 @@ export default function Questions() {
       .then((res) => {
         console.log("asdsadasdasdsadasdasdsadheloooo2");
         setStuDetails(res.data);
+
         console.log(res.data, "<---- res.data")
         if(res.data.questions.length){
-          setQuestions(res.data.questions);
+          setQuestions(res.data);
 
         }else{
           setData(initialData);
@@ -4552,6 +4561,7 @@ export default function Questions() {
 
 
   useEffect(() => {
+    
     console.log(Data[1]?.questions[8]?.goalQues, "<---- DATA GOALS");
 
     const titles = Data.map((Titles) => Titles.title);
@@ -4697,6 +4707,8 @@ export default function Questions() {
           MultiLimitSub={MultiLimitSub}
           setMultiLimitSub={setMultiLimitSub}
           stuDetails={stuDetails}
+          filteredJSON={filteredJSON}
+          setFilter={setFilter}
         />
       </>
     );
