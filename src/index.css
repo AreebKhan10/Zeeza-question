@@ -200,6 +200,10 @@ body {
 .studentContent .studentContent-Left .menuTop .menuIcon .menuInner p {
     padding-left: 10px;
     font-family: Bold-rubikFont;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 36px;
+    color: #1C3E57;
 }
 
 .studentContent .studentContent-Left.openMenu .menuTop .menuIcon .menuInner p {
@@ -238,7 +242,8 @@ body {
 
 .studentContent .studentContent-right .studentContentTop p:last-child {
     float: right;
-    line-height: 38px;
+    font-size: 17px;
+    line-height: 24px
 }
 
 .studentContent .studentContent-right .studentContentBottom {
@@ -281,10 +286,46 @@ body {
     padding-top: 24px;
 }
 
+.studentContent .studentContent-right .studentContentBottom .selectWrapper nav {
+    border: 2px solid;
+    border-color: #1D4D70;
+    border-top: none;
+    border-radius: 0px 0px 8px 8px;
+    opacity: 0;
+    visibility: hidden;
+}
+.studentContent .studentContent-right .studentContentBottom .selectWrapper nav.openDropdown {
+    opacity: 1;
+    visibility: visible;
+}
+
+.studentContent .studentContent-right .studentContentBottom .selectWrapper li {
+    color: #002B48;
+    font-size: 16px;
+}
+
 .studentContent .studentContent-right .studentContentBottom .selectWrapper button {
     border-color: #1D4D70;
     padding-top: 13px;
+    border-width: 2px;
     padding-bottom: 13px;
+    border-radius: 8px;
+    align-items: center;
+    color: #BDBDBD;
+}
+.studentContent .studentContent-right .studentContentBottom .selectWrapper button.borderNone {
+    border-radius: 8px 8px 0 0;
+}
+.studentContent .studentContent-right .studentContentBottom .selectWrapper button svg {
+    fill: #002B48;
+    width: 30px;
+    height: 30px;
+}
+.studentContent .studentContent-right .studentContentBottom .selectWrapper button .rotateIcon {
+    transform: rotate(180deg);
+}
+.studentContent .studentContent-right .studentContentBottom .selectWrapper .group:focus button {
+    border-radius: 8px 8px 0 0;
 }
 
 .studentContent .studentContent-right .studentContentBottom .selectWrapper .selectBorder {
@@ -324,6 +365,7 @@ body {
 
 footer {
     padding: 32px;
+    box-shadow: 0px -10px 10px rgb(38 50 56 / 8%);
 }
 
 footer .percentageRatio {
@@ -394,7 +436,7 @@ footer .nextBtnWrapper button:hover {
     }
 
     .acdemicReport {
-        padding: 16px;
+        padding: 8px 16px;
     }
 
     .acdemicReport h3 {
@@ -488,7 +530,7 @@ footer .nextBtnWrapper button:hover {
     height: 32px;
     background-image: url("./assets/uncheck.png");
     background-repeat: no-repeat;
-    background-size: 35px;
+    background-size: 34px;
     background-position: center center;
     position: absolute;
     left: 0;
@@ -504,6 +546,6 @@ footer .nextBtnWrapper button:hover {
     /* background-color: red; */
     background-image: url("./assets/check.png");
     background-repeat: no-repeat;
-    background-size: 35px;
+    background-size: 34px;
     background-position: center center;
 }
