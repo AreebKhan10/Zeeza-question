@@ -3,6 +3,7 @@ import PreviousMap from "postcss/lib/previous-map";
 import React, { useEffect, useState } from "react";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import axios from "axios";
+import { useGlobalContext } from '../context'
 
 
 export default function Footer({
@@ -20,13 +21,15 @@ export default function Footer({
   id,
   MultiLimitSub,
   setMultiLimitSub,
-  stuDetails,
-  filteredJSON,
-  setFilter
+  // stuDetails,
+  // filteredJSON,
+  // setFilter
 }) {
 
-  
-  console.log(filteredJSON,"<----12")
+  var {stuDetails, filteredJSON, setFilteredJSON} = useGlobalContext()
+  console.log(filteredJSON, "<---filteredJSONfilteredJSON")
+  const [totalQuestions, setTotalQuestions] = useState([]);
+  const {setPercentage, percentage, setStuDetails} = useGlobalContext();
   const groupNameArray =["Background","Decoding","Reading Comprehension","Math","Speech and Language","Social-emotional","Summary"]
   const uniqueArray = (array) => {
     var a = array.concat();
@@ -39,19 +42,12 @@ export default function Footer({
     return a;
   };
 
+ 
 
-
-  var total_question = 35;
-  var total_answered = 0;
-  stuDetails?.questions?.forEach((val,index) => {
-    var answred_q = val.answeres
-    total_answered += answred_q.length;
-  });
-
-  const percentage = (total_answered/ total_question) * 100
-
+  
   const handleNext = () => {
-    console.log(stuDetails);
+     
+   
     const grade = stuDetails.Grade;
     if (id == 0 && QuesID == 0) {
       var allChecked = Data[id].questions[QuesID].options.filter(
@@ -223,9 +219,10 @@ export default function Footer({
         Data[id].questions[QuesID + 1].goalQues = option;
         setData(Data);
 
-        console.log(Data[id].questions[QuesID + 1], "---------updated data");
-
+        console.log( "---------updated data");
+      
         nextQuestion(id, QuesID);
+       
       }
     }
     if (id == 1 && QuesID == 5) {
@@ -975,42 +972,57 @@ export default function Footer({
     }
   };
 
+useEffect(()=>{
+  // nextQuestion(id, QuesID)
+},[])
+
+
   const nextQuestion = (parent, question) => {
     Data[parent].questions[question].answered = true;
     setData(Data);
     var questionLength = Data[parent].questions.length;
     var parentId = parent;
     var questionId = question;
+    console.log(question, "<<<----questionLength")
+    // if(totalQuestions.length){
+      if (question < questionLength - 1) {
+        questionId = questionId + 1;
+      } else {
+        questionId = 0;
+        parentId = parentId + 1;
+      }
 
-    if (question < questionLength - 1) {
-      questionId = questionId + 1;
-    } else {
-      questionId = 0;
-      parentId = parentId + 1;
-    }
+    // }else{
+    //   questionId = 0;
+    //     parentId = parentId 
+    // }
     if (
       "isRandom" in Data[parentId].questions[questionId] &&
       Data[parentId].questions[questionId].isRandom === true
     ) {
+
       questionId = questionId + 1;
     }
-
     changeQuestionToGender(parentId, questionId);
-
     PostData(parentId,questionId);
-
-
-
     setID(parentId);
     setQuesID(questionId);
+    var total_question = 39;
+    var total_answered = 0;
+    console.log(totalQuestions, "<---totalQuestions")
+    total_answered += totalQuestions.length
+    const percentage = (total_answered/ total_question) * 100
+    setPercentage(percentage)
+
   };
+  
 
   
   const getFilteredJSONData = (groupId, questionId) => {
+    console.log('groupId+++++', groupId)
+    
     const groupName = groupNameArray[groupId];
-    const checkIfQuestionExistsInFilteredArr = filteredJSON?.filter(x => x.groupName.toLowerCase() === groupName.toLowerCase() && x.QuesID === questionId);
-    if (!checkIfQuestionExistsInFilteredArr.length) {
-      let filteredJSONQuestionObj = {groupName: groupName};
+    let filteredJSONQuestionObj = {groupName: groupName};
       const getGroupObjFromParent = Data.find(x => x.title.toLowerCase() === groupName.toLowerCase());
       const getCompletedQuestionFromGroup = getGroupObjFromParent.questions[questionId];
       
@@ -1032,31 +1044,28 @@ export default function Footer({
         console.log('filteredJSONQuestionObj', filteredJSONQuestionObj)
 
       }else{
-
         filteredJSONQuestionObj.answeres = getCompletedQuestionFromGroup.options.filter(x => x.check === true).map(x => x.value);
         filteredJSONQuestionObj.question = filteredJSONQuestionObj.question.replace('[name]', stuDetails.FirstName)
       }
+      console.log('filteredJSONQuestionObj', filteredJSONQuestionObj)
+      // setFilter(filteredJSON.concat(filteredJSONQuestionObj));
+      filteredJSON.push(filteredJSONQuestionObj)
+      setFilteredJSON(filteredJSON);
 
-      setFilter(filteredJSON.concat(filteredJSONQuestionObj));
-    }else{
-      const getGroupObjFromParent = Data.find(x => x.title.toLowerCase() === groupName.toLowerCase());
-      const getCompletedQuestionFromGroup = getGroupObjFromParent.questions[questionId];
-      const getquestions = filteredJSON.findIndex(x => x.groupName.toLowerCase() === groupName.toLowerCase() && x.QuesID === questionId );
-      
-      filteredJSON[getquestions].questionId = QuesID;
-      filteredJSON[getquestions].question = getCompletedQuestionFromGroup.question;
-      filteredJSON[getquestions].answeres = getCompletedQuestionFromGroup.options.filter(x => x.check === true).map(x => x.value);
-      filteredJSON[getquestions].question = getGroupObjFromParent.question.replace('[name]', stuDetails.FirstName)
-      setFilter(filteredJSON);
-    }
-  } 
+      console.log('filteredJSONddd', filteredJSON)
 
+  }
+  
 
+  
   const PostData = (parent,ques)=>{
     getFilteredJSONData(id, QuesID)
+    if(filteredJSON.length) {
+     console.log('filteredJSON++++', filteredJSON, QuesID)
+ 
     const searchParams = new URLSearchParams(document.location.search)
+    console.log('filteredJSON', filteredJSON)
     const updatedData = filteredJSON;
-    console.log(updatedData, "VALSUESS")
     const body = JSON.stringify({
       ...stuDetails,
       "questions": updatedData
@@ -1088,18 +1097,66 @@ export default function Footer({
   
   axios(config)
   .then(function (response) {
-      console.log(response, "<----response")
-      axios(confighook)
-   
-    console.log(JSON.stringify(response.data));
+    console.log(response.data.questions, "<---response.data.questions")
+    setTotalQuestions(response.data.questions)
+      if(id === 6 && QuesID === 0){
+        axios(confighook)
+      }
   })
   .catch(function (error) {
     console.log(error);
   });
-  }
+} 
+}
+
+
+
+
 
   const handleBack = () => {
-    PreviousQues(id, QuesID);
+    const back = true
+    if (filteredJSON.length) {
+      const groupName = groupNameArray[id];
+      const getIdxFromFilteredJSon = filteredJSON.findIndex(x => x.groupName.toLowerCase() === groupName.toLowerCase() && QuesID === x.questionId);
+      filteredJSON.splice(getIdxFromFilteredJSon, 1);
+
+      
+      const searchParams = new URLSearchParams(document.location.search)
+    console.log('filteredJSON', filteredJSON)
+    const updatedData = filteredJSON;
+    const body = JSON.stringify({
+      ...stuDetails,
+      "questions": updatedData
+    });
+
+  var config = {
+    method: 'POST',
+    maxBodyLength: Infinity,
+    url: `https://31zctjiomj.execute-api.us-east-1.amazonaws.com/default/enhacereport?StudentID=${searchParams.get('StudentID')}&Token=${searchParams.get('Token')}`,
+    headers: { 
+      'Content-Type': 'application/json',
+
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization, Content-Length, X-Requested-With, Accept"
+
+    },
+    withCredentials: false,
+    crossdomain: true,
+    data : body
+  };
+
+  axios(config)
+  .then(function (response) {
+    console.log(response.data.questions, "<---response.data.questions")
+    
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  PreviousQues(id, QuesID);
+  }
+    
   };
 
   const changeQuestionToGender = (parent, question) => {
@@ -1135,6 +1192,7 @@ export default function Footer({
     } else {
       PreviousQues(parent, question);
     }
+  
   };
 
   return (
@@ -1161,7 +1219,7 @@ export default function Footer({
           onClick={handleNext}
           className="bg-[#DE706C] h-10 rounded-md justify-center text-white font-medium flex flex-row"
         >
-          <p className="text-center mr-1">Next</p>
+          <p className="text-center mr-1">{id === 6 && QuesID === 0 ? "Submit" : "Next"}</p>
           <FaArrowRight className="text-center m-1 mr-0" />
         </button>
         </div>

@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import SingleQuestion from "./SingleQuestion";
 import axios from "axios";
 import menu from "../assets/menu.png";
+import { useGlobalContext } from '../context'
 
 
 
@@ -18,15 +19,16 @@ export default function Questions() {
   const [goalLevel, setgoalLevel] = useState();
   const [stuDetails, setStuDetails] = useState({})
   const [responceData, setResponceData] = useState([])
-  const [filteredJSON, setFilter ] = useState([])
+  
   const [singleQuestion, setSingleQuestion] = useState({
     title: "",
     question: [],
     select: "",
   });
   
+// console.log(filteredJSON)
 
-
+var { filteredJSON} = useGlobalContext()
 
 
   let initialData = [
@@ -35,6 +37,7 @@ export default function Questions() {
       title: "Background",
       questions: [
         {
+          questionID : 0,
           subTitle: "Areas of Struggle",
           description: "Multi select, minimum 1 up to 3",
           question: `Which areas does [name] struggle with most?`,
@@ -103,10 +106,13 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 1,
           subTitle: "Functioning Rate",
           description: "Single select, minimum 1",
           question: "Rate [name] level of functioning in these areas",
-          select: "single",
+          select: "Multi",
+          min:1,
+          max:1,
           answered: false,
           options: [
             {
@@ -132,6 +138,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 2,
           subTitle: "Academic domains",
           description: "Single select, minimum 1",
           question: "Which academic domains does [name] struggle with?",
@@ -167,6 +174,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 3,
           subTitle: "Interests",
           question: "What are [name] interests?",
           description: "Multi select, minimum 1 up to 3",
@@ -192,6 +200,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 4,
           subTitle: "Incorporate Interests",
           description: "Single select, minimum 1",
           question:
@@ -233,6 +242,7 @@ export default function Questions() {
       title: "Decoding",
       questions: [
         {
+          questionID : 5,
           subTitle: "Decoding Rate",
           description: "Single select, minimum 1",
           question: "How would you rate [name] performance in decoding?",
@@ -253,6 +263,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 6,
           subTitle: "Decoding Areas",
           description: "Single select, minimum 1",
           question: "How many areas of decoding does [name] struggle with?",
@@ -274,6 +285,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 7,
           subTitle: "Grade Level",
           description: "Single select, minimum 1",
           question: "Choose your grade level from the following",
@@ -496,6 +508,7 @@ export default function Questions() {
         //   ],
         // },
         {
+          questionID : 8,
           subTitle: "Reading Methodology",
           description: "Multi select, minimum 1 up to 3",
           question:
@@ -516,6 +529,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 9,
           subTitle: "Descriptive Rating Chart",
           description: "Single select, minimum 1",
           question: "How would you rate [name] progress in decoding?",
@@ -530,6 +544,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 10,
           subTitle: "Decoding Goals for Year",
           description:
             "Select up to 2 smart goals, and up to 3 goals for each smart goal",
@@ -708,6 +723,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 11,
           subTitle: "Struggling Details",
           description: "Multi select, minimum 3 up to 5",
           question:
@@ -982,6 +998,7 @@ export default function Questions() {
       title: "Reading Comprehension",
       questions: [
         {
+          questionID : 12,
           subTitle: "student's deficits",
           description: "Single select, minimum 1",
           question:
@@ -1007,6 +1024,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 13,
           subTitle: "student's range",
           description: "Single select, minimum 1",
           question:
@@ -1032,6 +1050,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 14,
           subTitle: "student's grade level",
           description: "Single select, minimum 1",
           question:
@@ -1105,6 +1124,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 15,
           subTitle: "techniques",
           description: "Multi select, minimum 2 up to 3",
           question: "Which techniques do you use during your sessions?",
@@ -1161,6 +1181,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 16,
           subTitle: "student’s progress",
           description: "Single select, minimum 1",
           question:
@@ -1191,6 +1212,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 17,
           subTitle: "Reading Comprehension goals",
           description:
             "Select up to 3 smart goals, and up to 3 goals for each smart goal",
@@ -1438,6 +1460,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 18,
           subTitle: "student still struggle with?",
           description:
             "Select up to 3 smart goals, and up to 3 goals for each smart goal",
@@ -1692,6 +1715,7 @@ export default function Questions() {
       title: "Math",
       questions: [
         {
+          questionID : 19,
           subTitle: "math skills",
           description: "Single select, minimum 1",
           question: "How would you rate 1's math skills?",
@@ -1721,6 +1745,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 20,
           subTitle: "grade",
           description: "Single select, minimum 1",
           question: "Select the grade level from the following",
@@ -1793,6 +1818,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 21,
           subTitle: "intervention",
           description: "Single select, minimum 1",
           question: "Which type of aids do you use during intervention?",
@@ -1827,6 +1853,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 22,
           subTitle: "Progess in math",
           description: "Single select, minimum 1",
           question: "How would you describe your student's progress in math?",
@@ -1856,6 +1883,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 23,
           subTitle: "Comprehension goals",
           description:
             "Select up to 3 smart goals and minimum one goals per smart goal, up to 6 goals total",
@@ -2527,6 +2555,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 24,
           subTitle: "struggle with",
           description:
             "Select up to 3 smart goals and minimum one goals per smart goal, up to 6 goals total",
@@ -3234,6 +3263,7 @@ export default function Questions() {
       title: "Speech and Language",
       questions: [
         {
+          questionID : 25,
           subTitle: "SLP Services",
           question: "Does [name] receive SLP (Speech therapy) services?",
           description: "Single select, minimum 1",
@@ -3258,6 +3288,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 26,
           subTitle: "Benefit SLP Services",
           question:
             "Do you think your student would benefit from SLP services?",
@@ -3278,6 +3309,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 27,
           subTitle: "Benefit SLP Services",
           question:
             "How many times a week does your student receive SLP services? ",
@@ -3313,6 +3345,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 28,
           subTitle: "student able",
           question: "Which of these is your student able to do?",
           select: "Multi",
@@ -3408,6 +3441,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 29,
           subTitle: "student struggle",
           question: "Which of these does your student struggle with?",
           select: "Multi",
@@ -3503,6 +3537,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 30,
           subTitle: "student’s strength",
           question: "Which of these is your student’s strength?",
           select: "Multi",
@@ -3544,6 +3579,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 31,
           subTitle: "student’s weakness",
           question: "Which of these is your student's weakness? ",
           select: "Multi",
@@ -3591,6 +3627,7 @@ export default function Questions() {
       title: "Social-emotional",
       questions: [
         {
+          questionID : 32,
           subTitle: "display a delay ",
           question:
             "Does your student display a delay in any of the following areas? If yes, please specify:",
@@ -3627,6 +3664,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 33,
           subTitle: "social-emotional skills",
           question:
             "How would you rate your student's delays in social-emotional skills?",
@@ -3652,6 +3690,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 34,
           subTitle: "area of concern",
           question: "Rate your student's progress in each area of concern:",
           select: "Accordian",
@@ -3690,6 +3729,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 35,
           subTitle: "struggle with",
           description: "Single select from each group",
           question: "",
@@ -3728,6 +3768,7 @@ export default function Questions() {
           ],
         },
         {
+          questionID : 36,
           subTitle: "Reading Comprehension struggle with",
           description: "Multi select, minimum 2 ",
           question: "",
@@ -3846,6 +3887,7 @@ export default function Questions() {
       title: "Summary",
       questions: [
         {
+          questionID : 37,
           subTitle: "Benefit SLP Services",
           question:
             "How would you describe your student's range of struggles overall ",
@@ -4484,17 +4526,17 @@ export default function Questions() {
       initialData[id].questions[QuesID + 1].goalQues = option;
       
     }
-    
-
   }
 
   const setQuestions = (response) =>{
-    setFilter(response.questions)
+    console.log(response, "<----responseresponse")
+    filteredJSON = response.questions;
+    console.log(filteredJSON, "++++++")
     let Responsedata = response.questions
     var lastitem = Responsedata[Responsedata.length - 1]
     let parent_id  = initialData.findIndex(x => x.title.toLowerCase() === lastitem.groupName.toLowerCase());
-      setID(parent_id);
-      setQuesID(lastitem?.questionId);
+      setID(parent_id );
+      setQuesID(lastitem?.questionId   );
 
       for (const questionObj of Responsedata) {
         let parent  = initialData.findIndex(x => x.title.toLowerCase() === questionObj.groupName.toLowerCase());
@@ -4537,14 +4579,12 @@ export default function Questions() {
   useEffect(() => {
 
     const searchParams = new URLSearchParams(document.location.search)
-
     const url =
       `https://31zctjiomj.execute-api.us-east-1.amazonaws.com/default/enhacereport?StudentID=${searchParams.get('StudentID')}&Token=${searchParams.get('Token')}`;
 
     axios
       .get(url)
       .then((res) => {
-        console.log("asdsadasdasdsadasdasdsadheloooo2");
         setStuDetails(res.data);
 
         console.log(res.data, "<---- res.data")
@@ -4574,9 +4614,6 @@ export default function Questions() {
       question: Questions[id],
       select: select[QuesID],
     });
-
-
-
 
     //  const gradeUpdate = Data[1].questions[2].options.filter(x => x.level < grade)
     //  Data[1].questions[2].options = gradeUpdate
@@ -4608,13 +4645,13 @@ export default function Questions() {
           <div className="flex flex-col studentContent-Left" id="studentContentLeft">
             <div className="menuTop flex justify-between items-center">
               <div className="menuIcon">
-                <a href="#" className="menuInner" onClick={menuFunction}>
+                <a  className="menuInner" onClick={menuFunction}>
                   <img src={menu} />
                   <p>Menu </p>
                 </a>
               </div>
               <div className="CloseIcon-Wrap">
-                <a href="#" className="CloseIcon" onClick={closeFunction}>
+                <a  className="CloseIcon" onClick={closeFunction}>
                 </a>
               </div>
               <div className="menuText" id="MenuQuestion">
@@ -4654,7 +4691,7 @@ export default function Questions() {
                                 {questions.subTitle}
                                    
                                 <div
-                                id="answeredOption"
+                                  id="answeredOption"
                                   className={
                                     questions.answered === true
                                       ? `inline-block float-right answred rightIcon`
@@ -4707,8 +4744,8 @@ export default function Questions() {
           MultiLimitSub={MultiLimitSub}
           setMultiLimitSub={setMultiLimitSub}
           stuDetails={stuDetails}
-          filteredJSON={filteredJSON}
-          setFilter={setFilter}
+          // filteredJSON={filteredJSON}
+          // setFilter={setFilter}
         />
       </>
     );

@@ -574,7 +574,7 @@ export default function SingleQuestion({
     <div className="studentContent-right">
       <div className="studentContentTop">
         <div className="menuIcon">
-          <a href="#" className="menuInner" onClick={menuFunction}>
+          <a className="menuInner" onClick={menuFunction}>
             <img src={menu} />
           </a>
         </div>
@@ -692,6 +692,37 @@ export default function SingleQuestion({
             />
           </>
         ) : (
+
+          // <>
+          // {singleQuestion?.question[QuesID]?.options?.map(
+          //         (option, index) => {
+          //           if (!("isHidden" in option) || option.isHidden === false) {
+          //             return (
+          //               <div className="selectWrapper">
+          //                 <li className="flex flex-row items-center">
+          //                   {option.check === true ? (
+          //                     <img
+          //                       src={check}
+          //                       className={"checkImg"}
+          //                       onClick={() => handleCheck(index)}
+          //                     />
+          //                   ) : (
+          //                     <img
+          //                       src={uncheck}
+          //                       className={"checkImg"}
+          //                       onClick={() => handleCheck(index)}
+          //                     />
+          //                   )}
+
+          //                   {option.value}
+          //                 </li>
+          //               </div>
+          //             );
+          //           }
+          //         }
+          //       )}
+          // </>
+
           <div class="selectWrapper">
             <div class="group relative">
               <button
