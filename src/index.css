@@ -26,6 +26,19 @@ body {
     font-family: rubikFont;
 }
 
+.loader {
+    background: url(../src/assets/loader.gif);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    position : fixed;
+    z-index: 9999;
+    top : 0;
+    left : 0;
+    height : 100%;
+    width : 100%;
+    cursor : wait;
+}
+
 .logoImage {
     padding: 21px 19px;
 }
