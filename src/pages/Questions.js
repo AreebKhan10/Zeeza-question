@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import SingleQuestion from "./SingleQuestion";
 import axios from "axios";
 import menu from "../assets/menu.png";
+import Loading from "../components/Loading";
 import { useGlobalContext } from '../context'
 
 
@@ -28,7 +29,7 @@ export default function Questions() {
   
 // console.log(filteredJSON)
 
-var { filteredJSON} = useGlobalContext()
+var { filteredJSON, setFilteredJSON} = useGlobalContext()
 
 
   let initialData = [
@@ -205,7 +206,9 @@ var { filteredJSON} = useGlobalContext()
           description: "Single select, minimum 1",
           question:
             "Why do you incorporate these interests into your sessions?",
-          select: "single",
+            select: "Multi",
+            min:1,
+            max:1,
           answered: false,
           options: [
             {
@@ -246,7 +249,9 @@ var { filteredJSON} = useGlobalContext()
           subTitle: "Decoding Rate",
           description: "Single select, minimum 1",
           question: "How would you rate [name] performance in decoding?",
-          select: "single",
+          select: "Multi",
+          min:1,
+          max:1,
           answered: false,
           options: [
             {
@@ -289,7 +294,9 @@ var { filteredJSON} = useGlobalContext()
           subTitle: "Grade Level",
           description: "Single select, minimum 1",
           question: "Choose your grade level from the following",
-          select: "single",
+          select: "Multi",
+          min:1,
+          max:1,
           answered: false,
           options: [
             {
@@ -533,7 +540,9 @@ var { filteredJSON} = useGlobalContext()
           subTitle: "Descriptive Rating Chart",
           description: "Single select, minimum 1",
           question: "How would you rate [name] progress in decoding?",
-          select: "single",
+          select: "Multi",
+          min:1,
+          max:1,
           answered: false,
           options: [
             { id: 1, text: "Very little", value: "1", check: false },
@@ -1003,7 +1012,9 @@ var { filteredJSON} = useGlobalContext()
           description: "Single select, minimum 1",
           question:
             "How would you describe your student's deficits in reading comprehension?",
-          select: "single",
+            select: "Multi",
+            min:1,
+            max:1,
           answered: false,
           options: [
             {
@@ -1029,7 +1040,9 @@ var { filteredJSON} = useGlobalContext()
           description: "Single select, minimum 1",
           question:
             "How would you describe your student’s range of difficulties in this domain?",
-          select: "single",
+            select: "Multi",
+            min:1,
+            max:1,
           answered: false,
           options: [
             {
@@ -1055,7 +1068,9 @@ var { filteredJSON} = useGlobalContext()
           description: "Single select, minimum 1",
           question:
             "What is your student’s approximate grade level in reading comprehension performance?",
-          select: "single",
+            select: "Multi",
+            min:1,
+            max:1,
           answered: false,
           options: [
             {
@@ -1186,7 +1201,9 @@ var { filteredJSON} = useGlobalContext()
           description: "Single select, minimum 1",
           question:
             "Describe your student’s progress in reading comprehension:",
-          select: "single",
+            select: "Multi",
+            min:1,
+            max:1,
           answered: false,
           options: [
             {
@@ -1719,7 +1736,9 @@ var { filteredJSON} = useGlobalContext()
           subTitle: "math skills",
           description: "Single select, minimum 1",
           question: "How would you rate 1's math skills?",
-          select: "single",
+          select: "Multi",
+          min:1,
+          max:1,
           answered: false,
           options: [
             {
@@ -1749,7 +1768,9 @@ var { filteredJSON} = useGlobalContext()
           subTitle: "grade",
           description: "Single select, minimum 1",
           question: "Select the grade level from the following",
-          select: "single",
+          select: "Multi",
+          min:1,
+          max:1,
           answered: false,
           options: [
             {
@@ -1822,7 +1843,9 @@ var { filteredJSON} = useGlobalContext()
           subTitle: "intervention",
           description: "Single select, minimum 1",
           question: "Which type of aids do you use during intervention?",
-          select: "single",
+          select: "Multi",
+          min:1,
+          max:1,
           answered: false,
           options: [
             {
@@ -1857,7 +1880,9 @@ var { filteredJSON} = useGlobalContext()
           subTitle: "Progess in math",
           description: "Single select, minimum 1",
           question: "How would you describe your student's progress in math?",
-          select: "single",
+          select: "Multi",
+          min:1,
+          max:1,
           answered: false,
           options: [
             {
@@ -3267,7 +3292,9 @@ var { filteredJSON} = useGlobalContext()
           subTitle: "SLP Services",
           question: "Does [name] receive SLP (Speech therapy) services?",
           description: "Single select, minimum 1",
-          select: "single",
+          select: "Multi",
+          min:1,
+          max:1,
           answered: false,
           options: [
             {
@@ -3293,7 +3320,9 @@ var { filteredJSON} = useGlobalContext()
           question:
             "Do you think your student would benefit from SLP services?",
           description: "Single select, minimum 1",
-          select: "single",
+          select: "Multi",
+          min:1,
+          max:1,
           answered: false,
           options: [
             {
@@ -3313,7 +3342,9 @@ var { filteredJSON} = useGlobalContext()
           subTitle: "Benefit SLP Services",
           question:
             "How many times a week does your student receive SLP services? ",
-          select: "single",
+            select: "Multi",
+            min:1,
+            max:1,
           description: "Single select, minimum 1",
           answered: false,
           options: [
@@ -3668,7 +3699,9 @@ var { filteredJSON} = useGlobalContext()
           subTitle: "social-emotional skills",
           question:
             "How would you rate your student's delays in social-emotional skills?",
-          select: "single",
+            select: "Multi",
+            min:1,
+            max:1,
           description: "Single select, minimum 1",
           answered: false,
           options: [
@@ -3891,7 +3924,9 @@ var { filteredJSON} = useGlobalContext()
           subTitle: "Benefit SLP Services",
           question:
             "How would you describe your student's range of struggles overall ",
-          select: "single",
+            select: "Multi",
+            min:1,
+            max:1,
           answered: false,
           options: [
             {
@@ -4529,9 +4564,7 @@ var { filteredJSON} = useGlobalContext()
   }
 
   const setQuestions = (response) =>{
-    console.log(response, "<----responseresponse")
-    filteredJSON = response.questions;
-    console.log(filteredJSON, "++++++")
+    setFilteredJSON(response.questions)
     let Responsedata = response.questions
     var lastitem = Responsedata[Responsedata.length - 1]
     let parent_id  = initialData.findIndex(x => x.title.toLowerCase() === lastitem.groupName.toLowerCase());
@@ -4540,27 +4573,27 @@ var { filteredJSON} = useGlobalContext()
 
       for (const questionObj of Responsedata) {
         let parent  = initialData.findIndex(x => x.title.toLowerCase() === questionObj.groupName.toLowerCase());
-        let quesId  = questionObj.questionId;
+        let quesId  = questionObj.externalId;
 
         
-        if(initialData[parent].questions[questionObj.questionId].select !== 'Accordian'){
+        if(initialData[parent].questions[quesId].select !== 'Accordian'){
           for (const answer of questionObj.answeres) {
-            initialData[parent].questions[questionObj.questionId].options.forEach((val,ind)=> {
-              initialData[parent].questions[questionObj.questionId].options[ind].value =  val.value.replace('[name]', response.FirstName+"'s");
+            initialData[parent].questions[quesId].options.forEach((val,ind)=> {
+              initialData[parent].questions[quesId].options[ind].value =  val.value.replace('[name]', response.FirstName+"'s");
             } );
-            let findOptionIndex = initialData[parent].questions[questionObj.questionId].options.findIndex(x => x.value.toLowerCase() === answer.toLowerCase());
-            initialData[parent].questions[questionObj.questionId].answered = true;
-            initialData[parent].questions[questionObj.questionId].options[findOptionIndex].check = true;
+            let findOptionIndex = initialData[parent].questions[quesId].options.findIndex(x => x.value.toLowerCase() === answer.toLowerCase());
+            initialData[parent].questions[quesId].answered = true;
+            initialData[parent].questions[quesId].options[findOptionIndex].check = true;
           }
         }else{
           for (const answer of questionObj.answeres) {
-            let parent_index = initialData[parent].questions[questionObj.questionId].goalQues.findIndex(x => x.value.toLowerCase() == answer.value.toLowerCase() );
-            initialData[parent].questions[questionObj.questionId].answered = true;
-            initialData[parent].questions[questionObj.questionId].goalQues[parent_index].check = true;
+            let parent_index = initialData[parent].questions[quesId].goalQues.findIndex(x => x.value.toLowerCase() == answer.value.toLowerCase() );
+            initialData[parent].questions[quesId].answered = true;
+            initialData[parent].questions[quesId].goalQues[parent_index].check = true;
 
             for ( const subAnswer of answer.subAnswers ){
-              let child_index = initialData[parent].questions[questionObj.questionId].goalQues[parent_index].text.findIndex(x => x.text.toLowerCase() == subAnswer.toLowerCase() );
-              initialData[parent].questions[questionObj.questionId].goalQues[parent_index].text[child_index].check = true;
+              let child_index = initialData[parent].questions[quesId].goalQues[parent_index].text.findIndex(x => x.text.toLowerCase() == subAnswer.toLowerCase() );
+              initialData[parent].questions[quesId].goalQues[parent_index].text[child_index].check = true;
             }
 
           }
@@ -4586,11 +4619,11 @@ var { filteredJSON} = useGlobalContext()
       .get(url)
       .then((res) => {
         setStuDetails(res.data);
-
+        
         console.log(res.data, "<---- res.data")
         if(res.data.questions.length){
           setQuestions(res.data);
-
+          // setFilteredJSON(res.data.questions)
         }else{
           setData(initialData);
         }
@@ -4638,7 +4671,7 @@ var { filteredJSON} = useGlobalContext()
     //setID(index);
   };
 
-  if (FormReady) {
+  if (FormReady  ) {
     return (
       <>
         <div className="flex flex-row studentContent">
@@ -4750,7 +4783,9 @@ var { filteredJSON} = useGlobalContext()
       </>
     );
   } else {
-    return <></>;
+    return <>
+    <Loading />
+    </>;
   }
 }
 

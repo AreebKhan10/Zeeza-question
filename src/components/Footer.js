@@ -1026,7 +1026,8 @@ useEffect(()=>{
       const getGroupObjFromParent = Data.find(x => x.title.toLowerCase() === groupName.toLowerCase());
       const getCompletedQuestionFromGroup = getGroupObjFromParent.questions[questionId];
       
-      filteredJSONQuestionObj.questionId = QuesID;
+      filteredJSONQuestionObj.questionId = getCompletedQuestionFromGroup.questionID;
+      filteredJSONQuestionObj.externalId = QuesID;
       filteredJSONQuestionObj.groupID = groupId;
       filteredJSONQuestionObj.question = getCompletedQuestionFromGroup.question;
       console.log('getCompletedQuestionFromGroup.question.select', getCompletedQuestionFromGroup)
@@ -1121,7 +1122,7 @@ useEffect(()=>{
       filteredJSON.splice(getIdxFromFilteredJSon, 1);
 
       
-      const searchParams = new URLSearchParams(document.location.search)
+    const searchParams = new URLSearchParams(document.location.search)
     console.log('filteredJSON', filteredJSON)
     const updatedData = filteredJSON;
     const body = JSON.stringify({
@@ -1148,16 +1149,14 @@ useEffect(()=>{
 
   axios(config)
   .then(function (response) {
-    console.log(response.data.questions, "<---response.data.questions")
     
   })
   .catch(function (error) {
     console.log(error);
   });
-  PreviousQues(id, QuesID);
-  }
-    
-  };
+}
+PreviousQues(id, QuesID);    
+};
 
   const changeQuestionToGender = (parent, question) => {
     var studentName = stuDetails.FirstName;
@@ -1176,7 +1175,26 @@ useEffect(()=>{
   };
 
   const PreviousQues = (parent, question) => {
+
+
+    if (Data[parent].questions[question].answered) {
+      console.log('aaa')
+      Data[parent].questions[question].answered = false;
+      if(Data[parent].questions[question].select == "Accordian"){
+        Data[parent].questions[question].goalQues = [];
+
+      }else{
+        for (const answer of Data[parent].questions[question].options) {
+          if (answer.check) {
+            answer.check = false;
+          }
+        }
+      }
+      
+    }
+    
     if (question == 0) {
+      console.log('rrr')
       parent = parent - 1;
       question = Data[parent].questions.length - 1;
       // Data[parent].questions.forEach((val, index) => {
@@ -1187,9 +1205,14 @@ useEffect(()=>{
     }
 
     if (Data[parent].questions[question].answered) {
+      console.log('aaa')
+      
+
+
       setID(parent);
       setQuesID(question);
     } else {
+      console.log('bbb')
       PreviousQues(parent, question);
     }
   

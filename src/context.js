@@ -6,6 +6,7 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [stuDetails, setStuDetails] = useState({});
   const [percentage, setPercentage] = useState(0);
+  const [loading, setLoading] = useState(true);
   const [filteredJSON, setFilteredJSON] = useState([]);
   // var filteredJSON = [];
 
@@ -13,7 +14,7 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(document.location.search);
-
+   
     const url = `https://31zctjiomj.execute-api.us-east-1.amazonaws.com/default/enhacereport?StudentID=${searchParams.get(
       "StudentID"
     )}&Token=${searchParams.get("Token")}`;
@@ -21,27 +22,38 @@ const AppProvider = ({ children }) => {
     axios
       .get(url)
       .then((res) => {
+        console.log(res, "<----res.data.questionsres.data.questions")
+        setFilteredJSON(res.data.questions)
         setStuDetails(res.data);
         var total_question = 38;
         var total_answered = 0;
         total_answered += res.data.questions.length;
-        console.log(filteredJSON, "<----filteredJSONCONTEXT");
         const percentages = (total_answered / total_question) * 100;
         setPercentage(percentages);
         console.log(res, "Responce");
-      })
-      .catch((err) => console.log(err));
-  }, []);
+        if(res.data){
 
-  return (
-    <AppContext.Provider
+          setLoading(false)
+        }
+      })
+      .catch((err) => { 
+          console.log(err)
+         setLoading(false)
+        
+        });
+    }, []);
+    
+
+    return (
+      <AppContext.Provider
       value={{
         stuDetails,
         setPercentage,
         percentage,
         setStuDetails,
         filteredJSON,
-        setFilteredJSON
+        setFilteredJSON,
+        loading
       }}
     >
       {children}
