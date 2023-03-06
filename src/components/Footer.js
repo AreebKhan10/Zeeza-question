@@ -26,9 +26,10 @@ export default function Footer({
   // setFilter
 }) {
 
-  var {stuDetails, filteredJSON, setFilteredJSON} = useGlobalContext()
+  var {stuDetails, filteredJSON, setFilteredJSON, setSubmit} = useGlobalContext()
   console.log(filteredJSON, "<---filteredJSONfilteredJSON")
   const [totalQuestions, setTotalQuestions] = useState([]);
+
   const {setPercentage, percentage, setStuDetails} = useGlobalContext();
   const groupNameArray =["Background","Decoding","Reading Comprehension","Math","Speech and Language","Social-emotional","Summary"]
   const uniqueArray = (array) => {
@@ -974,7 +975,7 @@ export default function Footer({
 
 useEffect(()=>{
   // nextQuestion(id, QuesID)
-},[])
+},[percentage])
 
 
   const nextQuestion = (parent, question) => {
@@ -1007,7 +1008,7 @@ useEffect(()=>{
     PostData(parentId,questionId);
     setID(parentId);
     setQuesID(questionId);
-    var total_question = 39;
+    var total_question = 38;
     var total_answered = 0;
     console.log(totalQuestions, "<---totalQuestions")
     total_answered += totalQuestions.length
@@ -1102,6 +1103,8 @@ useEffect(()=>{
     setTotalQuestions(response.data.questions)
       if(id === 6 && QuesID === 0){
         axios(confighook)
+        setSubmit(true)
+
       }
   })
   .catch(function (error) {

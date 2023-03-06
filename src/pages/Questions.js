@@ -38,9 +38,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
       title: "Background",
       questions: [
         {
-          questionID : 0,
+          questionID : 1,
           subTitle: "Areas of Struggle",
-          description: "Multi select, minimum 1 up to 3",
+          description: "Minimum 1 up to 3",
           question: `Which areas does [name] struggle with most?`,
           select: "Multi",
           min: 1,
@@ -107,9 +107,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 1,
+          questionID : 2,
           subTitle: "Functioning Rate",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           question: "Rate [name] level of functioning in these areas",
           select: "Multi",
           min:1,
@@ -139,9 +139,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 2,
+          questionID : 3,
           subTitle: "Academic domains",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           question: "Which academic domains does [name] struggle with?",
           select: "Multi",
           min: 1,
@@ -175,10 +175,10 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 3,
+          questionID : 4,
           subTitle: "Interests",
           question: "What are [name] interests?",
-          description: "Multi select, minimum 1 up to 3",
+          description: "Minimum 1 up to 3",
           select: "Multi",
           min: 1,
           max: 3,
@@ -201,9 +201,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 4,
+          questionID : 5,
           subTitle: "Incorporate Interests",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           question:
             "Why do you incorporate these interests into your sessions?",
             select: "Multi",
@@ -245,9 +245,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
       title: "Decoding",
       questions: [
         {
-          questionID : 5,
+          questionID : 6,
           subTitle: "Decoding Rate",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           question: "How would you rate [name] performance in decoding?",
           select: "Multi",
           min:1,
@@ -268,11 +268,13 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 6,
+          questionID : 7,
           subTitle: "Decoding Areas",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           question: "How many areas of decoding does [name] struggle with?",
-          select: "single",
+          select: "Multi",
+          min:1,
+          max:1,
           answered: false,
           options: [
             {
@@ -290,9 +292,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 7,
+          questionID : 8,
           subTitle: "Grade Level",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           question: "Choose your grade level from the following",
           select: "Multi",
           min:1,
@@ -498,8 +500,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         // {
+          // questionID : 8,
         //   subTitle: "Instruction Type",
-        //   description: "Single select, minimum 1",
+        //   description: "Minimum 1",
         //   question: "What type of instruction do you utilize during sessions?",
         //   select: "single",
         //   answered: false,
@@ -515,9 +518,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
         //   ],
         // },
         {
-          questionID : 8,
+          questionID : 9,
           subTitle: "Reading Methodology",
-          description: "Multi select, minimum 1 up to 3",
+          description: "Minimum 1 up to 3",
           question:
             "Which types of methodology do you use during reading instruction?",
           select: "Multi",
@@ -536,9 +539,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 9,
+          questionID : 10,
           subTitle: "Descriptive Rating Chart",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           question: "How would you rate [name] progress in decoding?",
           select: "Multi",
           min:1,
@@ -553,7 +556,7 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 10,
+          questionID : 11,
           subTitle: "Decoding Goals for Year",
           description:
             "Select up to 2 smart goals, and up to 3 goals for each smart goal",
@@ -732,9 +735,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 11,
+          questionID : 12,
           subTitle: "Struggling Details",
-          description: "Multi select, minimum 3 up to 5",
+          description: "Minimum 3 up to 5",
           question:
             "Which areas in decoding does your student still struggle with?",
           select: "Accordian",
@@ -1007,9 +1010,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
       title: "Reading Comprehension",
       questions: [
         {
-          questionID : 12,
+          questionID : 13,
           subTitle: "student's deficits",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           question:
             "How would you describe your student's deficits in reading comprehension?",
             select: "Multi",
@@ -1035,9 +1038,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 13,
+          questionID : 14,
           subTitle: "student's range",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           question:
             "How would you describe your student’s range of difficulties in this domain?",
             select: "Multi",
@@ -1063,9 +1066,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 14,
+          questionID : 15,
           subTitle: "student's grade level",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           question:
             "What is your student’s approximate grade level in reading comprehension performance?",
             select: "Multi",
@@ -1139,9 +1142,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 15,
+          questionID : 16,
           subTitle: "techniques",
-          description: "Multi select, minimum 2 up to 3",
+          description: "Minimum 2 up to 3",
           question: "Which techniques do you use during your sessions?",
           select: "Multi",
           answered: false,
@@ -1196,9 +1199,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 16,
+          questionID : 17,
           subTitle: "student’s progress",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           question:
             "Describe your student’s progress in reading comprehension:",
             select: "Multi",
@@ -1229,7 +1232,7 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 17,
+          questionID : 18,
           subTitle: "Reading Comprehension goals",
           description:
             "Select up to 3 smart goals, and up to 3 goals for each smart goal",
@@ -1477,7 +1480,7 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 18,
+          questionID : 19,
           subTitle: "student still struggle with?",
           description:
             "Select up to 3 smart goals, and up to 3 goals for each smart goal",
@@ -1732,9 +1735,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
       title: "Math",
       questions: [
         {
-          questionID : 19,
+          questionID : 20,
           subTitle: "math skills",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           question: "How would you rate 1's math skills?",
           select: "Multi",
           min:1,
@@ -1764,9 +1767,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 20,
+          questionID : 21,
           subTitle: "grade",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           question: "Select the grade level from the following",
           select: "Multi",
           min:1,
@@ -1839,9 +1842,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 21,
+          questionID : 22,
           subTitle: "intervention",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           question: "Which type of aids do you use during intervention?",
           select: "Multi",
           min:1,
@@ -1876,9 +1879,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 22,
+          questionID : 23,
           subTitle: "Progess in math",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           question: "How would you describe your student's progress in math?",
           select: "Multi",
           min:1,
@@ -1908,7 +1911,7 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 23,
+          questionID : 24,
           subTitle: "Comprehension goals",
           description:
             "Select up to 3 smart goals and minimum one goals per smart goal, up to 6 goals total",
@@ -2580,7 +2583,7 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 24,
+          questionID : 25,
           subTitle: "struggle with",
           description:
             "Select up to 3 smart goals and minimum one goals per smart goal, up to 6 goals total",
@@ -3288,10 +3291,10 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
       title: "Speech and Language",
       questions: [
         {
-          questionID : 25,
+          questionID : 26,
           subTitle: "SLP Services",
           question: "Does [name] receive SLP (Speech therapy) services?",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           select: "Multi",
           min:1,
           max:1,
@@ -3315,11 +3318,11 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 26,
+          questionID : 27,
           subTitle: "Benefit SLP Services",
           question:
             "Do you think your student would benefit from SLP services?",
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           select: "Multi",
           min:1,
           max:1,
@@ -3338,14 +3341,14 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 27,
+          questionID : 28,
           subTitle: "Benefit SLP Services",
           question:
             "How many times a week does your student receive SLP services? ",
             select: "Multi",
             min:1,
             max:1,
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           answered: false,
           options: [
             {
@@ -3376,11 +3379,11 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 28,
+          questionID : 29,
           subTitle: "student able",
           question: "Which of these is your student able to do?",
           select: "Multi",
-          description: "Multi select, up to 2",
+          description: "Select Up to 2",
           answered: false,
           min: 1,
           max: 2,
@@ -3472,11 +3475,11 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 29,
+          questionID : 30,
           subTitle: "student struggle",
           question: "Which of these does your student struggle with?",
           select: "Multi",
-          description: "Multi select, minimum 2 to many",
+          description: "Minimum 2 to many",
           answered: false,
           min: 2,
           max: 14,
@@ -3568,11 +3571,11 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 30,
+          questionID : 31,
           subTitle: "student’s strength",
           question: "Which of these is your student’s strength?",
           select: "Multi",
-          description: "Multi select, up to 3",
+          description: "Select, up to 3",
           answered: false,
           min: 1,
           max: 3,
@@ -3610,11 +3613,11 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 31,
+          questionID : 32,
           subTitle: "student’s weakness",
           question: "Which of these is your student's weakness? ",
           select: "Multi",
-          description: "Multi select, up to 3",
+          description: "Select, up to 3",
           answered: false,
           min: 1,
           max: 3,
@@ -3658,12 +3661,12 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
       title: "Social-emotional",
       questions: [
         {
-          questionID : 32,
+          questionID : 33,
           subTitle: "display a delay ",
           question:
             "Does your student display a delay in any of the following areas? If yes, please specify:",
           select: "Multi",
-          description: "Multi select, up to 3",
+          description: "Select, up to 3",
           min: 1,
           max: 3,
           answered: false,
@@ -3695,14 +3698,14 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 33,
+          questionID : 34,
           subTitle: "social-emotional skills",
           question:
             "How would you rate your student's delays in social-emotional skills?",
             select: "Multi",
             min:1,
             max:1,
-          description: "Single select, minimum 1",
+          description: "Minimum 1",
           answered: false,
           options: [
             {
@@ -3723,7 +3726,7 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 34,
+          questionID : 35,
           subTitle: "area of concern",
           question: "Rate your student's progress in each area of concern:",
           select: "Accordian",
@@ -3762,7 +3765,7 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 35,
+          questionID : 36,
           subTitle: "struggle with",
           description: "Single select from each group",
           question: "",
@@ -3801,9 +3804,9 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
           ],
         },
         {
-          questionID : 36,
+          questionID : 37,
           subTitle: "Reading Comprehension struggle with",
-          description: "Multi select, minimum 2 ",
+          description: "Minimum 2 ",
           question: "",
           select: "Accordian",
           dependQuestion: 0,
@@ -3920,7 +3923,7 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
       title: "Summary",
       questions: [
         {
-          questionID : 37,
+          questionID : 38,
           subTitle: "Benefit SLP Services",
           question:
             "How would you describe your student's range of struggles overall ",
@@ -3955,7 +3958,10 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
     },
   ];
 
-
+  const QUESTIONS = []
+  var quest =[]
+  initialData.map( item =>{ item.questions.map(it=>{QUESTIONS.push(it.question)})})
+  const val2 = initialData.map(qu => qu.questions)
   const [Data, setData] = useState(initialData);
   const [FormReady, setFormReady] = useState(true);
 
@@ -4568,8 +4574,16 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
     let Responsedata = response.questions
     var lastitem = Responsedata[Responsedata.length - 1]
     let parent_id  = initialData.findIndex(x => x.title.toLowerCase() === lastitem.groupName.toLowerCase());
-      setID(parent_id );
-      setQuesID(lastitem?.questionId   );
+      
+      let max_parent_length = initialData[parent_id].questions.length;
+      if(max_parent_length - 1 == lastitem?.externalId ){
+        setID(parent_id + 1 );
+        setQuesID(0);
+      }else{
+        setID(parent_id  );
+        setQuesID(lastitem?.externalId + 1);
+      }
+      
 
       for (const questionObj of Responsedata) {
         let parent  = initialData.findIndex(x => x.title.toLowerCase() === questionObj.groupName.toLowerCase());
@@ -4688,7 +4702,7 @@ var { filteredJSON, setFilteredJSON} = useGlobalContext()
                 </a>
               </div>
               <div className="menuText" id="MenuQuestion">
-                <p>57 questions</p>
+                <p>{`${QUESTIONS.length + 1} questions` }</p>
               </div>
             </div>
             <ul className="list-none navTop" id="menuItems">

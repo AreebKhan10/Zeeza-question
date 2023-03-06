@@ -23,7 +23,7 @@ console.log(percentage, "<---percentage")
       <img src={logo} className='w-100'></img>
     </div>
     <div  className='flex flex-row justify-between bg-[#EFEEF5] acdemicReport'>
-      <h3 className='text-[#1C3E57] font-medium text-xl'>Acadmic Report</h3> 
+      <h3 className='text-[#1C3E57] font-medium text-xl'>Acadmic Student Report</h3> 
       <div className="bg-[#EFEEF5] p-2 percentageRatio">
           <p className="text-[#47529B] text-md">{percentage ? Math.floor(percentage) : 0}% Complete</p>
 

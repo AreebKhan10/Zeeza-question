@@ -8,6 +8,7 @@ const AppProvider = ({ children }) => {
   const [percentage, setPercentage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [filteredJSON, setFilteredJSON] = useState([]);
+  const [submit,setSubmit] = useState(false);
   // var filteredJSON = [];
 
 
@@ -53,7 +54,9 @@ const AppProvider = ({ children }) => {
         setStuDetails,
         filteredJSON,
         setFilteredJSON,
-        loading
+        loading,
+        submit,
+        setSubmit
       }}
     >
       {children}

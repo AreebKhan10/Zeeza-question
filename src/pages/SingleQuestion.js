@@ -21,7 +21,7 @@ export default function SingleQuestion({
   stuDetails,
 }) {
   const [status, setStatus] = useState(false);
-  console.log(Data, "<----Data")
+  console.log(Data[ID]?.questions[QuesID], "<----Data")
   const Option = singleQuestion?.question[QuesID]?.options?.map(
     (option) => option?.value
   );
