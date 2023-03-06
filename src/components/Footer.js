@@ -30,7 +30,7 @@ export default function Footer({
   console.log(filteredJSON, "<---filteredJSONfilteredJSON")
   const [totalQuestions, setTotalQuestions] = useState([]);
 
-  const {setPercentage, percentage, setStuDetails} = useGlobalContext();
+  const {setPercentage, percentage, setStuDetails, setDisable} = useGlobalContext();
   const groupNameArray =["Background","Decoding","Reading Comprehension","Math","Speech and Language","Social-emotional","Summary"]
   const uniqueArray = (array) => {
     var a = array.concat();

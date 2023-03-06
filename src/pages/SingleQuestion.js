@@ -4,6 +4,7 @@ import uncheck from "../assets/uncheck.png";
 import axios from "axios";
 import AccordianComponent from "../components/Accordian";
 import menu from "../assets/menu.png";
+import { useGlobalContext } from '../context'
 
 export default function SingleQuestion({
   setgoalLevel,
@@ -21,6 +22,8 @@ export default function SingleQuestion({
   stuDetails,
 }) {
   const [status, setStatus] = useState(false);
+  const {disable, setDisable} = useGlobalContext();
+
   console.log(Data[ID]?.questions[QuesID], "<----Data")
   const Option = singleQuestion?.question[QuesID]?.options?.map(
     (option) => option?.value
@@ -61,6 +64,7 @@ export default function SingleQuestion({
           };
           setData(Data);
         } else {
+          setDisable(true)
           alert(`Only ${Data[ID].questions[QuesID].max} Allowed`);
         }
       }
@@ -584,7 +588,7 @@ export default function SingleQuestion({
         </p>
       </div>
       <div className="studentContentBottom">
-        <p className="text-xl text-[#002B48]">{value[QuesID]?.replace("[name]", `${stuDetails.FirstName}'s`)}</p>
+        <p className="text-xl text-[#002B48]">{value[QuesID]?.replace("[name]", `${stuDetails.FirstName}`)}</p>
         <p className="text-blue-800">
           {Data[ID].questions[QuesID].description}
         </p>
@@ -628,7 +632,7 @@ export default function SingleQuestion({
                     (option, index) => {
                       if (!("isHidden" in option) || option.isHidden === false) {
                         return (
-                          <div className="selectWrapper">
+                          <div className={disable ? "selecDisabledtWrapper" : "selectWrapper"}>
                             <li className="flex flex-row items-center">
                               {option.check === true ? (
                                 <img

@@ -9,6 +9,7 @@ const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [filteredJSON, setFilteredJSON] = useState([]);
   const [submit,setSubmit] = useState(false);
+  const [disable, setDisable] = useState(false)
   // var filteredJSON = [];
 
 
@@ -56,7 +57,9 @@ const AppProvider = ({ children }) => {
         setFilteredJSON,
         loading,
         submit,
-        setSubmit
+        setSubmit,
+        disable, 
+        setDisable
       }}
     >
       {children}
