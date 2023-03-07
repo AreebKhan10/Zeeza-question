@@ -22,7 +22,7 @@ export default function SingleQuestion({
   stuDetails,
 }) {
   const [status, setStatus] = useState(false);
-  const {disable, setDisable} = useGlobalContext();
+  const {disable, setDisable, setUpdate} = useGlobalContext();
 
   console.log(Data[ID]?.questions[QuesID], "<----Data")
   const Option = singleQuestion?.question[QuesID]?.options?.map(
@@ -44,6 +44,7 @@ export default function SingleQuestion({
   }, [Data, MultiLimit, MultiLimitSub]);
 
   const handleCheck = (index) => {
+    setUpdate(true )
     if (ID == 0 && QuesID == 0) {
       var isChecked = Data[ID].questions[QuesID].options[index].check;
       var allChecked = Data[ID].questions[QuesID].options.filter(

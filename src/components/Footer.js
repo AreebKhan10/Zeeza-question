@@ -26,7 +26,7 @@ export default function Footer({
   // setFilter
 }) {
 
-  var {stuDetails, filteredJSON, setFilteredJSON, setSubmit} = useGlobalContext()
+  var {stuDetails, filteredJSON, setFilteredJSON, setSubmit,  setUpdate} = useGlobalContext()
   console.log(filteredJSON, "<---filteredJSONfilteredJSON")
   const [totalQuestions, setTotalQuestions] = useState([]);
 
@@ -43,13 +43,46 @@ export default function Footer({
     return a;
   };
 
+  const isQuestionUpdate = (id, QuesID) =>{
+    
+    if(Data[id].questions[QuesID].answered === true){
+      let parent  = groupNameArray[id];
+      var oldAnswer = filteredJSON.filter(x => x.groupName == parent && x.externalId == QuesID)    
+      let currentAnswer = [];
+      console.log(filteredJSON, "<---filteredJSON")
+      if(Data[id].questions[QuesID].select == 'Accordian'){
+        const getSelectedGoals = Data[id].questions[QuesID].goalQues.filter(x => x.check === true);
+        for (const goal of getSelectedGoals) {
+          const tempObj = {};
+          tempObj.value = goal.value;
+          tempObj.subAnswers = goal.text.filter(x => x.check === true).map(x => x.text);
+          currentAnswer.push(tempObj);
+          goal.text = goal.text.filter(x => x.check === true);
+        }
+        
+      }else{
+        currentAnswer = Data[id].questions[QuesID].options.filter(x => x.check === true).map(x => x.value);
+      }
+
+      console.log(JSON.stringify(oldAnswer) , JSON.stringify(currentAnswer) , "<---oldAnswer === currentAnswer")
+      if(JSON.stringify(oldAnswer[0].answeres) == JSON.stringify(currentAnswer)){
+        return true 
+      }else{
+        return false
+      }
+    }else{
+      return false;
+    }
+
+
+  }
  
 
   
   const handleNext = () => {
      
-   
     const grade = stuDetails.Grade;
+    const checkUpdate =  isQuestionUpdate(id,QuesID);
     if (id == 0 && QuesID == 0) {
       var allChecked = Data[id].questions[QuesID].options.filter(
         (x) => x.check === true
@@ -57,22 +90,26 @@ export default function Footer({
       if (allChecked.length < Data[id].questions[QuesID].min) {
         alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
-        var toShowOptions = [];
-        Data[id].questions[QuesID].options.forEach((value, index) => {
-          if (value.check === true) {
-            toShowOptions = toShowOptions.concat(value.show);
-          }
-        });
 
-        Data[id].questions[QuesID + 2].options.forEach((value, index) => {
-          Data[id].questions[QuesID + 2].options[index].check = false;
-          if (toShowOptions.includes(index)) {
-            Data[id].questions[QuesID + 2].options[index].isHidden = false;
-          } else {
-            Data[id].questions[QuesID + 2].options[index].isHidden = true;
-          }
-          setData(Data);
-        });
+       if(checkUpdate === false){
+         var toShowOptions = [];
+         Data[id].questions[QuesID].options.forEach((value, index) => {
+           if (value.check === true) {
+             toShowOptions = toShowOptions.concat(value.show);
+           }
+         });
+  
+         Data[id].questions[QuesID + 2].options.forEach((value, index) => {
+           Data[id].questions[QuesID + 2].options[index].check = false;
+           if (toShowOptions.includes(index)) {
+             Data[id].questions[QuesID + 2].options[index].isHidden = false;
+           } else {
+             Data[id].questions[QuesID + 2].options[index].isHidden = true;
+           }
+           setData(Data);
+         });
+       }
+
 
         nextQuestion(id, QuesID);
       }
@@ -137,6 +174,7 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
+        if(checkUpdate === false){
         Data[id].questions[QuesID + 1].options.forEach((value, index) => {
           if (Data[id].questions[QuesID + 1].options[index].level <= grade) {
             Data[id].questions[QuesID + 1].options[index].isHidden = false;
@@ -146,6 +184,7 @@ export default function Footer({
             setData(Data);
           }
         });
+      }
         nextQuestion(id, QuesID);
       }
     }
@@ -176,6 +215,7 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
+        if(checkUpdate === false){
         var option = [];
         var dependentLevel = Data[id].questions[
           Data[id].questions[QuesID + 1].dependQuestion
@@ -221,7 +261,7 @@ export default function Footer({
         setData(Data);
 
         console.log( "---------updated data");
-      
+        }
         nextQuestion(id, QuesID);
        
       }
@@ -233,6 +273,7 @@ export default function Footer({
       if (allCheckded.length < 1) {
         alert("minimum 1 Selection is Required");
       } else {
+        if(checkUpdate === false){
         var allAnsers = [];
         allCheckded.forEach((value, index) => {
           value.text.forEach((texval, point) => {
@@ -296,6 +337,7 @@ export default function Footer({
         Data[id].questions[QuesID + 1].goalQues = option;
         setData(Data);
         console.log(Data, "this is the data");
+      }
         nextQuestion(id, QuesID);
       }
     }
@@ -333,6 +375,7 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
+        if(checkUpdate === false){
         Data[id].questions[QuesID + 1].options.forEach((value, index) => {
           if (Data[id].questions[QuesID + 1].options[index].level <= grade) {
             Data[id].questions[QuesID + 1].options[index].isHidden = false;
@@ -342,6 +385,7 @@ export default function Footer({
             setData(Data);
           }
         });
+      }
         nextQuestion(id, QuesID);
       }
     }
@@ -372,6 +416,7 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
+        if(checkUpdate === false){
         var option = [];
         var dependentLevel = Data[id].questions[
           Data[id].questions[QuesID + 1].dependQuestion
@@ -417,7 +462,7 @@ export default function Footer({
         setData(Data);
 
         console.log(Data[id].questions[QuesID + 1], "---------updated data");
-
+      }
         nextQuestion(id, QuesID);
       }
     }
@@ -428,6 +473,7 @@ export default function Footer({
       if (allCheckded < 1) {
         alert("Required");
       } else {
+        if(checkUpdate === false){
         var allAnsers = [];
         allCheckded.forEach((value, index) => {
           value.text.forEach((texval, point) => {
@@ -484,6 +530,7 @@ export default function Footer({
         });
         Data[id].questions[QuesID + 1].goalQues = option;
         setData(Data);
+      }
         nextQuestion(id, QuesID);
       }
     }
@@ -505,6 +552,7 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
+        if(checkUpdate === false){
         Data[id].questions[QuesID + 1].options.forEach((value, index) => {
           if (Data[id].questions[QuesID + 1].options[index].level <= grade) {
             Data[id].questions[QuesID + 1].options[index].isHidden = false;
@@ -514,6 +562,7 @@ export default function Footer({
             setData(Data);
           }
         });
+      }
         nextQuestion(id, QuesID);
       }
     }
@@ -544,6 +593,7 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
+        if(checkUpdate === false){
         var option = [];
         var dependentLevel = Data[id].questions[
           Data[id].questions[QuesID + 1].dependQuestion
@@ -589,7 +639,7 @@ export default function Footer({
         setData(Data);
 
         console.log(Data[id].questions[QuesID + 1], "---------updated data");
-
+      }
         nextQuestion(id, QuesID);
       }
     }
@@ -600,6 +650,7 @@ export default function Footer({
       if (allCheckded < 1) {
         alert("Required");
       } else {
+        if(checkUpdate === false){
         var allAnsers = [];
         allCheckded.forEach((value, index) => {
           value.text.forEach((texval, point) => {
@@ -673,6 +724,7 @@ export default function Footer({
 
         Data[id].questions[QuesID + 1].goalQues = option;
         setData(Data);
+      }
         nextQuestion(id, QuesID);
       }
     }
@@ -732,6 +784,7 @@ export default function Footer({
       if (allChecked.length < Data[id].questions[QuesID].min) {
         alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
+        if(checkUpdate === false){
         var toHideOptions = [];
         allChecked.forEach((value, index) => {
           toHideOptions = toHideOptions.concat(value.doHide);
@@ -745,6 +798,7 @@ export default function Footer({
           }
           setData(Data);
         });
+      }
         nextQuestion(id, QuesID);
       }
     }
@@ -765,6 +819,7 @@ export default function Footer({
       if (allChecked.length < Data[id].questions[QuesID].min) {
         alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
+        if(checkUpdate === false){
         var toHideOptions = [];
         allChecked.forEach((value, index) => {
           toHideOptions = toHideOptions.concat(value.doHide);
@@ -778,7 +833,7 @@ export default function Footer({
           }
           setData(Data);
         });
-
+      }
         nextQuestion(id, QuesID);
       }
     }
@@ -799,6 +854,7 @@ export default function Footer({
       if (allChecked.length < Data[id].questions[QuesID].min) {
         alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
+        
         if (allChecked.length == 1 && allChecked[0].value == "none") {
           console.log(Data[id].questions[4], "<----answered")
           nextQuestion(id, Data[id].questions.length - 1);
@@ -819,6 +875,7 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
+        if(checkUpdate === false){
         var option = [];
         var checkedLevel = Data[id].questions[
           Data[id].questions[QuesID + 1].dependQuestion
@@ -848,6 +905,7 @@ export default function Footer({
 
         Data[id].questions[QuesID + 1].goalQues = option;
         setData(Data);
+      }
         nextQuestion(id, QuesID);
       }
     }
@@ -858,6 +916,7 @@ export default function Footer({
       if (allCheckded.length < Data[id].questions[QuesID].goalQues.length) {
         alert("Required");
       } else {
+        if(checkUpdate === false){
         var option = [];
         var checkedLevel = Data[id].questions[
           Data[id].questions[QuesID + 1].dependQuestion
@@ -887,6 +946,7 @@ export default function Footer({
 
         Data[id].questions[QuesID + 1].goalQues = option;
         setData(Data);
+      }
         nextQuestion(id, QuesID);
       }
     }
@@ -897,6 +957,7 @@ export default function Footer({
       if (allCheckded.length < Data[id].questions[QuesID].goalQues.length) {
         alert("Required");
       } else {
+        if(checkUpdate === false){
         var allCheckded = Data[id].questions[QuesID].goalQues.filter(
           (x) => x.check === true
         );
@@ -946,6 +1007,7 @@ export default function Footer({
 
         Data[id].questions[QuesID + 1].goalQues = option;
         setData(Data);
+      }
         nextQuestion(id, QuesID);
       }
     }
@@ -1027,34 +1089,58 @@ useEffect(()=>{
       const getGroupObjFromParent = Data.find(x => x.title.toLowerCase() === groupName.toLowerCase());
       const getCompletedQuestionFromGroup = getGroupObjFromParent.questions[questionId];
       
-      filteredJSONQuestionObj.questionId = getCompletedQuestionFromGroup.questionID;
-      filteredJSONQuestionObj.externalId = QuesID;
-      filteredJSONQuestionObj.groupID = groupId;
-      filteredJSONQuestionObj.question = getCompletedQuestionFromGroup.question;
-      console.log('getCompletedQuestionFromGroup.question.select', getCompletedQuestionFromGroup)
-      if(getCompletedQuestionFromGroup.select === "Accordian") {
-        filteredJSONQuestionObj.question = filteredJSONQuestionObj.question.replace('[name]', stuDetails.FirstName);
-        const getSelectedGoals = getCompletedQuestionFromGroup.goalQues.filter(x => x.check === true);
-        filteredJSONQuestionObj.answeres = [];
-        for (const goal of getSelectedGoals) {
-          const tempObj = {};
-          tempObj.value = goal.value;
-          tempObj.subAnswers = goal.text.filter(x => x.check === true).map(x => x.text);
-          filteredJSONQuestionObj.answeres.push(tempObj);
-          goal.text = goal.text.filter(x => x.check === true);
+      const is_exist = filteredJSON.filter(x => x.groupName == groupName && x.externalId == questionId);
+
+      if(is_exist.length > 0  ){
+        const index = filteredJSON.findIndex(x => x.groupName == groupName && x.externalId == questionId);
+        if(getCompletedQuestionFromGroup.select === "Accordian") {
+          const getSelectedGoals = getCompletedQuestionFromGroup.goalQues.filter(x => x.check === true);
+          filteredJSON[index].answeres = [];
+          for (const goal of getSelectedGoals) {
+            const tempObj = {};
+            tempObj.value = goal.value;
+            tempObj.subAnswers = goal.text.filter(x => x.check === true).map(x => x.text);
+            filteredJSON[index].answeres.push(tempObj);
+            goal.text = goal.text.filter(x => x.check === true);
+          }
+        }else{
+          filteredJSON[index].answeres = getCompletedQuestionFromGroup.options.filter(x => x.check === true).map(x => x.value);
+     
         }
-        console.log('filteredJSONQuestionObj', filteredJSONQuestionObj)
 
       }else{
-        filteredJSONQuestionObj.answeres = getCompletedQuestionFromGroup.options.filter(x => x.check === true).map(x => x.value);
-        filteredJSONQuestionObj.question = filteredJSONQuestionObj.question.replace('[name]', stuDetails.FirstName)
+        filteredJSONQuestionObj.questionId = getCompletedQuestionFromGroup.questionID;
+        filteredJSONQuestionObj.externalId = QuesID;
+        filteredJSONQuestionObj.groupID = groupId;
+        filteredJSONQuestionObj.question = getCompletedQuestionFromGroup.question;
+        console.log('getCompletedQuestionFromGroup.question.select', getCompletedQuestionFromGroup)
+       
+        if(getCompletedQuestionFromGroup.select === "Accordian") {
+          filteredJSONQuestionObj.question = filteredJSONQuestionObj.question.replace('[name]', stuDetails.FirstName);
+          const getSelectedGoals = getCompletedQuestionFromGroup.goalQues.filter(x => x.check === true);
+          filteredJSONQuestionObj.answeres = [];
+          for (const goal of getSelectedGoals) {
+            const tempObj = {};
+            tempObj.value = goal.value;
+            tempObj.subAnswers = goal.text.filter(x => x.check === true).map(x => x.text);
+            filteredJSONQuestionObj.answeres.push(tempObj);
+            goal.text = goal.text.filter(x => x.check === true);
+          }
+          console.log('filteredJSONQuestionObj', filteredJSONQuestionObj)
+  
+        }else{
+          filteredJSONQuestionObj.answeres = getCompletedQuestionFromGroup.options.filter(x => x.check === true).map(x => x.value);
+          filteredJSONQuestionObj.question = filteredJSONQuestionObj.question.replace('[name]', stuDetails.FirstName)
+        }
+        console.log('filteredJSONQuestionObj', filteredJSONQuestionObj)
+        // setFilter(filteredJSON.concat(filteredJSONQuestionObj));
+        filteredJSON.push(filteredJSONQuestionObj)
+        setFilteredJSON(filteredJSON);
+  
+        console.log('filteredJSONddd', filteredJSON)
       }
-      console.log('filteredJSONQuestionObj', filteredJSONQuestionObj)
-      // setFilter(filteredJSON.concat(filteredJSONQuestionObj));
-      filteredJSON.push(filteredJSONQuestionObj)
-      setFilteredJSON(filteredJSON);
 
-      console.log('filteredJSONddd', filteredJSON)
+      
 
   }
   
@@ -1119,47 +1205,47 @@ useEffect(()=>{
 
   const handleBack = () => {
     const back = true
-    if (filteredJSON.length) {
-      const groupName = groupNameArray[id];
-      const getIdxFromFilteredJSon = filteredJSON.findIndex(x => x.groupName.toLowerCase() === groupName.toLowerCase() && QuesID === x.questionId);
-      filteredJSON.splice(getIdxFromFilteredJSon, 1);
+    // if (filteredJSON.length) {
+    //   const groupName = groupNameArray[id];
+    //   const getIdxFromFilteredJSon = filteredJSON.findIndex(x => x.groupName.toLowerCase() === groupName.toLowerCase() && QuesID === x.questionId);
+    //   filteredJSON.splice(getIdxFromFilteredJSon, 1);
 
       
-    const searchParams = new URLSearchParams(document.location.search)
-    console.log('filteredJSON', filteredJSON)
-    const updatedData = filteredJSON;
-    const body = JSON.stringify({
-      ...stuDetails,
-      "questions": updatedData
-    });
+    //   const searchParams = new URLSearchParams(document.location.search)
+    //   console.log('filteredJSON', filteredJSON)
+    //   const updatedData = filteredJSON;
+    //   const body = JSON.stringify({
+    //     ...stuDetails,
+    //     "questions": updatedData
+    //   });
 
-  var config = {
-    method: 'POST',
-    maxBodyLength: Infinity,
-    url: `https://31zctjiomj.execute-api.us-east-1.amazonaws.com/default/enhacereport?StudentID=${searchParams.get('StudentID')}&Token=${searchParams.get('Token')}`,
-    headers: { 
-      'Content-Type': 'application/json',
+    //   var config = {
+    //     method: 'POST',
+    //     maxBodyLength: Infinity,
+    //     url: `https://31zctjiomj.execute-api.us-east-1.amazonaws.com/default/enhacereport?StudentID=${searchParams.get('StudentID')}&Token=${searchParams.get('Token')}`,
+    //     headers: { 
+    //       'Content-Type': 'application/json',
 
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, Authorization, Content-Length, X-Requested-With, Accept"
+    //             "Access-Control-Allow-Origin": "*",
+    //             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,OPTIONS",
+    //             "Access-Control-Allow-Headers": "Content-Type, Authorization, Content-Length, X-Requested-With, Accept"
 
-    },
-    withCredentials: false,
-    crossdomain: true,
-    data : body
+    //     },
+    //     withCredentials: false,
+    //     crossdomain: true,
+    //     data : body
+    //   };
+
+    //   axios(config)
+    //   .then(function (response) {
+        
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+    // }
+    PreviousQues(id, QuesID);    
   };
-
-  axios(config)
-  .then(function (response) {
-    
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-}
-PreviousQues(id, QuesID);    
-};
 
   const changeQuestionToGender = (parent, question) => {
     var studentName = stuDetails.FirstName;
@@ -1180,21 +1266,21 @@ PreviousQues(id, QuesID);
   const PreviousQues = (parent, question) => {
 
 
-    if (Data[parent].questions[question].answered) {
-      console.log('aaa')
-      Data[parent].questions[question].answered = false;
-      if(Data[parent].questions[question].select == "Accordian"){
-        Data[parent].questions[question].goalQues = [];
+    // if (Data[parent].questions[question].answered) {
+    //   console.log('aaa')
+    //   Data[parent].questions[question].answered = false;
+    //   if(Data[parent].questions[question].select == "Accordian"){
+    //     Data[parent].questions[question].goalQues = [];
 
-      }else{
-        for (const answer of Data[parent].questions[question].options) {
-          if (answer.check) {
-            answer.check = false;
-          }
-        }
-      }
+    //   }else{
+    //     for (const answer of Data[parent].questions[question].options) {
+    //       if (answer.check) {
+    //         answer.check = false;
+    //       }
+    //     }
+    //   }
       
-    }
+    // }
     
     if (question == 0) {
       console.log('rrr')
