@@ -21,12 +21,12 @@ export default function Questions() {
   const [stuDetails, setStuDetails] = useState({})
   const [responceData, setResponceData] = useState([])
   const [currentSelected, setCurrentSelected] = useState([])
-  const [openDrop, setopenDrop] = useState(0)
   const [singleQuestion, setSingleQuestion] = useState({
     title: "",
     question: [],
     select: "",
   });
+  const [currentNav,setCurrentNav] = useState(0);
   
 // console.log(filteredJSON)
 
@@ -47,6 +47,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           select: "Multi",
           min: 1,
           max: 3,
+          limit: false,
           answered: false,
           options: [
             {
@@ -117,6 +118,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           select: "Multi",
           min:1,
           max:1,
+          limit: false,
           answered: false,
           options: [
             {
@@ -145,7 +147,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           isUpdated: false,
           questionID : 3,
           subTitle: "Academic domains",
-          description: "Maximum 1",
+          description: "Maximum 1 up to 2",
           question: "Which academic domains does [name] struggle with?",
           select: "Multi",
           min: 1,
@@ -4693,13 +4695,13 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
     const Questions = Data.map((question) => question.questions);
     const select = Questions[id].map((selectValue) => selectValue.select);
     setData(Data);
-    setopenDrop(id)
     setSingleQuestion({
       ...singleQuestion,
       title: titles[id],
       question: Questions[id],
       select: select[QuesID],
     });
+    setCurrentNav(id);
 
     //  const gradeUpdate = Data[1].questions[2].options.filter(x => x.level < grade)
     //  Data[1].questions[2].options = gradeUpdate
@@ -4709,7 +4711,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
     
     console.log(i , parent, id, "<----INDEX MENU")
     // setCurrentSelected(currentSelected.push([{ques: i, group: parent }]))
-    if(i <= QuesID && parent === id){
+    if((i <= QuesID && parent == id) || ( parent < id)){
       setQuesID(i);
       setID(parent);
 
@@ -4717,6 +4719,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
       console.log(i , parent, "<----INDEX MENU")
     }
 
+  
 
     // const titles = Data.map((Titles) => Titles.title);
     // const Questions = Data.map((question) => question.questions);
@@ -4730,8 +4733,9 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
   };
 
   const handleOpen = (index) => {
-    if(index < 6)
-    setopenDrop(index)
+    //if(index < 6)
+    setCurrentNav(index)
+    //setID(index)
   };
 
   if (FormReady  ) {
@@ -4770,9 +4774,9 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
                     </div>
                   </div>  
                   {/* <p className="flex flex-row-reverse -m-4">5</p> */}
-                  <div className="">
-                    {openDrop === index  &&
-                      Data[id]?.questions?.map((questions, i) => {
+                  <div style={index == currentNav ? {display:"block"} : {display:"none"} }>
+                    {
+                      titles.questions?.map((questions, i) => {
                         if (!questions.isRandom) {
                           return (
                             <ul>
@@ -4789,7 +4793,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
                                 <div
                                   id="answeredOption"
                                   className={
-                                    questions.answered === true && id === index
+                                    questions.answered === true 
                                       ? `inline-block float-right answred rightIcon`
                                       : `inline-block float-right rightIcon`
                                   }

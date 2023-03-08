@@ -41,6 +41,7 @@ export default function SingleQuestion({
   useEffect(() => {
     setData(Data);
     console.log(Data, '---helloooo')
+    setDisable(false)
   }, [Data, MultiLimit, MultiLimitSub]);
 
   const handleCheck = (index) => {
@@ -56,16 +57,22 @@ export default function SingleQuestion({
           ...Data[ID].questions[QuesID].options[index],
           check: false,
         };
+        Data[ID].questions[QuesID].limit = false 
         setData(Data);
       } else {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = true  
+        }
+      
         if (allChecked.length < Data[ID].questions[QuesID].max) {
+          
           Data[ID].questions[QuesID].options[index] = {
             ...Data[ID].questions[QuesID].options[index],
             check: true,
           };
           setData(Data);
         } else {
-          setDisable(true)
+          
           alert(`Only ${Data[ID].questions[QuesID].max} Allowed`);
         }
       }
@@ -74,10 +81,14 @@ export default function SingleQuestion({
       var isChecked = Data[ID].questions[QuesID].options[index].check;
       var allChecked = Data[ID].questions[QuesID].options.filter(
         (x) => x.check === true
-      );
-      if (!isChecked) {
+        );
+        if (!isChecked) {
+          if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+            Data[ID].questions[QuesID].limit = false
+        }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true 
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
@@ -95,8 +106,12 @@ export default function SingleQuestion({
           ...Data[ID].questions[QuesID].options[index],
           check: false,
         };
+        Data[ID].questions[QuesID].limit = false 
         setData(Data);
       } else {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = true 
+        }
         if (allChecked.length < Data[ID].questions[QuesID].max) {
           Data[ID].questions[QuesID].options[index] = {
             ...Data[ID].questions[QuesID].options[index],
@@ -118,8 +133,13 @@ export default function SingleQuestion({
           ...Data[ID].questions[QuesID].options[index],
           check: false,
         };
+        Data[ID].questions[QuesID].limit = false
         setData(Data);
       } else {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = true 
+          
+        }
         if (allChecked.length < Data[ID].questions[QuesID].max) {
           Data[ID].questions[QuesID].options[index] = {
             ...Data[ID].questions[QuesID].options[index],
@@ -136,9 +156,18 @@ export default function SingleQuestion({
       var allChecked = Data[ID].questions[QuesID].options.filter(
         (x) => x.check === true
       );
+      console.log(allChecked.length, Data[ID].questions[QuesID].max - 1, "<----MAZZ")
+
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1 ) {
+          Data[ID].questions[QuesID].limit = false
+        }
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          setDisable(true)
+        }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true 
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
@@ -153,11 +182,16 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true 
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
+       
         setData(Data);
       }
     }
@@ -167,11 +201,16 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
+         
         setData(Data);
       }
     }
@@ -181,11 +220,16 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true 
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
+        
         setData(Data);
       }
     }
@@ -199,8 +243,12 @@ export default function SingleQuestion({
           ...Data[ID].questions[QuesID].options[index],
           check: false,
         };
+        Data[ID].questions[QuesID].limit = false 
         setData(Data);
       } else {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = true  
+        }
         if (allChecked.length < Data[ID].questions[QuesID].max) {
           Data[ID].questions[QuesID].options[index] = {
             ...Data[ID].questions[QuesID].options[index],
@@ -208,6 +256,7 @@ export default function SingleQuestion({
           };
           setData(Data);
         } else {
+
           alert(`Only ${Data[ID].questions[QuesID].max} Allowed`);
         }
       }
@@ -218,8 +267,12 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
@@ -233,8 +286,12 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
@@ -247,8 +304,12 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true 
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
@@ -261,8 +322,12 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true 
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
@@ -280,8 +345,12 @@ export default function SingleQuestion({
           ...Data[ID].questions[QuesID].options[index],
           check: false,
         };
+        Data[ID].questions[QuesID].limit = false 
         setData(Data);
       } else {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = true  
+        }
         if (allChecked.length < Data[ID].questions[QuesID].max) {
           Data[ID].questions[QuesID].options[index] = {
             ...Data[ID].questions[QuesID].options[index],
@@ -299,8 +368,12 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true 
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
@@ -314,8 +387,12 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true 
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
@@ -328,8 +405,12 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true 
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
@@ -342,8 +423,12 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true 
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
@@ -356,8 +441,12 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true 
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
@@ -370,8 +459,12 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true 
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
@@ -384,8 +477,12 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true 
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
@@ -398,8 +495,12 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
@@ -416,8 +517,13 @@ export default function SingleQuestion({
           ...Data[ID].questions[QuesID].options[index],
           check: false,
         };
+        Data[ID].questions[QuesID].limit = false 
         setData(Data);
       } else {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = true  
+        }
+      
         if (allChecked.length < Data[ID].questions[QuesID].max) {
           Data[ID].questions[QuesID].options[index] = {
             ...Data[ID].questions[QuesID].options[index],
@@ -439,8 +545,12 @@ export default function SingleQuestion({
           ...Data[ID].questions[QuesID].options[index],
           check: false,
         };
+        Data[ID].questions[QuesID].limit = false 
         setData(Data);
       } else {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = true  
+        }
         if (allChecked.length < Data[ID].questions[QuesID].max) {
           Data[ID].questions[QuesID].options[index] = {
             ...Data[ID].questions[QuesID].options[index],
@@ -462,8 +572,12 @@ export default function SingleQuestion({
           ...Data[ID].questions[QuesID].options[index],
           check: false,
         };
+        Data[ID].questions[QuesID].limit = false 
         setData(Data);
       } else {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = true  
+        }
         if (allChecked.length < Data[ID].questions[QuesID].max) {
           Data[ID].questions[QuesID].options[index] = {
             ...Data[ID].questions[QuesID].options[index],
@@ -485,8 +599,12 @@ export default function SingleQuestion({
           ...Data[ID].questions[QuesID].options[index],
           check: false,
         };
+        Data[ID].questions[QuesID].limit = false 
         setData(Data);
       } else {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = true  
+        }
         if (allChecked.length < Data[ID].questions[QuesID].max) {
           Data[ID].questions[QuesID].options[index] = {
             ...Data[ID].questions[QuesID].options[index],
@@ -506,12 +624,17 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (isChecked) {
+        
         Data[ID].questions[QuesID].options[index] = {
           ...Data[ID].questions[QuesID].options[index],
           check: false,
         };
+        Data[ID].questions[QuesID].limit = false 
         setData(Data);
       } else {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = true  
+        }
         if (currentValue != "none") {
           if (allChecked.length < Data[ID].questions[QuesID].max) {
             var noneIndex = Data[ID].questions[QuesID].options.findIndex(
@@ -549,8 +672,12 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
+          Data[ID].questions[QuesID].limit = true 
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
@@ -563,11 +690,15 @@ export default function SingleQuestion({
         (x) => x.check === true
       );
       if (!isChecked) {
+        if(allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = false
+      }
         Data[ID].questions[QuesID].options.forEach((element, point) => {
           Data[ID].questions[QuesID].options[point].check = false;
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
+        Data[ID].questions[QuesID].limit = true 
         setData(Data);
       }
     }
@@ -575,6 +706,8 @@ export default function SingleQuestion({
     setStatus(!status);
   };
 
+
+  console.log(disable, "<-----disable")
   return (
     <div className="studentContent-right">
       <div className="studentContentTop">
@@ -602,7 +735,7 @@ export default function SingleQuestion({
                   (option, index) => {
                     if (!("isHidden" in option) || option.isHidden === false) {
                       return (
-                        <div className="selectWrapper">
+                        <div className={Data[ID].questions[QuesID].limit === true? "selecDisabledtWrapper" : "selectWrapper"}>
                           <li className="flex flex-row items-center">
                             {option.check === true ? (
                               <img
@@ -617,7 +750,6 @@ export default function SingleQuestion({
                                 onClick={() => handleCheck(index)}
                               />
                             )}
-
                             {option.value}
                           </li>
                         </div>
@@ -633,7 +765,7 @@ export default function SingleQuestion({
                     (option, index) => {
                       if (!("isHidden" in option) || option.isHidden === false) {
                         return (
-                          <div className={disable ? "selecDisabledtWrapper" : "selectWrapper"}>
+                          <div className={Data[ID].questions[QuesID].limit === true? "selecDisabledtWrapper" : "selectWrapper"}>
                             <li className="flex flex-row items-center">
                               {option.check === true ? (
                                 <img
@@ -728,7 +860,7 @@ export default function SingleQuestion({
           //       )}
           // </>
 
-          <div class="selectWrapper">
+          <div className={Data[ID].questions[QuesID].limit === true? "selecDisabledtWrapper" : "selectWrapper"}>
             <div class="group relative">
               <button
                 type="button"
