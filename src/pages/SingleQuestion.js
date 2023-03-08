@@ -735,7 +735,7 @@ export default function SingleQuestion({
                   (option, index) => {
                     if (!("isHidden" in option) || option.isHidden === false) {
                       return (
-                        <div className={Data[ID].questions[QuesID].limit === true? "selecDisabledtWrapper" : "selectWrapper"}>
+                        <div className={"selectWrapper"}>
                           <li className="flex flex-row items-center">
                             {option.check === true ? (
                               <img
@@ -746,7 +746,7 @@ export default function SingleQuestion({
                             ) : (
                               <img
                                 src={uncheck}
-                                className={"checkImg"}
+                                className={Data[ID].questions[QuesID].limit === true? "unCheckImg" :"checkImg"}
                                 onClick={() => handleCheck(index)}
                               />
                             )}
@@ -765,7 +765,7 @@ export default function SingleQuestion({
                     (option, index) => {
                       if (!("isHidden" in option) || option.isHidden === false) {
                         return (
-                          <div className={Data[ID].questions[QuesID].limit === true? "selecDisabledtWrapper" : "selectWrapper"}>
+                          <div className={ "selectWrapper"}>
                             <li className="flex flex-row items-center">
                               {option.check === true ? (
                                 <img
@@ -776,7 +776,7 @@ export default function SingleQuestion({
                               ) : (
                                 <img
                                   src={uncheck}
-                                  className={"checkImg"}
+                                  className={Data[ID].questions[QuesID].limit === true? "unCheckImg" :"checkImg"}
                                   onClick={() => handleCheck(index)}
                                 />
                               )}
@@ -860,7 +860,7 @@ export default function SingleQuestion({
           //       )}
           // </>
 
-          <div className={Data[ID].questions[QuesID].limit === true? "selecDisabledtWrapper" : "selectWrapper"}>
+          <div className={ Data[ID].questions[QuesID].limit === true? "selecDisabledtWrapper" :"selectWrapper"}>
             <div class="group relative">
               <button
                 type="button"

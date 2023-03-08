@@ -152,6 +152,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           select: "Multi",
           min: 1,
           max: 2,
+          limit: false,
           answered: false,
           options: [
             {
@@ -189,6 +190,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           select: "Multi",
           min: 1,
           max: 3,
+          limit: false,
           answered: false,
           options: [
             { id: 1, value: "Drawing", check: false },
@@ -217,6 +219,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
             select: "Multi",
             min:1,
             max:1,
+            limit: false,
           answered: false,
           options: [
             {
