@@ -295,6 +295,13 @@ body {
     margin-right: 20px;
 }
 
+.studentContent .studentContent-right .studentContentBottom li img.unCheckImg {
+    width: 32px;
+    height: 32px;
+    margin-right: 20px;
+    position: relative;
+}
+
 .studentContent .studentContent-right .studentContentBottom .selectWrapper {
     padding-top: 24px;
 }
@@ -310,6 +317,61 @@ body {
 .studentContent .studentContent-right .studentContentBottom .selectWrapper nav.openDropdown {
     opacity: 1;
     visibility: visible;
+}
+
+.studentContent .studentContent-right .studentContentBottom .selectWrapper .UncheckBox {
+    width: 32px;
+    height: 32px;
+    border: 2px solid;
+    border-color: #1D4D70;
+    border-radius: 6px;
+    margin-right: 20px;
+}
+
+.studentContent .studentContent-right .studentContentBottom .selectWrapper .checkBox {
+    width: 32px;
+    height: 32px;
+    border: 2px solid;
+    border-color: #1D4D70;
+    border-radius: 6px;
+    margin-right: 20px;
+    background: #1D4D70;
+    position: relative;
+}
+.studentContent .studentContent-right .studentContentBottom .selectWrapper .checkBox::before {
+    position: absolute;
+    left: 0;
+    top: 51%;
+    height: 21%;
+    width: 2px;
+    background-color: #ffffff;
+    content: "";
+    transform: translateX(10px) rotate(-45deg);
+    transform-origin: left bottom;
+    border-radius: 10px;
+ }
+ 
+.studentContent .studentContent-right .studentContentBottom .selectWrapper .checkBox::after {
+    position: absolute;
+    left: 0;
+    top: 19px;
+    height: 2px;
+    width: 60%;
+    background-color: #ffffff;
+    content: "";
+    transform: translateX(11px) rotate(-48deg);
+    transform-origin: left bottom;
+    border-radius: 10px;
+}
+
+.studentContent .studentContent-right .studentContentBottom .selectWrapper .Disable {
+    width: 32px;
+    height: 32px;
+    border: 2px solid;
+    border-color: #adadad;
+    border-radius: 6px;
+    margin-right: 20px;
+    background: #d5d6d7;
 }
 
 .studentContent .studentContent-right .studentContentBottom .selectWrapper li {

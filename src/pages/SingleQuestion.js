@@ -736,19 +736,23 @@ export default function SingleQuestion({
                     if (!("isHidden" in option) || option.isHidden === false) {
                       return (
                         <div className={"selectWrapper"}>
-                          <li className={Data[ID].questions[QuesID].limit === true? "flex flex-row items-center unCheckImg" :"flex flex-row items-center"}>
+                          <li className={ "flex flex-row items-center"}>
                             {option.check === true ? (
-                              <img
-                                src={check}
-                                className={"checkImg"}
-                                onClick={() => handleCheck(index)}
-                              />
+                              <div className="checkBox" onClick={() => handleCheck(index)}>
+                                  
+                              </div>
+                              // <img
+                              //   src={check}
+                              //   className={"checkImg"}
+                              //   onClick={() => handleCheck(index)}
+                              // />
                             ) : (
-                              <img
-                                src={uncheck}
-                                className={"checkImg"}
-                                onClick={() => handleCheck(index)}
-                              />
+                              <div className={Data[ID].questions[QuesID].limit === true ? "Disable" : "UncheckBox"} onClick={() => handleCheck(index)}></div>
+                              // <img
+                              //   src={uncheck}
+                              //   className={"checkImg"}
+                              //   onClick={() => handleCheck(index)}
+                              // />
                             )}
                             {option.value}
                           </li>
@@ -766,22 +770,26 @@ export default function SingleQuestion({
                       if (!("isHidden" in option) || option.isHidden === false) {
                         return (
                           <div className={ "selectWrapper"}>
-                            <li className={Data[ID].questions[QuesID].limit === true? "flex flex-row items-center unCheckImg" : "flex flex-row items-center"}>
-                              {option.check === true ? (
-                                <img
-                                  src={check}
-                                  className={"checkImg"}
-                                  onClick={() => handleCheck(index)}
-                                />
-                              ) : (
-                                <img
-                                  src={uncheck}
-                                  className={"checkImg"}
-                                  onClick={() => handleCheck(index)}
-                                />
-                              )}
-
-                              {option.value}
+                            <li className={"flex flex-row items-center"}>
+                            {option.check === true ? (
+                          <div className="checkBox" onClick={() => handleCheck(index)}></div>
+                              // <img
+                              //   src={check}
+                              //   className={"checkImg"}
+                              //   onClick={() => handleCheck(index)}
+                              // />
+                            ) : (
+                              <div className={Data[ID].questions[QuesID].limit === true? "disable" : "UncheckBox"} onClick={() => handleCheck(index)}>
+                                  
+                              </div>
+                             
+                              // <img
+                              //   src={uncheck}
+                              //   className={"checkImg"}
+                              //   onClick={() => handleCheck(index)}
+                              // />
+                            )}
+                            {option.value}
                             </li>
                           </div>
                         );
