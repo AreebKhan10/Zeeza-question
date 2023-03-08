@@ -264,6 +264,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           select: "Multi",
           min:1,
           max:1,
+          limit: false,
           answered: false,
           options: [
             {
@@ -288,6 +289,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           select: "Multi",
           min:1,
           max:1,
+          limit: false,
           answered: false,
           options: [
             {
@@ -313,6 +315,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           select: "Multi",
           min:1,
           max:1,
+          limit: false,
           answered: false,
           options: [
             {
@@ -542,6 +545,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           answered: false,
           min: 1,
           max: 3,
+          limit: false,
           options: [
             { id: 1, value: "Orton Gillingham methodology", check: false },
             { id: 2, value: "Wilson methodology", check: false },
@@ -562,6 +566,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           select: "Multi",
           min:1,
           max:1,
+          limit: false,
           answered: false,
           options: [
             { id: 1, text: "Very little", value: "1", check: false },
@@ -573,6 +578,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
         },
         {
           isUpdated: false,
+          limit: false,
           questionID : 11,
           subTitle: "Decoding Goals for Year",
           description:
@@ -753,6 +759,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
         },
         {
           isUpdated: false,
+          limit: false,
           questionID : 12,
           subTitle: "Struggling Details",
           description: "Maximum 3 up to 5",
@@ -1037,6 +1044,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
             select: "Multi",
             min:1,
             max:1,
+            limit: false,
           answered: false,
           options: [
             {
@@ -1066,6 +1074,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
             select: "Multi",
             min:1,
             max:1,
+            limit: false,
           answered: false,
           options: [
             {
@@ -1095,6 +1104,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
             select: "Multi",
             min:1,
             max:1,
+            limit: false,
           answered: false,
           options: [
             {
@@ -1172,6 +1182,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           answered: false,
           min: 2,
           max: 3,
+          limit: false,
           options: [
             {
               id: 1,
@@ -1230,6 +1241,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
             select: "Multi",
             min:1,
             max:1,
+            limit: false,
           answered: false,
           options: [
             {
@@ -1256,6 +1268,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
         },
         {
           isUpdated: false,
+          limit: false,
           questionID : 18,
           subTitle: "Reading Comprehension goals",
           description:
@@ -1505,6 +1518,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
         },
         {
           isUpdated: false,
+          limit: false,
           questionID : 19,
           subTitle: "student still struggle with?",
           description:
@@ -1768,6 +1782,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           select: "Multi",
           min:1,
           max:1,
+          limit: false,
           answered: false,
           options: [
             {
@@ -1801,6 +1816,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           select: "Multi",
           min:1,
           max:1,
+          limit: false,
           answered: false,
           options: [
             {
@@ -1877,6 +1893,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           select: "Multi",
           min:1,
           max:1,
+          limit: false,
           answered: false,
           options: [
             {
@@ -1915,6 +1932,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           select: "Multi",
           min:1,
           max:1,
+          limit: false,
           answered: false,
           options: [
             {
@@ -1941,6 +1959,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
         },
         {
           isUpdated: false,
+          limit: false,
           questionID : 24,
           subTitle: "Comprehension goals",
           description:
@@ -2614,6 +2633,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
         },
         {
           isUpdated: false,
+          limit: false,
           questionID : 25,
           subTitle: "struggle with",
           description:
@@ -3330,6 +3350,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           select: "Multi",
           min:1,
           max:1,
+          limit: false,
           answered: false,
           options: [
             {
@@ -3359,6 +3380,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           select: "Multi",
           min:1,
           max:1,
+          limit: false,
           answered: false,
           options: [
             {
@@ -3382,6 +3404,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
             select: "Multi",
             min:1,
             max:1,
+            limit: false,
           description: "Maximum 1",
           answered: false,
           options: [
@@ -3422,6 +3445,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           answered: false,
           min: 1,
           max: 2,
+          limit: false,
           options: [
             {
               id: 1,
@@ -3519,6 +3543,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           answered: false,
           min: 2,
           max: 14,
+          limit: false,
           options: [
             {
               id: 1,
@@ -3616,6 +3641,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           answered: false,
           min: 1,
           max: 3,
+          limit: false,
           options: [
             {
               id: 1,
@@ -3659,6 +3685,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           answered: false,
           min: 1,
           max: 3,
+          limit: false,
           options: [
             {
               id: 1,
@@ -3708,6 +3735,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           description: "Select, up to 3",
           min: 1,
           max: 3,
+          limit: false,
           answered: false,
           options: [
             {
@@ -3745,6 +3773,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
             select: "Multi",
             min:1,
             max:1,
+            limit: false,
           description: "Maximum 1",
           answered: false,
           options: [
@@ -3767,6 +3796,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
         },
         {
           isUpdated: false,
+          limit: false,
           questionID : 35,
           subTitle: "area of concern",
           question: "Rate your student's progress in each area of concern:",
@@ -3807,6 +3837,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
         },
         {
           isUpdated: false,
+          limit: false,
           questionID : 36,
           subTitle: "struggle with",
           description: "Single select from each group",
@@ -3847,6 +3878,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
         },
         {
           isUpdated: false,
+          limit: false,
           questionID : 37,
           subTitle: "Reading Comprehension struggle with",
           description: "Maximum 2 ",
@@ -3974,6 +4006,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
             select: "Multi",
             min:1,
             max:1,
+            limit: false,
           answered: false,
           options: [
             {
