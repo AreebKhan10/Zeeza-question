@@ -736,7 +736,7 @@ export default function SingleQuestion({
                     if (!("isHidden" in option) || option.isHidden === false) {
                       return (
                         <div className={"selectWrapper"}>
-                          <li className={Data[ID].questions[QuesID].limit === true? "unCheckImg" :"flex flex-row items-center"}>
+                          <li className={Data[ID].questions[QuesID].limit === true? "flex flex-row items-center unCheckImg" :"flex flex-row items-center"}>
                             {option.check === true ? (
                               <img
                                 src={check}
@@ -766,7 +766,7 @@ export default function SingleQuestion({
                       if (!("isHidden" in option) || option.isHidden === false) {
                         return (
                           <div className={ "selectWrapper"}>
-                            <li className={Data[ID].questions[QuesID].limit === true? "unCheckImg" : "flex flex-row items-center"}>
+                            <li className={Data[ID].questions[QuesID].limit === true? "flex flex-row items-center unCheckImg" : "flex flex-row items-center"}>
                               {option.check === true ? (
                                 <img
                                   src={check}
