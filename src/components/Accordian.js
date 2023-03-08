@@ -632,12 +632,19 @@ export default function Accordian({
           <div className={"outboxes flex justify-between items-center"}>
             <li className="flex flex-row">
               {record.check === true ? (
+                // <div className="checkBox" onClick={() => handleCheckSupergoal(index)}>
+                                  
+                // </div>
                 <img
                   src={check}
                   className={"h-8 mr-2"}
                   onClick={() => handleCheckSupergoal(index)}
                 />
               ) : (
+                // <div className="UncheckBox" onClick={() => handleCheckSupergoal(index)}>
+                                  
+                // </div>
+              
                 <img
                   src={uncheck}
                   className={"h-8 mr-2"}
@@ -662,17 +669,24 @@ export default function Accordian({
 
                     <li className="flex flex-row">
                       {rec.check === true ? (
-                        <img
-                          src={check}
-                          className={"h-8 mr-2"}
-                          onClick={() => handleCheckSubGoal(i)}
-                        />
+                          <div className="checkBox"  onClick={() => handleCheckSubGoal(i)}>
+                                  
+                          </div>
+                     
+                        // <img
+                        //   src={check}
+                        //   className={"h-8 mr-2"}
+                        //   onClick={() => handleCheckSubGoal(i)}
+                        // />
                       ) : (
-                        <img
-                          src={uncheck}
-                          className={"h-8 mr-2"}
-                          onClick={() => handleCheckSubGoal(i)}
-                        />
+                        <div className="UncheckBox"  onClick={() => handleCheckSubGoal(i)}>
+                                  
+                        </div>
+                        // <img
+                        //   src={uncheck}
+                        //   className={"h-8 mr-2"}
+                        //   onClick={() => handleCheckSubGoal(i)}
+                        // />
                       )}
                       {rec.text}
                     </li>
