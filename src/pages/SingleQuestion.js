@@ -698,7 +698,6 @@ export default function SingleQuestion({
           setData(Data);
         });
         Data[ID].questions[QuesID].options[index].check = true;
-        Data[ID].questions[QuesID].limit = true 
         setData(Data);
       }
     }
@@ -735,8 +734,8 @@ export default function SingleQuestion({
                   (option, index) => {
                     if (!("isHidden" in option) || option.isHidden === false) {
                       return (
-                        <div className={"selectWrapper"}>
-                          <li className={Data[ID].questions[QuesID].limit === true? "flex flex-row items-center unCheckImg" :"flex flex-row items-center"}>
+                        <div className={Data[ID].questions[QuesID].limit === true? "selecDisabledtWrapper" : "selectWrapper"}>
+                          <li className="flex flex-row items-center">
                             {option.check === true ? (
                               <img
                                 src={check}
@@ -765,8 +764,8 @@ export default function SingleQuestion({
                     (option, index) => {
                       if (!("isHidden" in option) || option.isHidden === false) {
                         return (
-                          <div className={ "selectWrapper"}>
-                            <li className={Data[ID].questions[QuesID].limit === true? "flex flex-row items-center unCheckImg" : "flex flex-row items-center"}>
+                          <div className={Data[ID].questions[QuesID].limit === true? "selecDisabledtWrapper" : "selectWrapper"}>
+                            <li className="flex flex-row items-center">
                               {option.check === true ? (
                                 <img
                                   src={check}
@@ -860,7 +859,7 @@ export default function SingleQuestion({
           //       )}
           // </>
 
-          <div className={ Data[ID].questions[QuesID].limit === true? "selecDisabledtWrapper" :"selectWrapper"}>
+          <div className={Data[ID].questions[QuesID].limit === true? "selecDisabledtWrapper" : "selectWrapper"}>
             <div class="group relative">
               <button
                 type="button"

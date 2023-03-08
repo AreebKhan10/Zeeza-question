@@ -99,6 +99,7 @@ export default function Accordian({
             Data[ID].questions[QuesID].goalQues[subgoal].check = false;
             setData(Data);
           }
+          Data[ID].questions[QuesID].limit = true
           alert(" only 3 allow");
         }
       }
@@ -161,6 +162,7 @@ export default function Accordian({
             setData(Data);
           }
           alert(" only 3 allow");
+          Data[ID].questions[QuesID].limit = true
         }
       }
     }
@@ -216,6 +218,7 @@ export default function Accordian({
               Data[ID].questions[QuesID].goalQues[subgoal].check = false;
               setData(Data);
             }
+            Data[ID].questions[QuesID].limit = true
             alert(" only 6 allow");
           }
         } else {
@@ -223,6 +226,7 @@ export default function Accordian({
             Data[ID].questions[QuesID].goalQues[subgoal].check = false;
             setData(Data);
           }
+          Data[ID].questions[QuesID].limit = true
           alert(" only 3 allow");
         }
       }
@@ -279,6 +283,7 @@ export default function Accordian({
               Data[ID].questions[QuesID].goalQues[subgoal].check = false;
               setData(Data);
             }
+            Data[ID].questions[QuesID].limit = true
             alert(" only 6 allow");
           }
         } else {
@@ -286,6 +291,7 @@ export default function Accordian({
             Data[ID].questions[QuesID].goalQues[subgoal].check = false;
             setData(Data);
           }
+          
           alert(" only 3 allow");
         }
       }
@@ -340,6 +346,7 @@ export default function Accordian({
               Data[ID].questions[QuesID].goalQues[subgoal].check = false;
               setData(Data);
             }
+            Data[ID].questions[QuesID].limit = true
             alert(" only 6 allow");
           }
         } else {
@@ -401,6 +408,7 @@ export default function Accordian({
               Data[ID].questions[QuesID].goalQues[subgoal].check = false;
               setData(Data);
             }
+            Data[ID].questions[QuesID].limit = true
             alert(" only 6 allow");
           }
         } else {
@@ -465,6 +473,7 @@ export default function Accordian({
               Data[ID].questions[QuesID].goalQues[subgoal].check = false;
               setData(Data);
             }
+            Data[ID].questions[QuesID].limit = true
             alert(" only 6 allow");
           }
         } else {
@@ -528,6 +537,7 @@ export default function Accordian({
               Data[ID].questions[QuesID].goalQues[subgoal].check = false;
               setData(Data);
             }
+            Data[ID].questions[QuesID].limit = true
             alert(" only 6 allow");
           }
         } else {
@@ -591,6 +601,7 @@ export default function Accordian({
               Data[ID].questions[QuesID].goalQues[subgoal].check = false;
               setData(Data);
             }
+            Data[ID].questions[QuesID].limit = true
             alert(" only 6 allow");
           }
         } else {

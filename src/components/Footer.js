@@ -29,7 +29,7 @@ export default function Footer({
   var {stuDetails, filteredJSON, setFilteredJSON, setSubmit,  setUpdate} = useGlobalContext()
   console.log(filteredJSON, "<---filteredJSONfilteredJSON")
   const [totalQuestions, setTotalQuestions] = useState([]);
-
+  let progress 
   const {setPercentage, percentage, setStuDetails, setDisable} = useGlobalContext();
   const groupNameArray =["Background","Decoding","Reading Comprehension","Math","Speech and Language","Social-emotional","Summary"]
   const uniqueArray = (array) => {
@@ -1306,6 +1306,20 @@ useEffect(()=>{
     }
   
   };
+  if(Math.floor(percentage) == 2){
+    progress = "1/6"
+  }else if(Math.floor(percentage) == 10){
+    progress = "2/6"
+  }else if(Math.floor(percentage) == 44){
+    progress =  "3/6"
+  }else if(Math.floor(percentage) == 60){
+    progress =  "4/6"
+  }else if(Math.floor(percentage) == 78){
+    progress =  "5/6"
+  }else if(Math.floor(percentage) == 89){
+    progress =  "6/6"
+  }
+console.log(progress, "<----percentagepercentage")
 
   return (
     <footer className="fixed drop-shadow-2xl border-t-4 border-gray-200 inset-x-0 bottom-0 w-full bg-white">
@@ -1313,7 +1327,7 @@ useEffect(()=>{
       <div className="bg-[#EFEEF5] percentageRatio">
           <p className="text-[#47529B] text-md">{percentage ? Math.floor(percentage) : 0}% Complete</p>
           <div class="overflow-hidden h-2 mb-2 text-xs flex rounded bg-white">
-            <div class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#47529B] w-1/4"></div>
+            <div class={`shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#47529B] w-${progress}`}></div>
           </div>
         </div>
         
