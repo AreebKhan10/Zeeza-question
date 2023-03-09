@@ -8,6 +8,7 @@ const AppProvider = ({ children }) => {
   const [percentage, setPercentage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [filteredJSON, setFilteredJSON] = useState([]);
+  const [totalQuestions, setTotalQuestions] = useState([]);
   const [submit,setSubmit] = useState(false);
   const [disable, setDisable] = useState(false)
   const [update, setUpdate] = useState(false)
@@ -25,17 +26,11 @@ const AppProvider = ({ children }) => {
     axios
       .get(url)
       .then((res) => {
-        console.log(res, "<----res.data.questionsres.data.questions")
+        setTotalQuestions(res.data.questions.length)
         setFilteredJSON(res.data.questions)
         setStuDetails(res.data);
-        var total_question = 38;
-        var total_answered = 0;
-        total_answered += res.data.questions.length;
-        const percentages = (total_answered / total_question) * 100;
-        setPercentage(percentages);
-        console.log(res, "Responce");
+        
         if(res.data){
-
           setLoading(false)
         }
       })
@@ -62,7 +57,9 @@ const AppProvider = ({ children }) => {
         disable, 
         setDisable,
         update, 
-        setUpdate
+        setUpdate,
+        totalQuestions,
+        setTotalQuestions
       }}
     >
       {children}

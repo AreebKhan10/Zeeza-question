@@ -42,7 +42,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           isUpdated: false,
           questionID : 1,
           subTitle: "Areas of Struggle",
-          description: "Maximum 1 up to 3",
+          description: "Minimum 1 and up to Maximum 3",
           question: `Which areas does [name] struggle with most?`,
           select: "Multi",
           min: 1,
@@ -147,7 +147,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           isUpdated: false,
           questionID : 3,
           subTitle: "Academic domains",
-          description: "Maximum 1 up to 2",
+          description: "Minimum 1 and up to Maximum 2",
           question: "Which academic domains does [name] struggle with?",
           select: "Multi",
           min: 1,
@@ -186,7 +186,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           questionID : 4,
           subTitle: "Interests",
           question: "What are [name] interests?",
-          description: "Maximum 1 up to 3",
+          description: "Minimum 1 and up to Maximum 3",
           select: "Multi",
           min: 1,
           max: 3,
@@ -762,7 +762,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           limit: false,
           questionID : 12,
           subTitle: "Struggling Details",
-          description: "Maximum 3 up to 5",
+          description: "Minimum 3 and up to Maximum 5",
           question:
             "Which areas in decoding does your student still struggle with?",
           select: "Accordian",
@@ -1176,7 +1176,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           isUpdated: false,
           questionID : 16,
           subTitle: "techniques",
-          description: "Maximum 2 up to 3",
+          description: "Minimum 2 and up to Maximum 3",
           question: "Which techniques do you use during your sessions?",
           select: "Multi",
           answered: false,
@@ -3441,7 +3441,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           subTitle: "student able",
           question: "Which of these is your student able to do?",
           select: "Multi",
-          description: "Select Up to 2",
+          description: "Minimum 1 and up to Maximum 2",
           answered: false,
           min: 1,
           max: 2,
@@ -3539,7 +3539,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           subTitle: "student struggle",
           question: "Which of these does your student struggle with?",
           select: "Multi",
-          description: "Maximum 2 to many",
+          description: "Minimum 1 and up to Many",
           answered: false,
           min: 2,
           max: 14,
@@ -3637,7 +3637,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           subTitle: "student’s strength",
           question: "Which of these is your student’s strength?",
           select: "Multi",
-          description: "Select, up to 3",
+          description: "Minimum 1 and up to Maximum 3",
           answered: false,
           min: 1,
           max: 3,
@@ -3681,7 +3681,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           subTitle: "student’s weakness",
           question: "Which of these is your student's weakness? ",
           select: "Multi",
-          description: "Select, up to 3",
+          description: "Minimum 1 and up to Maximum 3",
           answered: false,
           min: 1,
           max: 3,
@@ -3732,7 +3732,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           question:
             "Does your student display a delay in any of the following areas? If yes, please specify:",
           select: "Multi",
-          description: "Select, up to 3",
+          description: "Minimum 1 and up to Maximum 3",
           min: 1,
           max: 3,
           limit: false,
@@ -4880,6 +4880,7 @@ var { filteredJSON, setFilteredJSON, update} = useGlobalContext()
           MultiLimitSub={MultiLimitSub}
           setMultiLimitSub={setMultiLimitSub}
           stuDetails={stuDetails}
+          QUESTIONS={QUESTIONS}
           // filteredJSON={filteredJSON}
           // setFilter={setFilter}
         />

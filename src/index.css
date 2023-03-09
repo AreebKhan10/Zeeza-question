@@ -285,6 +285,10 @@ body {
     line-height: 24px;
 }
 
+.studentContent .studentContent-right .studentContentBottom .selectWrapper .selectBorder .innerBoxes p {
+    padding: 0;
+}   
+
 /* .studentContent .studentContent-right .studentContentBottom li {
         padding-top: 20px;
     } */

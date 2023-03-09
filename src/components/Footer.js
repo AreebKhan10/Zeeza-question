@@ -21,15 +21,19 @@ export default function Footer({
   id,
   MultiLimitSub,
   setMultiLimitSub,
+  QUESTIONS
   // stuDetails,
   // filteredJSON,
   // setFilter
 }) {
 
-  var {stuDetails, filteredJSON, setFilteredJSON, setSubmit,  setUpdate} = useGlobalContext()
+  var {stuDetails, filteredJSON, setFilteredJSON, setSubmit,  setUpdate,
+    totalQuestions,
+    setTotalQuestions
+  } = useGlobalContext()
   console.log(filteredJSON, "<---filteredJSONfilteredJSON")
-  const [totalQuestions, setTotalQuestions] = useState([]);
-  let progress 
+ 
+  let [progress, setProgress ] = useState("")
   const {setPercentage, percentage, setStuDetails, setDisable} = useGlobalContext();
   const groupNameArray =["Background","Decoding","Reading Comprehension","Math","Speech and Language","Social-emotional","Summary"]
   const uniqueArray = (array) => {
@@ -1036,9 +1040,44 @@ export default function Footer({
   };
 
 useEffect(()=>{
-  // nextQuestion(id, QuesID)
-},[percentage])
+  console.log(QUESTIONS.length, "<------filteredJSON.lengtheffect")
+  var total_question = QUESTIONS.length;;
+  var total_answered = 0;
+  total_answered = filteredJSON.length;
+  const percentages = (total_answered / total_question) * 100;
+  setPercentage(percentages);
 
+  if(filteredJSON.length <= 2 && filteredJSON.length > 0){
+    setProgress("w-1/12");
+  }else if(filteredJSON.length <= 4 && filteredJSON.length > 2){
+    setProgress("w-2/12");
+  }else if((filteredJSON.length <= 10 && filteredJSON.length > 4)){
+    setProgress("w-2/12");
+  }else if((filteredJSON.length <= 15 && filteredJSON.length > 10)){
+    setProgress("w-4/12");
+  }else if((filteredJSON.length <= 17 && filteredJSON.length > 15)){
+    setProgress("w-5/12");
+  }else if((filteredJSON.length <= 20 && filteredJSON.length > 17)){
+    setProgress("w-6/12");
+  }else if((filteredJSON.length <= 25 && filteredJSON.length > 20)){
+    setProgress("w-7/12");
+  }else if((filteredJSON.length <= 28 && filteredJSON.length > 25)){
+    setProgress("w-8/12");
+  }else if((filteredJSON.length <= 30 && filteredJSON.length > 28)){
+    setProgress("w-9/12");
+  }else if((filteredJSON.length <= 34 && filteredJSON.length > 30)){
+    setProgress("w-10/12");
+  }else if((filteredJSON.length <= 37 && filteredJSON.length > 34)){
+    setProgress("w-11/12");
+  }else if((filteredJSON.length <= 39 && filteredJSON.length > 37)){
+    setProgress("w-12/12");
+  }
+
+  
+  // nextQuestion(id, QuesID)
+},[percentage, filteredJSON])
+
+console.log(progress, "<----uaddfoa")
 
   const nextQuestion = (parent, question) => {
     Data[parent].questions[question].answered = true;
@@ -1070,20 +1109,51 @@ useEffect(()=>{
     PostData(parentId,questionId);
     setID(parentId);
     setQuesID(questionId);
-    var total_question = 38;
+
+
+    
+    var total_question = QUESTIONS.length;
     var total_answered = 0;
-    console.log(totalQuestions, "<---totalQuestions")
-    total_answered += totalQuestions.length
+    total_answered = filteredJSON.length
     const percentage = (total_answered/ total_question) * 100
     setPercentage(percentage)
 
-  };
+    if(filteredJSON.length <= 2 && filteredJSON.length > 0){
+      setProgress("w-1/12");
+    }else if(filteredJSON.length <= 4 && filteredJSON.length > 2){
+      setProgress("w-2/12");
+    }else if((filteredJSON.length <= 10 && filteredJSON.length > 4)){
+      setProgress("w-2/12");
+    }else if((filteredJSON.length <= 15 && filteredJSON.length > 10)){
+      setProgress("w-4/12");
+    }else if((filteredJSON.length <= 17 && filteredJSON.length > 15)){
+      setProgress("w-5/12");
+    }else if((filteredJSON.length <= 20 && filteredJSON.length > 17)){
+      setProgress("w-6/12");
+    }else if((filteredJSON.length <= 25 && filteredJSON.length > 20)){
+      setProgress("w-7/12");
+    }else if((filteredJSON.length <= 28 && filteredJSON.length > 25)){
+      setProgress("w-8/12");
+    }else if((filteredJSON.length <= 30 && filteredJSON.length > 28)){
+      setProgress("w-9/12");
+    }else if((filteredJSON.length <= 34 && filteredJSON.length > 30)){
+      setProgress("w-10/12");
+    }else if((filteredJSON.length <= 37 && filteredJSON.length > 34)){
+      setProgress("w-11/12");
+    }else if((filteredJSON.length <= 39 && filteredJSON.length > 37)){
+      setProgress("w-12/12");
+    }
   
 
+
+
+
+  };
   
-  const getFilteredJSONData = (groupId, questionId) => {
-    console.log('groupId+++++', groupId)
-    
+  console.log(progress, "<---progress88")
+
+  
+  const getFilteredJSONData = (groupId, questionId) => {  
     const groupName = groupNameArray[groupId];
     let filteredJSONQuestionObj = {groupName: groupName};
       const getGroupObjFromParent = Data.find(x => x.title.toLowerCase() === groupName.toLowerCase());
@@ -1306,20 +1376,8 @@ useEffect(()=>{
     }
   
   };
-  if(Math.floor(percentage) == 2){
-    progress = "1/6"
-  }else if(Math.floor(percentage) == 10){
-    progress = "2/6"
-  }else if(Math.floor(percentage) == 44){
-    progress =  "3/6"
-  }else if(Math.floor(percentage) == 60){
-    progress =  "4/6"
-  }else if(Math.floor(percentage) == 78){
-    progress =  "5/6"
-  }else if(Math.floor(percentage) == 89){
-    progress =  "6/6"
-  }
-console.log(progress, "<----percentagepercentage")
+ 
+
 
   return (
     <footer className="fixed drop-shadow-2xl border-t-4 border-gray-200 inset-x-0 bottom-0 w-full bg-white">
@@ -1327,7 +1385,7 @@ console.log(progress, "<----percentagepercentage")
       <div className="bg-[#EFEEF5] percentageRatio">
           <p className="text-[#47529B] text-md">{percentage ? Math.floor(percentage) : 0}% Complete</p>
           <div class="overflow-hidden h-2 mb-2 text-xs flex rounded bg-white">
-            <div class={`shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#47529B] w-${progress}`}></div>
+            <div class={`shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#47529B] ${progress}`}></div>
           </div>
         </div>
         
