@@ -283,10 +283,13 @@ body {
     font-weight: 400;
     font-size: 17px;
     line-height: 24px;
+    width: 100%;
+    padding: 0;
 }
 
 .studentContent .studentContent-right .studentContentBottom .selectWrapper .selectBorder .innerBoxes p {
     padding: 0;
+    width: 100%;
 }   
 
 /* .studentContent .studentContent-right .studentContentBottom li {
@@ -330,6 +333,8 @@ body {
     border-color: #1D4D70;
     border-radius: 6px;
     margin-right: 20px;
+    flex: 1 0 auto;
+    position: relative;
 }
 
 .studentContent .studentContent-right .studentContentBottom .selectWrapper .checkBox {
@@ -340,6 +345,7 @@ body {
     border-radius: 6px;
     margin-right: 20px;
     background: #1D4D70;
+    flex: 1 0 auto;
     position: relative;
 }
 .studentContent .studentContent-right .studentContentBottom .selectWrapper .checkBox::before {
@@ -376,6 +382,8 @@ body {
     border-radius: 6px;
     margin-right: 20px;
     background: #d5d6d7;
+    position: relative;
+    flex: 1 0 auto;
 }
 
 .studentContent .studentContent-right .studentContentBottom .selectWrapper li {
@@ -441,6 +449,14 @@ body {
     background-size: auto;
     background-position: 10px 13px;
 }
+/* 
+.studentContent .studentContent-right .studentContentBottom .selectWrapper .selectBorder .outboxes+.innerBoxes .checkBox {
+    width: 34.74px;
+}
+
+.studentContent .studentContent-right .studentContentBottom .selectWrapper .selectBorder .outboxes+.innerBoxes .UncheckBox {
+    width: 34.74px;
+} */
 
 footer {
     padding: 32px;

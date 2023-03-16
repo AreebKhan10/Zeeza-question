@@ -3,8 +3,7 @@ import PreviousMap from "postcss/lib/previous-map";
 import React, { useEffect, useState } from "react";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import axios from "axios";
-import { useGlobalContext } from '../context'
-
+import { useGlobalContext } from "../context";
 
 export default function Footer({
   setgoalLevel,
@@ -21,21 +20,34 @@ export default function Footer({
   id,
   MultiLimitSub,
   setMultiLimitSub,
-  QUESTIONS
+  QUESTIONS,
   // stuDetails,
   // filteredJSON,
   // setFilter
 }) {
-
-  var {stuDetails, filteredJSON, setFilteredJSON, setSubmit,  setUpdate,
+  var {
+    stuDetails,
+    filteredJSON,
+    setFilteredJSON,
+    setSubmit,
+    setUpdate,
     totalQuestions,
-    setTotalQuestions
-  } = useGlobalContext()
-  console.log(filteredJSON, "<---filteredJSONfilteredJSON")
- 
-  let [progress, setProgress ] = useState("")
-  const {setPercentage, percentage, setStuDetails, setDisable} = useGlobalContext();
-  const groupNameArray =["Background","Decoding","Reading Comprehension","Math","Speech and Language","Social-emotional","Summary"]
+    setTotalQuestions,
+  } = useGlobalContext();
+  console.log(filteredJSON, "<---filteredJSONfilteredJSON");
+
+  let [progress, setProgress] = useState("");
+  const { setPercentage, percentage, setStuDetails, setDisable } =
+    useGlobalContext();
+  const groupNameArray = [
+    "Background",
+    "Decoding",
+    "Reading Comprehension",
+    "Math",
+    "Speech and Language",
+    "Social-emotional",
+    "Summary",
+  ];
   const uniqueArray = (array) => {
     var a = array.concat();
     for (var i = 0; i < a.length; ++i) {
@@ -47,46 +59,70 @@ export default function Footer({
     return a;
   };
 
-  const isQuestionUpdate = (id, QuesID) =>{
-    
-    if(Data[id].questions[QuesID].answered === true){
-      let parent  = groupNameArray[id];
-      var oldAnswer = filteredJSON.filter(x => x.groupName == parent && x.externalId == QuesID)    
+  const isQuestionUpdate = (id, QuesID) => {
+    if (Data[id].questions[QuesID].answered === true) {
+      let parent = groupNameArray[id];
+      var oldAnswer = filteredJSON.filter(
+        (x) => x.groupName == parent && x.externalId == QuesID
+      );
       let currentAnswer = [];
-      console.log(filteredJSON, "<---filteredJSON")
-      if(Data[id].questions[QuesID].select == 'Accordian'){
-        const getSelectedGoals = Data[id].questions[QuesID].goalQues.filter(x => x.check === true);
+      console.log(filteredJSON, "<---filteredJSON");
+      if (Data[id].questions[QuesID].select == "Accordian") {
+        const getSelectedGoals = Data[id].questions[QuesID].goalQues.filter(
+          (x) => x.check === true
+        );
         for (const goal of getSelectedGoals) {
           const tempObj = {};
           tempObj.value = goal.value;
-          tempObj.subAnswers = goal.text.filter(x => x.check === true).map(x => x.text);
+          tempObj.subAnswers = goal.text
+            .filter((x) => x.check === true)
+            .map((x) => x.text);
           currentAnswer.push(tempObj);
-          goal.text = goal.text.filter(x => x.check === true);
+          goal.text = goal.text.filter((x) => x.check === true);
         }
-        
-      }else{
-        currentAnswer = Data[id].questions[QuesID].options.filter(x => x.check === true).map(x => x.value);
+      } else {
+        currentAnswer = Data[id].questions[QuesID].options
+          .filter((x) => x.check === true)
+          .map((x) => x.value);
       }
 
-      console.log(JSON.stringify(oldAnswer) , JSON.stringify(currentAnswer) , "<---oldAnswer === currentAnswer")
-      if(JSON.stringify(oldAnswer[0].answeres) == JSON.stringify(currentAnswer)){
-        return true 
-      }else{
-        return false
+      console.log(
+        JSON.stringify(oldAnswer),
+        JSON.stringify(currentAnswer),
+        "<---oldAnswer === currentAnswer"
+      );
+      if (
+        JSON.stringify(oldAnswer[0].answeres) == JSON.stringify(currentAnswer)
+      ) {
+        return true;
+      } else {
+        return false;
       }
-    }else{
+    } else {
       return false;
     }
+  };
 
+  const GradeLevels = [
+    ["Nursery"],
+    ["Kindergarten", "Pre1-A"],
+    ["1"],
+    ["2"],
+    ["3"],
+    ["4"],
+    ["5"],
+    ["6"],
+    ["7"],
+    ["8"],
+    ["9"],
+    ["10"],
+    ["11"],
+    ["12"],
+  ];
 
-  }
- 
-
-  
   const handleNext = () => {
-     
-    const grade = stuDetails.Grade;
-    const checkUpdate =  isQuestionUpdate(id,QuesID);
+    const grade = GradeLevels.findIndex((x) => x.includes(stuDetails.Grade));
+    const checkUpdate = isQuestionUpdate(id, QuesID);
     if (id == 0 && QuesID == 0) {
       var allChecked = Data[id].questions[QuesID].options.filter(
         (x) => x.check === true
@@ -94,26 +130,24 @@ export default function Footer({
       if (allChecked.length < Data[id].questions[QuesID].min) {
         alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
+        if (checkUpdate === false) {
+          var toShowOptions = [];
+          Data[id].questions[QuesID].options.forEach((value, index) => {
+            if (value.check === true) {
+              toShowOptions = toShowOptions.concat(value.show);
+            }
+          });
 
-       if(checkUpdate === false){
-         var toShowOptions = [];
-         Data[id].questions[QuesID].options.forEach((value, index) => {
-           if (value.check === true) {
-             toShowOptions = toShowOptions.concat(value.show);
-           }
-         });
-  
-         Data[id].questions[QuesID + 2].options.forEach((value, index) => {
-           Data[id].questions[QuesID + 2].options[index].check = false;
-           if (toShowOptions.includes(index)) {
-             Data[id].questions[QuesID + 2].options[index].isHidden = false;
-           } else {
-             Data[id].questions[QuesID + 2].options[index].isHidden = true;
-           }
-           setData(Data);
-         });
-       }
-
+          Data[id].questions[QuesID + 2].options.forEach((value, index) => {
+            Data[id].questions[QuesID + 2].options[index].check = false;
+            if (toShowOptions.includes(index)) {
+              Data[id].questions[QuesID + 2].options[index].isHidden = false;
+            } else {
+              Data[id].questions[QuesID + 2].options[index].isHidden = true;
+            }
+            setData(Data);
+          });
+        }
 
         nextQuestion(id, QuesID);
       }
@@ -178,17 +212,17 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
-        if(checkUpdate === false){
-        Data[id].questions[QuesID + 1].options.forEach((value, index) => {
-          if (Data[id].questions[QuesID + 1].options[index].level <= grade) {
-            Data[id].questions[QuesID + 1].options[index].isHidden = false;
-            setData(Data);
-          } else {
-            Data[id].questions[QuesID + 1].options[index].isHidden = true;
-            setData(Data);
-          }
-        });
-      }
+        if (checkUpdate === false) {
+          Data[id].questions[QuesID + 1].options.forEach((value, index) => {
+            if (Data[id].questions[QuesID + 1].options[index].level <= grade) {
+              Data[id].questions[QuesID + 1].options[index].isHidden = false;
+              setData(Data);
+            } else {
+              Data[id].questions[QuesID + 1].options[index].isHidden = true;
+              setData(Data);
+            }
+          });
+        }
         nextQuestion(id, QuesID);
       }
     }
@@ -219,24 +253,95 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
-        if(checkUpdate === false){
-        var option = [];
-        var dependentLevel = Data[id].questions[
-          Data[id].questions[QuesID + 1].dependQuestion
-        ].options.filter((x) => x.check === true);
-        Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
-          if (
-            value.level < grade + 1 &&
-            value.level >= dependentLevel[0].level
-          ) {
+        if (checkUpdate === false) {
+          var option = [];
+          var dependentLevel = Data[id].questions[
+            Data[id].questions[QuesID + 1].dependQuestion
+          ].options.filter((x) => x.check === true);
+          Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+            if (
+              value.level < grade + 1 &&
+              value.level >= dependentLevel[0].level
+            ) {
+              var isPresenrt = option.filter((x) => x.value == value.title);
+              if (!isPresenrt.length > 0) {
+                var subGoals = [];
+                value.subGoals.forEach((x) => {
+                  subGoals.push({
+                    text: x,
+                    check: false,
+                  });
+                });
+                option.push({
+                  value: value.title,
+                  text: subGoals,
+                  check: false,
+                });
+              } else {
+                var superGoalIndex = option.findIndex(
+                  (p) => p.value == value.title
+                );
+                value.subGoals.forEach((x) => {
+                  var exsitdGoal = option[superGoalIndex].text.filter(
+                    (goal) => goal.text == x
+                  );
+                  if (!exsitdGoal.length > 0) {
+                    option[superGoalIndex].text.push({
+                      text: x,
+                      check: false,
+                    });
+                  }
+                });
+              }
+            }
+          });
+          Data[id].questions[QuesID + 1].goalQues = option;
+          setData(Data);
+
+          console.log("---------updated data");
+        }
+        nextQuestion(id, QuesID);
+      }
+    }
+    if (id == 1 && QuesID == 5) {
+      var allCheckded = Data[id].questions[QuesID].goalQues.filter(
+        (x) => x.check === true
+      );
+      if (allCheckded.length < 1) {
+        alert("minimum 1 Selection is Required");
+      } else {
+        if (checkUpdate === false) {
+          var allAnsers = [];
+          allCheckded.forEach((value, index) => {
+            value.text.forEach((texval, point) => {
+              if (texval.check === true) allAnsers.push(texval.text);
+            });
+          });
+          var option = [];
+          var dependentLevel = Data[id].questions[
+            Data[id].questions[QuesID + 1].dependQuestion
+          ].options.filter((x) => x.check === true);
+          Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
             var isPresenrt = option.filter((x) => x.value == value.title);
             if (!isPresenrt.length > 0) {
               var subGoals = [];
               value.subGoals.forEach((x) => {
-                subGoals.push({
-                  text: x,
-                  check: false,
-                });
+                var exsitdGoal = subGoals.filter(
+                  (goal) => goal.text == x.title
+                );
+                if (!exsitdGoal.length > 0) {
+                  if (
+                    x.level <= grade + 1 &&
+                    x.level >= dependentLevel[0].level
+                  ) {
+                    if (!allAnsers.includes(x.title)) {
+                      subGoals.push({
+                        text: x.title,
+                        check: false,
+                      });
+                    }
+                  }
+                }
               });
               option.push({
                 value: value.title,
@@ -249,99 +354,29 @@ export default function Footer({
               );
               value.subGoals.forEach((x) => {
                 var exsitdGoal = option[superGoalIndex].text.filter(
-                  (goal) => goal.text == x
+                  (goal) => goal.text == x.title
                 );
                 if (!exsitdGoal.length > 0) {
-                  option[superGoalIndex].text.push({
-                    text: x,
-                    check: false,
-                  });
+                  if (
+                    x.level <= grade + 1 &&
+                    x.level >= dependentLevel[0].level
+                  ) {
+                    if (!allAnsers.includes(x.title)) {
+                      option[superGoalIndex].text.push({
+                        text: x.title,
+                        check: false,
+                      });
+                    }
+                  }
                 }
               });
             }
-          }
-        });
-        Data[id].questions[QuesID + 1].goalQues = option;
-        setData(Data);
-
-        console.log( "---------updated data");
-        }
-        nextQuestion(id, QuesID);
-       
-      }
-    }
-    if (id == 1 && QuesID == 5) {
-      var allCheckded = Data[id].questions[QuesID].goalQues.filter(
-        (x) => x.check === true
-      );
-      if (allCheckded.length < 1) {
-        alert("minimum 1 Selection is Required");
-      } else {
-        if(checkUpdate === false){
-        var allAnsers = [];
-        allCheckded.forEach((value, index) => {
-          value.text.forEach((texval, point) => {
-            if (texval.check === true) allAnsers.push(texval.text);
           });
-        });
-        var option = [];
-        var dependentLevel = Data[id].questions[
-          Data[id].questions[QuesID + 1].dependQuestion
-        ].options.filter((x) => x.check === true);
-        Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
-          var isPresenrt = option.filter((x) => x.value == value.title);
-          if (!isPresenrt.length > 0) {
-            var subGoals = [];
-            value.subGoals.forEach((x) => {
-              var exsitdGoal = subGoals.filter((goal) => goal.text == x.title);
-              if (!exsitdGoal.length > 0) {
-                if (
-                  x.level <= grade + 1 &&
-                  x.level >= dependentLevel[0].level
-                ) {
-                  if (!allAnsers.includes(x.title)) {
-                    subGoals.push({
-                      text: x.title,
-                      check: false,
-                    });
-                  }
-                }
-              }
-            });
-            option.push({
-              value: value.title,
-              text: subGoals,
-              check: false,
-            });
-          } else {
-            var superGoalIndex = option.findIndex(
-              (p) => p.value == value.title
-            );
-            value.subGoals.forEach((x) => {
-              var exsitdGoal = option[superGoalIndex].text.filter(
-                (goal) => goal.text == x.title
-              );
-              if (!exsitdGoal.length > 0) {
-                if (
-                  x.level <= grade + 1 &&
-                  x.level >= dependentLevel[0].level
-                ) {
-                  if (!allAnsers.includes(x.title)) {
-                    option[superGoalIndex].text.push({
-                      text: x.title,
-                      check: false,
-                    });
-                  }
-                }
-              }
-            });
-          }
-        });
 
-        Data[id].questions[QuesID + 1].goalQues = option;
-        setData(Data);
-        console.log(Data, "this is the data");
-      }
+          Data[id].questions[QuesID + 1].goalQues = option;
+          setData(Data);
+          console.log(Data, "this is the data");
+        }
         nextQuestion(id, QuesID);
       }
     }
@@ -379,17 +414,17 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
-        if(checkUpdate === false){
-        Data[id].questions[QuesID + 1].options.forEach((value, index) => {
-          if (Data[id].questions[QuesID + 1].options[index].level <= grade) {
-            Data[id].questions[QuesID + 1].options[index].isHidden = false;
-            setData(Data);
-          } else {
-            Data[id].questions[QuesID + 1].options[index].isHidden = true;
-            setData(Data);
-          }
-        });
-      }
+        if (checkUpdate === false) {
+          Data[id].questions[QuesID + 1].options.forEach((value, index) => {
+            if (Data[id].questions[QuesID + 1].options[index].level <= grade) {
+              Data[id].questions[QuesID + 1].options[index].isHidden = false;
+              setData(Data);
+            } else {
+              Data[id].questions[QuesID + 1].options[index].isHidden = true;
+              setData(Data);
+            }
+          });
+        }
         nextQuestion(id, QuesID);
       }
     }
@@ -420,53 +455,53 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
-        if(checkUpdate === false){
-        var option = [];
-        var dependentLevel = Data[id].questions[
-          Data[id].questions[QuesID + 1].dependQuestion
-        ].options.filter((x) => x.check === true);
-        Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
-          if (
-            value.level < grade + 1 &&
-            value.level >= dependentLevel[0].level
-          ) {
-            var isPresenrt = option.filter((x) => x.value == value.title);
-            if (!isPresenrt.length > 0) {
-              var subGoals = [];
-              value.subGoals.forEach((x) => {
-                subGoals.push({
-                  text: x,
-                  check: false,
-                });
-              });
-              option.push({
-                value: value.title,
-                text: subGoals,
-                check: false,
-              });
-            } else {
-              var superGoalIndex = option.findIndex(
-                (p) => p.value == value.title
-              );
-              value.subGoals.forEach((x) => {
-                var exsitdGoal = option[superGoalIndex].text.filter(
-                  (goal) => goal.text == x
-                );
-                if (!exsitdGoal.length > 0) {
-                  option[superGoalIndex].text.push({
+        if (checkUpdate === false) {
+          var option = [];
+          var dependentLevel = Data[id].questions[
+            Data[id].questions[QuesID + 1].dependQuestion
+          ].options.filter((x) => x.check === true);
+          Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+            if (
+              value.level < grade + 1 &&
+              value.level >= dependentLevel[0].level
+            ) {
+              var isPresenrt = option.filter((x) => x.value == value.title);
+              if (!isPresenrt.length > 0) {
+                var subGoals = [];
+                value.subGoals.forEach((x) => {
+                  subGoals.push({
                     text: x,
                     check: false,
                   });
-                }
-              });
+                });
+                option.push({
+                  value: value.title,
+                  text: subGoals,
+                  check: false,
+                });
+              } else {
+                var superGoalIndex = option.findIndex(
+                  (p) => p.value == value.title
+                );
+                value.subGoals.forEach((x) => {
+                  var exsitdGoal = option[superGoalIndex].text.filter(
+                    (goal) => goal.text == x
+                  );
+                  if (!exsitdGoal.length > 0) {
+                    option[superGoalIndex].text.push({
+                      text: x,
+                      check: false,
+                    });
+                  }
+                });
+              }
             }
-          }
-        });
-        Data[id].questions[QuesID + 1].goalQues = option;
-        setData(Data);
+          });
+          Data[id].questions[QuesID + 1].goalQues = option;
+          setData(Data);
 
-        console.log(Data[id].questions[QuesID + 1], "---------updated data");
-      }
+          console.log(Data[id].questions[QuesID + 1], "---------updated data");
+        }
         nextQuestion(id, QuesID);
       }
     }
@@ -477,64 +512,64 @@ export default function Footer({
       if (allCheckded < 1) {
         alert("Required");
       } else {
-        if(checkUpdate === false){
-        var allAnsers = [];
-        allCheckded.forEach((value, index) => {
-          value.text.forEach((texval, point) => {
-            if (texval.check === true) allAnsers.push(texval.text);
+        if (checkUpdate === false) {
+          var allAnsers = [];
+          allCheckded.forEach((value, index) => {
+            value.text.forEach((texval, point) => {
+              if (texval.check === true) allAnsers.push(texval.text);
+            });
           });
-        });
-        var option = [];
-        var dependentLevel = Data[id].questions[
-          Data[id].questions[QuesID + 1].dependQuestion
-        ].options.filter((x) => x.check === true);
-        Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
-          if (
-            value.level <= grade + 1 &&
-            value.level >= dependentLevel[0].level
-          ) {
-            var isPresenrt = option.filter((x) => x.value == value.title);
-            if (!isPresenrt.length > 0) {
-              var subGoals = [];
-              value.subGoals.forEach((x) => {
-                var exsitdGoal = subGoals.filter((goal) => goal.text == x);
-                if (!exsitdGoal.length > 0) {
-                  if (!allAnsers.includes(x)) {
-                    subGoals.push({
-                      text: x,
-                      check: false,
-                    });
+          var option = [];
+          var dependentLevel = Data[id].questions[
+            Data[id].questions[QuesID + 1].dependQuestion
+          ].options.filter((x) => x.check === true);
+          Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+            if (
+              value.level <= grade + 1 &&
+              value.level >= dependentLevel[0].level
+            ) {
+              var isPresenrt = option.filter((x) => x.value == value.title);
+              if (!isPresenrt.length > 0) {
+                var subGoals = [];
+                value.subGoals.forEach((x) => {
+                  var exsitdGoal = subGoals.filter((goal) => goal.text == x);
+                  if (!exsitdGoal.length > 0) {
+                    if (!allAnsers.includes(x)) {
+                      subGoals.push({
+                        text: x,
+                        check: false,
+                      });
+                    }
                   }
-                }
-              });
-              option.push({
-                value: value.title,
-                text: subGoals,
-                check: false,
-              });
-            } else {
-              var superGoalIndex = option.findIndex(
-                (p) => p.value == value.title
-              );
-              value.subGoals.forEach((x) => {
-                var exsitdGoal = option[superGoalIndex].text.filter(
-                  (goal) => goal.text == x
+                });
+                option.push({
+                  value: value.title,
+                  text: subGoals,
+                  check: false,
+                });
+              } else {
+                var superGoalIndex = option.findIndex(
+                  (p) => p.value == value.title
                 );
-                if (!exsitdGoal.length > 0) {
-                  if (!allAnsers.includes(x)) {
-                    option[superGoalIndex].text.push({
-                      text: x,
-                      check: false,
-                    });
+                value.subGoals.forEach((x) => {
+                  var exsitdGoal = option[superGoalIndex].text.filter(
+                    (goal) => goal.text == x
+                  );
+                  if (!exsitdGoal.length > 0) {
+                    if (!allAnsers.includes(x)) {
+                      option[superGoalIndex].text.push({
+                        text: x,
+                        check: false,
+                      });
+                    }
                   }
-                }
-              });
+                });
+              }
             }
-          }
-        });
-        Data[id].questions[QuesID + 1].goalQues = option;
-        setData(Data);
-      }
+          });
+          Data[id].questions[QuesID + 1].goalQues = option;
+          setData(Data);
+        }
         nextQuestion(id, QuesID);
       }
     }
@@ -556,17 +591,17 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
-        if(checkUpdate === false){
-        Data[id].questions[QuesID + 1].options.forEach((value, index) => {
-          if (Data[id].questions[QuesID + 1].options[index].level <= grade) {
-            Data[id].questions[QuesID + 1].options[index].isHidden = false;
-            setData(Data);
-          } else {
-            Data[id].questions[QuesID + 1].options[index].isHidden = true;
-            setData(Data);
-          }
-        });
-      }
+        if (checkUpdate === false) {
+          Data[id].questions[QuesID + 1].options.forEach((value, index) => {
+            if (Data[id].questions[QuesID + 1].options[index].level <= grade) {
+              Data[id].questions[QuesID + 1].options[index].isHidden = false;
+              setData(Data);
+            } else {
+              Data[id].questions[QuesID + 1].options[index].isHidden = true;
+              setData(Data);
+            }
+          });
+        }
         nextQuestion(id, QuesID);
       }
     }
@@ -597,53 +632,53 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
-        if(checkUpdate === false){
-        var option = [];
-        var dependentLevel = Data[id].questions[
-          Data[id].questions[QuesID + 1].dependQuestion
-        ].options.filter((x) => x.check === true);
-        Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
-          if (
-            value.level < grade + 1 &&
-            value.level >= dependentLevel[0].level
-          ) {
-            var isPresenrt = option.filter((x) => x.value == value.title);
-            if (!isPresenrt.length > 0) {
-              var subGoals = [];
-              value.subGoals.forEach((x) => {
-                subGoals.push({
-                  text: x,
-                  check: false,
-                });
-              });
-              option.push({
-                value: value.title,
-                text: subGoals,
-                check: false,
-              });
-            } else {
-              var superGoalIndex = option.findIndex(
-                (p) => p.value == value.title
-              );
-              value.subGoals.forEach((x) => {
-                var exsitdGoal = option[superGoalIndex].text.filter(
-                  (goal) => goal.text == x
-                );
-                if (!exsitdGoal.length > 0) {
-                  option[superGoalIndex].text.push({
+        if (checkUpdate === false) {
+          var option = [];
+          var dependentLevel = Data[id].questions[
+            Data[id].questions[QuesID + 1].dependQuestion
+          ].options.filter((x) => x.check === true);
+          Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+            if (
+              value.level < grade + 1 &&
+              value.level >= dependentLevel[0].level
+            ) {
+              var isPresenrt = option.filter((x) => x.value == value.title);
+              if (!isPresenrt.length > 0) {
+                var subGoals = [];
+                value.subGoals.forEach((x) => {
+                  subGoals.push({
                     text: x,
                     check: false,
                   });
-                }
-              });
+                });
+                option.push({
+                  value: value.title,
+                  text: subGoals,
+                  check: false,
+                });
+              } else {
+                var superGoalIndex = option.findIndex(
+                  (p) => p.value == value.title
+                );
+                value.subGoals.forEach((x) => {
+                  var exsitdGoal = option[superGoalIndex].text.filter(
+                    (goal) => goal.text == x
+                  );
+                  if (!exsitdGoal.length > 0) {
+                    option[superGoalIndex].text.push({
+                      text: x,
+                      check: false,
+                    });
+                  }
+                });
+              }
             }
-          }
-        });
-        Data[id].questions[QuesID + 1].goalQues = option;
-        setData(Data);
+          });
+          Data[id].questions[QuesID + 1].goalQues = option;
+          setData(Data);
 
-        console.log(Data[id].questions[QuesID + 1], "---------updated data");
-      }
+          console.log(Data[id].questions[QuesID + 1], "---------updated data");
+        }
         nextQuestion(id, QuesID);
       }
     }
@@ -654,81 +689,81 @@ export default function Footer({
       if (allCheckded < 1) {
         alert("Required");
       } else {
-        if(checkUpdate === false){
-        var allAnsers = [];
-        allCheckded.forEach((value, index) => {
-          value.text.forEach((texval, point) => {
-            if (texval.check === true) allAnsers.push(texval.text);
-          });
-        });
-        var option = [];
-        var dependentLevel = Data[id].questions[
-          Data[id].questions[QuesID + 1].dependQuestion
-        ].options.filter((x) => x.check === true);
-        Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
-          var checkInHide = Data[id].questions[
-            QuesID + 1
-          ].removeSuperGoals.filter((x) => x.hide == value.title);
-          var toAdd = true;
-          if (checkInHide.length > 0) {
-            allAnsers.every((x) => {
-              if (checkInHide[0].titles.includes(x)) {
-                toAdd = false;
-                return false;
-              }
-              return true;
+        if (checkUpdate === false) {
+          var allAnsers = [];
+          allCheckded.forEach((value, index) => {
+            value.text.forEach((texval, point) => {
+              if (texval.check === true) allAnsers.push(texval.text);
             });
-          }
-          if (
-            value.level <= grade + 1 &&
-            value.level >= dependentLevel[0].level &&
-            toAdd
-          ) {
-            var isPresenrt = option.filter((x) => x.value == value.title);
-            if (!isPresenrt.length > 0) {
-              var subGoals = [];
-              value.subGoals.forEach((x) => {
-                var exsitdGoal = subGoals.filter((goal) => goal.text == x);
-                if (!exsitdGoal.length > 0) {
-                  if (!allAnsers.includes(x)) {
-                    subGoals.push({
-                      text: x,
-                      check: false,
-                    });
-                  }
+          });
+          var option = [];
+          var dependentLevel = Data[id].questions[
+            Data[id].questions[QuesID + 1].dependQuestion
+          ].options.filter((x) => x.check === true);
+          Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+            var checkInHide = Data[id].questions[
+              QuesID + 1
+            ].removeSuperGoals.filter((x) => x.hide == value.title);
+            var toAdd = true;
+            if (checkInHide.length > 0) {
+              allAnsers.every((x) => {
+                if (checkInHide[0].titles.includes(x)) {
+                  toAdd = false;
+                  return false;
                 }
-              });
-              option.push({
-                value: value.title,
-                text: subGoals,
-                check: false,
-              });
-            } else {
-              var superGoalIndex = option.findIndex(
-                (p) => p.value == value.title
-              );
-              value.subGoals.forEach((x) => {
-                var exsitdGoal = option[superGoalIndex].text.filter(
-                  (goal) => goal.text == x
-                );
-                if (!exsitdGoal.length > 0) {
-                  if (!allAnsers.includes(x)) {
-                    option[superGoalIndex].text.push({
-                      text: x,
-                      check: false,
-                    });
-                  }
-                }
+                return true;
               });
             }
-          }
-        });
+            if (
+              value.level <= grade + 1 &&
+              value.level >= dependentLevel[0].level &&
+              toAdd
+            ) {
+              var isPresenrt = option.filter((x) => x.value == value.title);
+              if (!isPresenrt.length > 0) {
+                var subGoals = [];
+                value.subGoals.forEach((x) => {
+                  var exsitdGoal = subGoals.filter((goal) => goal.text == x);
+                  if (!exsitdGoal.length > 0) {
+                    if (!allAnsers.includes(x)) {
+                      subGoals.push({
+                        text: x,
+                        check: false,
+                      });
+                    }
+                  }
+                });
+                option.push({
+                  value: value.title,
+                  text: subGoals,
+                  check: false,
+                });
+              } else {
+                var superGoalIndex = option.findIndex(
+                  (p) => p.value == value.title
+                );
+                value.subGoals.forEach((x) => {
+                  var exsitdGoal = option[superGoalIndex].text.filter(
+                    (goal) => goal.text == x
+                  );
+                  if (!exsitdGoal.length > 0) {
+                    if (!allAnsers.includes(x)) {
+                      option[superGoalIndex].text.push({
+                        text: x,
+                        check: false,
+                      });
+                    }
+                  }
+                });
+              }
+            }
+          });
 
-        option = option.filter((x) => x.text.length > 0);
+          option = option.filter((x) => x.text.length > 0);
 
-        Data[id].questions[QuesID + 1].goalQues = option;
-        setData(Data);
-      }
+          Data[id].questions[QuesID + 1].goalQues = option;
+          setData(Data);
+        }
         nextQuestion(id, QuesID);
       }
     }
@@ -788,21 +823,21 @@ export default function Footer({
       if (allChecked.length < Data[id].questions[QuesID].min) {
         alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
-        if(checkUpdate === false){
-        var toHideOptions = [];
-        allChecked.forEach((value, index) => {
-          toHideOptions = toHideOptions.concat(value.doHide);
-        });
-        Data[id].questions[QuesID + 1].options.forEach((value, index) => {
-          Data[id].questions[QuesID + 1].options[index].check = false;
-          if (toHideOptions.includes(index)) {
-            Data[id].questions[QuesID + 1].options[index].isHidden = true;
-          } else {
-            Data[id].questions[QuesID + 1].options[index].isHidden = false;
-          }
-          setData(Data);
-        });
-      }
+        if (checkUpdate === false) {
+          var toHideOptions = [];
+          allChecked.forEach((value, index) => {
+            toHideOptions = toHideOptions.concat(value.doHide);
+          });
+          Data[id].questions[QuesID + 1].options.forEach((value, index) => {
+            Data[id].questions[QuesID + 1].options[index].check = false;
+            if (toHideOptions.includes(index)) {
+              Data[id].questions[QuesID + 1].options[index].isHidden = true;
+            } else {
+              Data[id].questions[QuesID + 1].options[index].isHidden = false;
+            }
+            setData(Data);
+          });
+        }
         nextQuestion(id, QuesID);
       }
     }
@@ -823,21 +858,21 @@ export default function Footer({
       if (allChecked.length < Data[id].questions[QuesID].min) {
         alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
-        if(checkUpdate === false){
-        var toHideOptions = [];
-        allChecked.forEach((value, index) => {
-          toHideOptions = toHideOptions.concat(value.doHide);
-        });
-        Data[id].questions[QuesID + 1].options.forEach((value, index) => {
-          Data[id].questions[QuesID + 1].options[index].check = false;
-          if (toHideOptions.includes(index)) {
-            Data[id].questions[QuesID + 1].options[index].isHidden = true;
-          } else {
-            Data[id].questions[QuesID + 1].options[index].isHidden = false;
-          }
-          setData(Data);
-        });
-      }
+        if (checkUpdate === false) {
+          var toHideOptions = [];
+          allChecked.forEach((value, index) => {
+            toHideOptions = toHideOptions.concat(value.doHide);
+          });
+          Data[id].questions[QuesID + 1].options.forEach((value, index) => {
+            Data[id].questions[QuesID + 1].options[index].check = false;
+            if (toHideOptions.includes(index)) {
+              Data[id].questions[QuesID + 1].options[index].isHidden = true;
+            } else {
+              Data[id].questions[QuesID + 1].options[index].isHidden = false;
+            }
+            setData(Data);
+          });
+        }
         nextQuestion(id, QuesID);
       }
     }
@@ -858,9 +893,8 @@ export default function Footer({
       if (allChecked.length < Data[id].questions[QuesID].min) {
         alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
-        
         if (allChecked.length == 1 && allChecked[0].value == "none") {
-          console.log(Data[id].questions[4], "<----answered")
+          console.log(Data[id].questions[4], "<----answered");
           nextQuestion(id, Data[id].questions.length - 1);
           Data[id].questions[1].answered = false;
           Data[id].questions[2].answered = false;
@@ -879,37 +913,37 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
-        if(checkUpdate === false){
-        var option = [];
-        var checkedLevel = Data[id].questions[
-          Data[id].questions[QuesID + 1].dependQuestion
-        ].options.filter((x) => x.check === true);
+        if (checkUpdate === false) {
+          var option = [];
+          var checkedLevel = Data[id].questions[
+            Data[id].questions[QuesID + 1].dependQuestion
+          ].options.filter((x) => x.check === true);
 
-        var DependentLevel = [];
-        checkedLevel.forEach((value, index) => {
-          if (value.check === true) DependentLevel.push(value.level);
-        });
+          var DependentLevel = [];
+          checkedLevel.forEach((value, index) => {
+            if (value.check === true) DependentLevel.push(value.level);
+          });
 
-        Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
-          if (DependentLevel.includes(value.level)) {
-            var subGoals = [];
-            value.subGoals.forEach((x) => {
-              subGoals.push({
-                text: x,
+          Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+            if (DependentLevel.includes(value.level)) {
+              var subGoals = [];
+              value.subGoals.forEach((x) => {
+                subGoals.push({
+                  text: x,
+                  check: false,
+                });
+              });
+              option.push({
+                value: value.title,
+                text: subGoals,
                 check: false,
               });
-            });
-            option.push({
-              value: value.title,
-              text: subGoals,
-              check: false,
-            });
-          }
-        });
+            }
+          });
 
-        Data[id].questions[QuesID + 1].goalQues = option;
-        setData(Data);
-      }
+          Data[id].questions[QuesID + 1].goalQues = option;
+          setData(Data);
+        }
         nextQuestion(id, QuesID);
       }
     }
@@ -920,37 +954,37 @@ export default function Footer({
       if (allCheckded.length < Data[id].questions[QuesID].goalQues.length) {
         alert("Required");
       } else {
-        if(checkUpdate === false){
-        var option = [];
-        var checkedLevel = Data[id].questions[
-          Data[id].questions[QuesID + 1].dependQuestion
-        ].options.filter((x) => x.check === true);
+        if (checkUpdate === false) {
+          var option = [];
+          var checkedLevel = Data[id].questions[
+            Data[id].questions[QuesID + 1].dependQuestion
+          ].options.filter((x) => x.check === true);
 
-        var DependentLevel = [];
-        checkedLevel.forEach((value, index) => {
-          if (value.check === true) DependentLevel.push(value.level);
-        });
+          var DependentLevel = [];
+          checkedLevel.forEach((value, index) => {
+            if (value.check === true) DependentLevel.push(value.level);
+          });
 
-        Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
-          if (DependentLevel.includes(value.level)) {
-            var subGoals = [];
-            value.subGoals.forEach((x) => {
-              subGoals.push({
-                text: x,
+          Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+            if (DependentLevel.includes(value.level)) {
+              var subGoals = [];
+              value.subGoals.forEach((x) => {
+                subGoals.push({
+                  text: x,
+                  check: false,
+                });
+              });
+              option.push({
+                value: value.title,
+                text: subGoals,
                 check: false,
               });
-            });
-            option.push({
-              value: value.title,
-              text: subGoals,
-              check: false,
-            });
-          }
-        });
+            }
+          });
 
-        Data[id].questions[QuesID + 1].goalQues = option;
-        setData(Data);
-      }
+          Data[id].questions[QuesID + 1].goalQues = option;
+          setData(Data);
+        }
         nextQuestion(id, QuesID);
       }
     }
@@ -961,57 +995,57 @@ export default function Footer({
       if (allCheckded.length < Data[id].questions[QuesID].goalQues.length) {
         alert("Required");
       } else {
-        if(checkUpdate === false){
-        var allCheckded = Data[id].questions[QuesID].goalQues.filter(
-          (x) => x.check === true
-        );
-        var option = [];
-        var checkedLevel = Data[id].questions[
-          Data[id].questions[QuesID + 1].dependQuestion
-        ].options.filter((x) => x.check === true);
+        if (checkUpdate === false) {
+          var allCheckded = Data[id].questions[QuesID].goalQues.filter(
+            (x) => x.check === true
+          );
+          var option = [];
+          var checkedLevel = Data[id].questions[
+            Data[id].questions[QuesID + 1].dependQuestion
+          ].options.filter((x) => x.check === true);
 
-        var DependentLevel = [];
-        var allanswer = [];
-        allCheckded.forEach((value, index) => {
-          value.text.forEach((val, point) => {
-            if (val.check === true) allanswer.push(val.text);
+          var DependentLevel = [];
+          var allanswer = [];
+          allCheckded.forEach((value, index) => {
+            value.text.forEach((val, point) => {
+              if (val.check === true) allanswer.push(val.text);
+            });
+            //if (value.check === true) DependentLevel.push(value.level);
           });
-          //if (value.check === true) DependentLevel.push(value.level);
-        });
 
-        checkedLevel.forEach((value, index) => {
-          if (value.check === true) DependentLevel.push(value.level);
-        });
+          checkedLevel.forEach((value, index) => {
+            if (value.check === true) DependentLevel.push(value.level);
+          });
 
-        Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
-          if (DependentLevel.includes(value.level)) {
-            var subGoals = [];
-            value.subGoals.forEach((x) => {
-              if (x.hideIf.length > 0) {
-                if (!allanswer.includes(x.hideIf[0])) {
+          Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+            if (DependentLevel.includes(value.level)) {
+              var subGoals = [];
+              value.subGoals.forEach((x) => {
+                if (x.hideIf.length > 0) {
+                  if (!allanswer.includes(x.hideIf[0])) {
+                    subGoals.push({
+                      text: x.title,
+                      check: false,
+                    });
+                  }
+                } else {
                   subGoals.push({
                     text: x.title,
                     check: false,
                   });
                 }
-              } else {
-                subGoals.push({
-                  text: x.title,
-                  check: false,
-                });
-              }
-            });
-            option.push({
-              value: value.title,
-              text: subGoals,
-              check: false,
-            });
-          }
-        });
+              });
+              option.push({
+                value: value.title,
+                text: subGoals,
+                check: false,
+              });
+            }
+          });
 
-        Data[id].questions[QuesID + 1].goalQues = option;
-        setData(Data);
-      }
+          Data[id].questions[QuesID + 1].goalQues = option;
+          setData(Data);
+        }
         nextQuestion(id, QuesID);
       }
     }
@@ -1032,52 +1066,51 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
-        Data[id].questions[QuesID].answered = true
-        setData(Data)
-        PostData(id,QuesID)
+        Data[id].questions[QuesID].answered = true;
+        setData(Data);
+        PostData(id, QuesID);
       }
     }
   };
 
-useEffect(()=>{
-  console.log(QUESTIONS.length, "<------filteredJSON.lengtheffect")
-  var total_question = QUESTIONS.length;;
-  var total_answered = 0;
-  total_answered = filteredJSON.length;
-  const percentages = (total_answered / total_question) * 100;
-  setPercentage(percentages);
+  useEffect(() => {
+    console.log(QUESTIONS.length, "<------filteredJSON.lengtheffect");
+    var total_question = QUESTIONS.length;
+    var total_answered = 0;
+    total_answered = filteredJSON.length;
+    const percentages = (total_answered / total_question) * 100;
+    setPercentage(percentages);
 
-  if(filteredJSON.length <= 2 && filteredJSON.length > 0){
-    setProgress("w-1/12");
-  }else if(filteredJSON.length <= 4 && filteredJSON.length > 2){
-    setProgress("w-2/12");
-  }else if((filteredJSON.length <= 10 && filteredJSON.length > 4)){
-    setProgress("w-2/12");
-  }else if((filteredJSON.length <= 15 && filteredJSON.length > 10)){
-    setProgress("w-4/12");
-  }else if((filteredJSON.length <= 17 && filteredJSON.length > 15)){
-    setProgress("w-5/12");
-  }else if((filteredJSON.length <= 20 && filteredJSON.length > 17)){
-    setProgress("w-6/12");
-  }else if((filteredJSON.length <= 25 && filteredJSON.length > 20)){
-    setProgress("w-7/12");
-  }else if((filteredJSON.length <= 28 && filteredJSON.length > 25)){
-    setProgress("w-8/12");
-  }else if((filteredJSON.length <= 30 && filteredJSON.length > 28)){
-    setProgress("w-9/12");
-  }else if((filteredJSON.length <= 34 && filteredJSON.length > 30)){
-    setProgress("w-10/12");
-  }else if((filteredJSON.length <= 37 && filteredJSON.length > 34)){
-    setProgress("w-11/12");
-  }else if((filteredJSON.length <= 39 && filteredJSON.length > 37)){
-    setProgress("w-12/12");
-  }
+    if (filteredJSON.length <= 2 && filteredJSON.length > 0) {
+      setProgress("w-1/12");
+    } else if (filteredJSON.length <= 4 && filteredJSON.length > 2) {
+      setProgress("w-2/12");
+    } else if (filteredJSON.length <= 10 && filteredJSON.length > 4) {
+      setProgress("w-2/12");
+    } else if (filteredJSON.length <= 15 && filteredJSON.length > 10) {
+      setProgress("w-4/12");
+    } else if (filteredJSON.length <= 17 && filteredJSON.length > 15) {
+      setProgress("w-5/12");
+    } else if (filteredJSON.length <= 20 && filteredJSON.length > 17) {
+      setProgress("w-6/12");
+    } else if (filteredJSON.length <= 25 && filteredJSON.length > 20) {
+      setProgress("w-7/12");
+    } else if (filteredJSON.length <= 28 && filteredJSON.length > 25) {
+      setProgress("w-8/12");
+    } else if (filteredJSON.length <= 30 && filteredJSON.length > 28) {
+      setProgress("w-9/12");
+    } else if (filteredJSON.length <= 34 && filteredJSON.length > 30) {
+      setProgress("w-10/12");
+    } else if (filteredJSON.length <= 37 && filteredJSON.length > 34) {
+      setProgress("w-11/12");
+    } else if (filteredJSON.length <= 39 && filteredJSON.length > 37) {
+      setProgress("w-12/12");
+    }
 
-  
-  // nextQuestion(id, QuesID)
-},[percentage, filteredJSON])
+    // nextQuestion(id, QuesID)
+  }, [percentage, filteredJSON]);
 
-console.log(progress, "<----uaddfoa")
+  console.log(progress, "<----uaddfoa");
 
   const nextQuestion = (parent, question) => {
     Data[parent].questions[question].answered = true;
@@ -1085,202 +1118,211 @@ console.log(progress, "<----uaddfoa")
     var questionLength = Data[parent].questions.length;
     var parentId = parent;
     var questionId = question;
-    console.log(question, "<<<----questionLength")
+    console.log(question, "<<<----questionLength");
     // if(totalQuestions.length){
-      if (question < questionLength - 1) {
-        questionId = questionId + 1;
-      } else {
-        questionId = 0;
-        parentId = parentId + 1;
-      }
+    if (question < questionLength - 1) {
+      questionId = questionId + 1;
+    } else {
+      questionId = 0;
+      parentId = parentId + 1;
+    }
 
     // }else{
     //   questionId = 0;
-    //     parentId = parentId 
+    //     parentId = parentId
     // }
     if (
       "isRandom" in Data[parentId].questions[questionId] &&
       Data[parentId].questions[questionId].isRandom === true
     ) {
-
       questionId = questionId + 1;
     }
     changeQuestionToGender(parentId, questionId);
-    PostData(parentId,questionId);
+    PostData(parentId, questionId);
     setID(parentId);
     setQuesID(questionId);
 
-
-    
     var total_question = QUESTIONS.length;
     var total_answered = 0;
-    total_answered = filteredJSON.length
-    const percentage = (total_answered/ total_question) * 100
-    setPercentage(percentage)
+    total_answered = filteredJSON.length;
+    const percentage = (total_answered / total_question) * 100;
+    setPercentage(percentage);
 
-    if(filteredJSON.length <= 2 && filteredJSON.length > 0){
+    if (filteredJSON.length <= 2 && filteredJSON.length > 0) {
       setProgress("w-1/12");
-    }else if(filteredJSON.length <= 4 && filteredJSON.length > 2){
+    } else if (filteredJSON.length <= 4 && filteredJSON.length > 2) {
       setProgress("w-2/12");
-    }else if((filteredJSON.length <= 10 && filteredJSON.length > 4)){
+    } else if (filteredJSON.length <= 10 && filteredJSON.length > 4) {
       setProgress("w-2/12");
-    }else if((filteredJSON.length <= 15 && filteredJSON.length > 10)){
+    } else if (filteredJSON.length <= 15 && filteredJSON.length > 10) {
       setProgress("w-4/12");
-    }else if((filteredJSON.length <= 17 && filteredJSON.length > 15)){
+    } else if (filteredJSON.length <= 17 && filteredJSON.length > 15) {
       setProgress("w-5/12");
-    }else if((filteredJSON.length <= 20 && filteredJSON.length > 17)){
+    } else if (filteredJSON.length <= 20 && filteredJSON.length > 17) {
       setProgress("w-6/12");
-    }else if((filteredJSON.length <= 25 && filteredJSON.length > 20)){
+    } else if (filteredJSON.length <= 25 && filteredJSON.length > 20) {
       setProgress("w-7/12");
-    }else if((filteredJSON.length <= 28 && filteredJSON.length > 25)){
+    } else if (filteredJSON.length <= 28 && filteredJSON.length > 25) {
       setProgress("w-8/12");
-    }else if((filteredJSON.length <= 30 && filteredJSON.length > 28)){
+    } else if (filteredJSON.length <= 30 && filteredJSON.length > 28) {
       setProgress("w-9/12");
-    }else if((filteredJSON.length <= 34 && filteredJSON.length > 30)){
+    } else if (filteredJSON.length <= 34 && filteredJSON.length > 30) {
       setProgress("w-10/12");
-    }else if((filteredJSON.length <= 37 && filteredJSON.length > 34)){
+    } else if (filteredJSON.length <= 37 && filteredJSON.length > 34) {
       setProgress("w-11/12");
-    }else if((filteredJSON.length <= 39 && filteredJSON.length > 37)){
+    } else if (filteredJSON.length <= 39 && filteredJSON.length > 37) {
       setProgress("w-12/12");
     }
-  
-
-
-
-
   };
-  
-  console.log(progress, "<---progress88")
 
-  
-  const getFilteredJSONData = (groupId, questionId) => {  
+  console.log(progress, "<---progress88");
+
+  const getFilteredJSONData = (groupId, questionId) => {
     const groupName = groupNameArray[groupId];
-    let filteredJSONQuestionObj = {groupName: groupName};
-      const getGroupObjFromParent = Data.find(x => x.title.toLowerCase() === groupName.toLowerCase());
-      const getCompletedQuestionFromGroup = getGroupObjFromParent.questions[questionId];
-      
-      const is_exist = filteredJSON.filter(x => x.groupName == groupName && x.externalId == questionId);
+    let filteredJSONQuestionObj = { groupName: groupName };
+    const getGroupObjFromParent = Data.find(
+      (x) => x.title.toLowerCase() === groupName.toLowerCase()
+    );
+    const getCompletedQuestionFromGroup =
+      getGroupObjFromParent.questions[questionId];
 
-      if(is_exist.length > 0  ){
-        const index = filteredJSON.findIndex(x => x.groupName == groupName && x.externalId == questionId);
-        if(getCompletedQuestionFromGroup.select === "Accordian") {
-          const getSelectedGoals = getCompletedQuestionFromGroup.goalQues.filter(x => x.check === true);
-          filteredJSON[index].answeres = [];
-          for (const goal of getSelectedGoals) {
-            const tempObj = {};
-            tempObj.value = goal.value;
-            tempObj.subAnswers = goal.text.filter(x => x.check === true).map(x => x.text);
-            filteredJSON[index].answeres.push(tempObj);
-            goal.text = goal.text.filter(x => x.check === true);
-          }
-        }else{
-          filteredJSON[index].answeres = getCompletedQuestionFromGroup.options.filter(x => x.check === true).map(x => x.value);
-     
-        }
+    const is_exist = filteredJSON.filter(
+      (x) => x.groupName == groupName && x.externalId == questionId
+    );
 
-      }else{
-        filteredJSONQuestionObj.questionId = getCompletedQuestionFromGroup.questionID;
-        filteredJSONQuestionObj.externalId = QuesID;
-        filteredJSONQuestionObj.groupID = groupId;
-        filteredJSONQuestionObj.question = getCompletedQuestionFromGroup.question;
-        console.log('getCompletedQuestionFromGroup.question.select', getCompletedQuestionFromGroup)
-       
-        if(getCompletedQuestionFromGroup.select === "Accordian") {
-          filteredJSONQuestionObj.question = filteredJSONQuestionObj.question.replace('[name]', stuDetails.FirstName);
-          const getSelectedGoals = getCompletedQuestionFromGroup.goalQues.filter(x => x.check === true);
-          filteredJSONQuestionObj.answeres = [];
-          for (const goal of getSelectedGoals) {
-            const tempObj = {};
-            tempObj.value = goal.value;
-            tempObj.subAnswers = goal.text.filter(x => x.check === true).map(x => x.text);
-            filteredJSONQuestionObj.answeres.push(tempObj);
-            goal.text = goal.text.filter(x => x.check === true);
-          }
-          console.log('filteredJSONQuestionObj', filteredJSONQuestionObj)
-  
-        }else{
-          filteredJSONQuestionObj.answeres = getCompletedQuestionFromGroup.options.filter(x => x.check === true).map(x => x.value);
-          filteredJSONQuestionObj.question = filteredJSONQuestionObj.question.replace('[name]', stuDetails.FirstName)
+    if (is_exist.length > 0) {
+      const index = filteredJSON.findIndex(
+        (x) => x.groupName == groupName && x.externalId == questionId
+      );
+      if (getCompletedQuestionFromGroup.select === "Accordian") {
+        const getSelectedGoals = getCompletedQuestionFromGroup.goalQues.filter(
+          (x) => x.check === true
+        );
+        filteredJSON[index].answeres = [];
+        for (const goal of getSelectedGoals) {
+          const tempObj = {};
+          tempObj.value = goal.value;
+          tempObj.subAnswers = goal.text
+            .filter((x) => x.check === true)
+            .map((x) => x.text);
+          filteredJSON[index].answeres.push(tempObj);
+          goal.text = goal.text.filter((x) => x.check === true);
         }
-        console.log('filteredJSONQuestionObj', filteredJSONQuestionObj)
-        // setFilter(filteredJSON.concat(filteredJSONQuestionObj));
-        filteredJSON.push(filteredJSONQuestionObj)
-        setFilteredJSON(filteredJSON);
-  
-        console.log('filteredJSONddd', filteredJSON)
+      } else {
+        filteredJSON[index].answeres = getCompletedQuestionFromGroup.options
+          .filter((x) => x.check === true)
+          .map((x) => x.value);
       }
+    } else {
+      filteredJSONQuestionObj.questionId =
+        getCompletedQuestionFromGroup.questionID;
+      filteredJSONQuestionObj.externalId = QuesID;
+      filteredJSONQuestionObj.groupID = groupId;
+      filteredJSONQuestionObj.question = getCompletedQuestionFromGroup.question;
+      console.log(
+        "getCompletedQuestionFromGroup.question.select",
+        getCompletedQuestionFromGroup
+      );
 
-      
+      if (getCompletedQuestionFromGroup.select === "Accordian") {
+        filteredJSONQuestionObj.question =
+          filteredJSONQuestionObj.question.replace(
+            "name",
+            stuDetails.FirstName
+          );
+        const getSelectedGoals = getCompletedQuestionFromGroup.goalQues.filter(
+          (x) => x.check === true
+        );
+        filteredJSONQuestionObj.answeres = [];
+        for (const goal of getSelectedGoals) {
+          const tempObj = {};
+          tempObj.value = goal.value;
+          tempObj.subAnswers = goal.text
+            .filter((x) => x.check === true)
+            .map((x) => x.text);
+          filteredJSONQuestionObj.answeres.push(tempObj);
+          goal.text = goal.text.filter((x) => x.check === true);
+        }
+        console.log("filteredJSONQuestionObj", filteredJSONQuestionObj);
+      } else {
+        filteredJSONQuestionObj.answeres = getCompletedQuestionFromGroup.options
+          .filter((x) => x.check === true)
+          .map((x) => x.value);
+        filteredJSONQuestionObj.question =
+          filteredJSONQuestionObj.question.replace(
+            "name",
+            stuDetails.FirstName
+          );
+      }
+      console.log("filteredJSONQuestionObj", filteredJSONQuestionObj);
+      // setFilter(filteredJSON.concat(filteredJSONQuestionObj));
+      filteredJSON.push(filteredJSONQuestionObj);
+      setFilteredJSON(filteredJSON);
 
-  }
-  
-
-  
-  const PostData = (parent,ques)=>{
-    getFilteredJSONData(id, QuesID)
-    if(filteredJSON.length) {
-     console.log('filteredJSON++++', filteredJSON, QuesID)
- 
-    const searchParams = new URLSearchParams(document.location.search)
-    console.log('filteredJSON', filteredJSON)
-    const updatedData = filteredJSON;
-    const body = JSON.stringify({
-      ...stuDetails,
-      "questions": updatedData
-    });
-
-  var config = {
-    method: 'POST',
-    maxBodyLength: Infinity,
-    url: `https://31zctjiomj.execute-api.us-east-1.amazonaws.com/default/enhacereport?StudentID=${searchParams.get('StudentID')}&Token=${searchParams.get('Token')}`,
-    headers: { 
-      'Content-Type': 'application/json',
-
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, Authorization, Content-Length, X-Requested-With, Accept"
-
-    },
-    withCredentials: false,
-    crossdomain: true,
-    data : body
-  };
-  var confighook = {
-    method: 'POST',
-    maxBodyLength: Infinity,
-    url: `https://eo1uo5aa7h7sqbm.m.pipedream.net`,
-    data : body
+      console.log("filteredJSONddd", filteredJSON);
+    }
   };
 
-  
-  axios(config)
-  .then(function (response) {
-    console.log(response.data.questions, "<---response.data.questions")
-    setTotalQuestions(response.data.questions)
-      if(id === 6 && QuesID === 0){
-        axios(confighook)
-        setSubmit(true)
+  const PostData = (parent, ques) => {
+    getFilteredJSONData(id, QuesID);
+    if (filteredJSON.length) {
+      console.log("filteredJSON++++", filteredJSON, QuesID);
 
-      }
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-} 
-}
+      const searchParams = new URLSearchParams(document.location.search);
+      console.log("filteredJSON", filteredJSON);
+      const updatedData = filteredJSON;
+      const body = JSON.stringify({
+        ...stuDetails,
+        questions: updatedData,
+      });
 
+      var config = {
+        method: "POST",
+        maxBodyLength: Infinity,
+        url: `https://31zctjiomj.execute-api.us-east-1.amazonaws.com/default/enhacereport?StudentID=${searchParams.get(
+          "StudentID"
+        )}&Token=${searchParams.get("Token")}`,
+        headers: {
+          "Content-Type": "application/json",
 
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,OPTIONS",
+          "Access-Control-Allow-Headers":
+            "Content-Type, Authorization, Content-Length, X-Requested-With, Accept",
+        },
+        withCredentials: false,
+        crossdomain: true,
+        data: body,
+      };
+      var confighook = {
+        method: "POST",
+        maxBodyLength: Infinity,
+        url: `https://eo1uo5aa7h7sqbm.m.pipedream.net`,
+        data: body,
+      };
 
-
+      axios(config)
+        .then(function (response) {
+          console.log(response.data.questions, "<---response.data.questions");
+          setTotalQuestions(response.data.questions);
+          if (id === 6 && QuesID === 0) {
+            axios(confighook);
+            setSubmit(true);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  };
 
   const handleBack = () => {
-    const back = true
+    const back = true;
     // if (filteredJSON.length) {
     //   const groupName = groupNameArray[id];
     //   const getIdxFromFilteredJSon = filteredJSON.findIndex(x => x.groupName.toLowerCase() === groupName.toLowerCase() && QuesID === x.questionId);
     //   filteredJSON.splice(getIdxFromFilteredJSon, 1);
 
-      
     //   const searchParams = new URLSearchParams(document.location.search)
     //   console.log('filteredJSON', filteredJSON)
     //   const updatedData = filteredJSON;
@@ -1293,7 +1335,7 @@ console.log(progress, "<----uaddfoa")
     //     method: 'POST',
     //     maxBodyLength: Infinity,
     //     url: `https://31zctjiomj.execute-api.us-east-1.amazonaws.com/default/enhacereport?StudentID=${searchParams.get('StudentID')}&Token=${searchParams.get('Token')}`,
-    //     headers: { 
+    //     headers: {
     //       'Content-Type': 'application/json',
 
     //             "Access-Control-Allow-Origin": "*",
@@ -1308,25 +1350,25 @@ console.log(progress, "<----uaddfoa")
 
     //   axios(config)
     //   .then(function (response) {
-        
+
     //   })
     //   .catch(function (error) {
     //     console.log(error);
     //   });
     // }
-    PreviousQues(id, QuesID);    
+    PreviousQues(id, QuesID);
   };
 
   const changeQuestionToGender = (parent, question) => {
     var studentName = stuDetails.FirstName;
     Data[parent].questions[question].question = Data[parent].questions[
       question
-    ].question.replace("[name]", `${studentName}'s`);
+    ].question.replace("name", `${studentName}`);
 
     if (Data[parent].questions[question].select != "Accordian") {
       Data[parent].questions[question].options.forEach((val, index) => {
         Data[parent].questions[question].options[index].value =
-          val.value.replace("[name]", `${studentName}'s`);
+          val.value.replace("name", `${studentName}`);
       });
     }
 
@@ -1334,8 +1376,6 @@ console.log(progress, "<----uaddfoa")
   };
 
   const PreviousQues = (parent, question) => {
-
-
     // if (Data[parent].questions[question].answered) {
     //   console.log('aaa')
     //   Data[parent].questions[question].answered = false;
@@ -1349,11 +1389,11 @@ console.log(progress, "<----uaddfoa")
     //       }
     //     }
     //   }
-      
+
     // }
-    
+
     if (question == 0) {
-      console.log('rrr')
+      console.log("rrr");
       parent = parent - 1;
       question = Data[parent].questions.length - 1;
       // Data[parent].questions.forEach((val, index) => {
@@ -1364,48 +1404,49 @@ console.log(progress, "<----uaddfoa")
     }
 
     if (Data[parent].questions[question].answered) {
-      console.log('aaa')
-      
-
+      console.log("aaa");
 
       setID(parent);
       setQuesID(question);
     } else {
-      console.log('bbb')
+      console.log("bbb");
       PreviousQues(parent, question);
     }
-  
   };
- 
-
 
   return (
     <footer className="fixed drop-shadow-2xl border-t-4 border-gray-200 inset-x-0 bottom-0 w-full bg-white">
       <div className="flex flex-row items-center">
-      <div className="bg-[#EFEEF5] percentageRatio">
-          <p className="text-[#47529B] text-md">{percentage ? Math.floor(percentage) : 0}% Complete</p>
+        <div className="bg-[#EFEEF5] percentageRatio">
+          <p className="text-[#47529B] text-md">
+            {percentage ? Math.floor(percentage) : 0}% Complete
+          </p>
           <div class="overflow-hidden h-2 mb-2 text-xs flex rounded bg-white">
-            <div class={`shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#47529B] ${progress}`}></div>
+            <div
+              class={`shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#47529B] ${progress}`}
+            ></div>
           </div>
         </div>
-        
+
         <div className="backBtnWrapper">
-        <button
-          onClick={handleBack}
-          className="rounded-md font-medium flex flex-row"
-        >
-          <FaArrowLeft className="text-center m-1 ml-0" />
-          <p className="text-center ml-1">Back</p>
-        </button>
+          <button
+            onClick={handleBack}
+            className="rounded-md font-medium flex flex-row"
+          >
+            <FaArrowLeft className="text-center m-1 ml-0" />
+            <p className="text-center ml-1">Back</p>
+          </button>
         </div>
         <div className="nextBtnWrapper">
-        <button
-          onClick={handleNext}
-          className="bg-[#DE706C] h-10 rounded-md justify-center text-white font-medium flex flex-row"
-        >
-          <p className="text-center mr-1">{id === 6 && QuesID === 0 ? "Submit" : "Next"}</p>
-          <FaArrowRight className="text-center m-1 mr-0" />
-        </button>
+          <button
+            onClick={handleNext}
+            className="bg-[#DE706C] h-10 rounded-md justify-center text-white font-medium flex flex-row"
+          >
+            <p className="text-center mr-1">
+              {id === 6 && QuesID === 0 ? "Submit" : "Next"}
+            </p>
+            <FaArrowRight className="text-center m-1 mr-0" />
+          </button>
         </div>
       </div>
     </footer>

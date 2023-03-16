@@ -42,7 +42,7 @@ console.log(stuDetails)
           <tr className="text-normal text-[#1C3E57]">
           
             <td>
-              {stuDetails.FirstName ? stuDetails.FirstName :
+              {stuDetails.FirstName ?` ${stuDetails.FirstName} ${stuDetails.LastName} `:
               <svg class="animate-spin h-5 w-5  bg-indigo-500" viewBox="0 0 24 24"> </svg> 
                 }
             </td>
