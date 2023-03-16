@@ -522,6 +522,9 @@ footer .nextBtnWrapper button:hover {
 }
 
 @media screen and (max-width:767px) {
+    footer {
+        padding: 16px 24px;
+    }
     .logoImage {
         padding: 16px 6px;
     }
