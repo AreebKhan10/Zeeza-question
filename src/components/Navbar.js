@@ -4,7 +4,6 @@ import { useGlobalContext } from '../context'
 
 export default function Navbar() {
   
-  const {stuDetails} = useGlobalContext()
   const {percentage} = useGlobalContext();
 
   // var total_question = 35;
@@ -16,14 +15,14 @@ export default function Navbar() {
 
   // const percentage = (total_answered/ total_question) * 100
 
-console.log(percentage, "<---percentage")
+
   return (
     <>
     <div className='flex flex-row bg-[#47529B] logoImage' >
       <img src={logo} className='w-100'></img>
     </div>
     <div  className='flex flex-row justify-between bg-[#EFEEF5] acdemicReport'>
-      <h3 className='text-[#1C3E57] font-medium text-xl'>Acadmic Student Report</h3> 
+      <h3 className='text-[#1C3E57] font-medium text-xl'>Student Progress Report</h3> 
       <div className="bg-[#EFEEF5] p-2 percentageRatio">
           <p className="text-[#47529B] text-md">{percentage ? Math.floor(percentage) : 0}% Complete</p>
 
