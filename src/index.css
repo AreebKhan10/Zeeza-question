@@ -655,3 +655,12 @@ footer .nextBtnWrapper button:hover {
     background-size: 34px;
     background-position: center center;
 }
+
+@media screen and (max-width:380px) {
+    .acdemicReport h3 {
+        font-size: 15px;
+    }
+    .acdemicReport .percentageRatio p {
+        font-size: 14px;
+    }
+}
