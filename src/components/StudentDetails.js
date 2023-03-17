@@ -24,7 +24,7 @@ useEffect(()=>{
 console.log(stuDetails)
 
   return (
-    <div className="studentTableWrapper sticky top-0 bg-white">
+    <div className="studentTableWrapper bg-white">
       <table class="studentTable table-auto text-medium text-[#1C3E57]">
         <thead>
           <tr>

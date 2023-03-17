@@ -73,6 +73,8 @@ body {
     text-align: left;
     border-bottom: 1px solid #E9E9E9;
     z-index: 1;
+    position: sticky;
+    top: 0;
     overflow: auto;
 }
 
@@ -142,8 +144,6 @@ body {
 
 .studentContent .studentContent-Left>ul.navTop {
     padding: 24px;
-    border-top: 1px solid;
-    border-color: #DBE0E3;
 }
 
 .studentContent .studentContent-Left>ul.navTop>li {
@@ -201,8 +201,8 @@ body {
 
 .studentContent .studentContent-Left .menuTop {
     padding: 24px;
-    /* border-bottom: 1px solid;
-    border-color: #DBE0E3; */
+    border-bottom: 1px solid;
+    border-color: #DBE0E3;
 }
 
 .studentContent .studentContent-Left .menuTop .menuIcon .menuInner {
@@ -234,6 +234,8 @@ body {
     padding: 22px;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid;
+    border-color: #DBE0E3;
 }
 
 .studentContent .studentContent-right .studentContentTop p {
@@ -261,14 +263,6 @@ body {
 
 .studentContent .studentContent-right .studentContentBottom {
     padding: 24px;
-    border-top: 1px solid;
-    border-color: #DBE0E3;
-}
-
-.studentContent .studentContent-right .studentContentBottom {
-    padding: 24px;
-    border-top: 1px solid;
-    border-color: #DBE0E3;
 }
 
 .studentContent .studentContent-right .studentContentBottom p:first-child {
@@ -461,6 +455,8 @@ body {
 footer {
     padding: 32px;
     box-shadow: 0px -10px 10px rgb(38 50 56 / 8%);
+    position: fixed;
+    bottom: 0;
 }
 
 footer .percentageRatio {
@@ -476,7 +472,7 @@ footer .percentageRatio p {
 
 footer .backBtnWrapper {
     flex: 1 1 auto;
-    margin-left: 96px;
+    margin-left: 80px;
 }
 
 footer .backBtnWrapper button {
@@ -522,8 +518,18 @@ footer .nextBtnWrapper button:hover {
 }
 
 @media screen and (max-width:767px) {
+    .studentContent .studentContent-right .studentContentTop {
+        position: sticky;
+        top: 0;
+        background: #fff;
+        z-index: 1;
+    }
+    .studentContent .studentContent-right .studentContentBottom .selectWrapper .selectBorder .innerBoxes {
+        padding: 15px 0px 15px 64px;
+    }
     footer {
         padding: 16px 24px;
+        position: inherit;
     }
     .logoImage {
         padding: 16px 6px;
@@ -538,7 +544,7 @@ footer .nextBtnWrapper button:hover {
     }
 
     .acdemicReport h3 {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .acdemicReport .percentageRatio p {
@@ -551,6 +557,7 @@ footer .nextBtnWrapper button:hover {
 
     .studentTableWrapper {
         padding: 16px;
+        position: inherit;
     }
 
     .studentTableWrapper table.studentTable thead tr th {
@@ -561,6 +568,7 @@ footer .nextBtnWrapper button:hover {
     .studentContent {
         display: block;
         padding: 0;
+        margin-bottom: 0;
     }
 
     .studentContent .studentContent-right .studentContentTop .menuIcon {

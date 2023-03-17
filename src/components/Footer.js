@@ -1415,7 +1415,7 @@ export default function Footer({
   };
 
   return (
-    <footer className="fixed drop-shadow-2xl border-t-4 border-gray-200 inset-x-0 bottom-0 w-full bg-white">
+    <footer className="drop-shadow-2xl border-t-4 border-gray-200 inset-x-0 w-full bg-white">
       <div className="flex flex-row items-center">
         <div className="bg-[#EFEEF5] percentageRatio">
           <p className="text-[#47529B] text-md">
