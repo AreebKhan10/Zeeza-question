@@ -34,7 +34,6 @@ export default function Footer({
     totalQuestions,
     setTotalQuestions,
   } = useGlobalContext();
-  console.log(filteredJSON, "<---filteredJSONfilteredJSON");
 
   let [progress, setProgress] = useState("");
   const { setPercentage, percentage, setStuDetails, setDisable } =
@@ -314,9 +313,16 @@ export default function Footer({
           var allAnsers = [];
           allCheckded.forEach((value, index) => {
             value.text.forEach((texval, point) => {
-              if (texval.check === true) allAnsers.push(texval.text);
+              
+              if (texval.check === true){
+                allAnsers.push(texval.text);
+              }
+              
+
             });
           });
+          
+          console.log(allAnsers, "allAnsers")
           var option = [];
           var dependentLevel = Data[id].questions[
             Data[id].questions[QuesID + 1].dependQuestion
@@ -374,12 +380,14 @@ export default function Footer({
           });
 
           Data[id].questions[QuesID + 1].goalQues = option;
+          console.log(Data,"<----Data")
           setData(Data);
           console.log(Data, "this is the data");
         }
         nextQuestion(id, QuesID);
       }
     }
+    
     if (id == 1 && QuesID == 6) {
       var allCheckded = Data[id].questions[QuesID].goalQues.filter(
         (x) => x.check === true
@@ -785,8 +793,10 @@ export default function Footer({
       if (allChecked.length < 1) {
         alert(`Required`);
       } else {
+
         if (allChecked[0].value == "Yes") {
-          nextQuestion(id, QuesID + 1);
+          Data[id].questions[QuesID].answered = true
+          nextQuestion(id, QuesID + 1, false);
         } else {
           nextQuestion(id, QuesID);
         }
@@ -1073,8 +1083,12 @@ export default function Footer({
     }
   };
 
+
+
+
   useEffect(() => {
-    console.log(QUESTIONS.length, "<------filteredJSON.lengtheffect");
+
+    console.log(Data, "<------filteredJSON");
     var total_question = QUESTIONS.length;
     var total_answered = 0;
     total_answered = filteredJSON.length;
@@ -1106,14 +1120,12 @@ export default function Footer({
     } else if (filteredJSON.length <= 39 && filteredJSON.length > 37) {
       setProgress("w-12/12");
     }
-
-    // nextQuestion(id, QuesID)
   }, [percentage, filteredJSON]);
 
   console.log(progress, "<----uaddfoa");
 
-  const nextQuestion = (parent, question) => {
-    Data[parent].questions[question].answered = true;
+  const nextQuestion = (parent, question, makeTrue = true) => {
+    if(makeTrue) Data[parent].questions[question].answered = true;
     setData(Data);
     var questionLength = Data[parent].questions.length;
     var parentId = parent;
@@ -1206,7 +1218,7 @@ export default function Footer({
             .filter((x) => x.check === true)
             .map((x) => x.text);
           filteredJSON[index].answeres.push(tempObj);
-          goal.text = goal.text.filter((x) => x.check === true);
+          // goal.text = goal.text.filter((x) => x.check === true);
         }
       } else {
         filteredJSON[index].answeres = getCompletedQuestionFromGroup.options
@@ -1241,7 +1253,7 @@ export default function Footer({
             .filter((x) => x.check === true)
             .map((x) => x.text);
           filteredJSONQuestionObj.answeres.push(tempObj);
-          goal.text = goal.text.filter((x) => x.check === true);
+          // goal.text = goal.text.filter((x) => x.check === true);
         }
         console.log("filteredJSONQuestionObj", filteredJSONQuestionObj);
       } else {
@@ -1317,6 +1329,7 @@ export default function Footer({
   };
 
   const handleBack = () => {
+    // console.log(Data, "<---DATA in back")
     const back = true;
     // if (filteredJSON.length) {
     //   const groupName = groupNameArray[id];
@@ -1357,6 +1370,7 @@ export default function Footer({
     //   });
     // }
     PreviousQues(id, QuesID);
+    setData(Data)
   };
 
   const changeQuestionToGender = (parent, question) => {
@@ -1393,7 +1407,6 @@ export default function Footer({
     // }
 
     if (question == 0) {
-      console.log("rrr");
       parent = parent - 1;
       question = Data[parent].questions.length - 1;
       // Data[parent].questions.forEach((val, index) => {
@@ -1404,12 +1417,9 @@ export default function Footer({
     }
 
     if (Data[parent].questions[question].answered) {
-      console.log("aaa");
-
       setID(parent);
       setQuesID(question);
     } else {
-      console.log("bbb");
       PreviousQues(parent, question);
     }
   };
@@ -1430,7 +1440,7 @@ export default function Footer({
 
         <div className="backBtnWrapper">
           <button
-            onClick={handleBack}
+            onClick={handleBack} 
             className="rounded-md font-medium flex flex-row"
           >
             <FaArrowLeft className="text-center m-1 ml-0" />

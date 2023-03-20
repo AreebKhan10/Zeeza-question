@@ -39,7 +39,7 @@ export default function Questions() {
           isUpdated: false,
           questionID: 1,
           subTitle: "Areas of Struggle",
-          description: "Minimum 1 up to 3",
+          description: "Select 1 to 3",
           question: `Which areas does name struggle with most?`,
           select: "Multi",
           min: 1,
@@ -110,7 +110,7 @@ export default function Questions() {
           isUpdated: false,
           questionID: 2,
           subTitle: "Functioning Rate",
-          description: "Minimum 1",
+          description: "Select 1",
           question: "Rate name's level of functioning in these areas",
           select: "Multi",
           min: 1,
@@ -144,7 +144,7 @@ export default function Questions() {
           isUpdated: false,
           questionID: 3,
           subTitle: "Academic Domains",
-          description: "Minimum 1",
+          description: "Select 1 to 2",
           question: "Which academic domains does name struggle with?",
           select: "Multi",
           min: 1,
@@ -183,7 +183,7 @@ export default function Questions() {
           questionID: 4,
           subTitle: "Interests",
           question: "What are name's interests?",
-          description: "Minimum 1 up to 3",
+          description: "Select 1 to 3",
           select: "Multi",
           min: 1,
           max: 3,
@@ -210,7 +210,7 @@ export default function Questions() {
           isUpdated: false,
           questionID: 5,
           subTitle: "Incorporate Interests",
-          description: "Minimum 1",
+          description: "Select 1",
           question:
             "Why do you incorporate these interests into your sessions?",
           select: "Multi",
@@ -256,7 +256,7 @@ export default function Questions() {
           isUpdated: false,
           questionID: 6,
           subTitle: "Decoding Rate",
-          description: "Minimum 1",
+          description: "Select 1",
           question: "How would you rate name's performance in decoding?",
           select: "Multi",
           min: 1,
@@ -281,7 +281,7 @@ export default function Questions() {
           isUpdated: false,
           questionID: 7,
           subTitle: "Decoding Areas",
-          description: "Minimum 1",
+          description: "Select 1",
           question: "How many areas of decoding does name struggle with?",
           select: "Multi",
           min: 1,
@@ -307,8 +307,8 @@ export default function Questions() {
           isUpdated: false,
           questionID: 8,
           subTitle: "Grade Level",
-          description: "Minimum 1",
-          question: "Choose a grade level",
+          description: "Select 1",
+          question: "Rate name's grade level in decoding",
           select: "Multi",
           min: 1,
           max: 1,
@@ -317,7 +317,7 @@ export default function Questions() {
           options: [
             {
               id: 1,
-              value: "+Pre-K",
+              value: "Pre-K",
               check: false,
               level: 1,
               isHidden: false,
@@ -535,7 +535,7 @@ export default function Questions() {
           isUpdated: false,
           questionID: 9,
           subTitle: "Reading Methodology",
-          description: "Minimum 1 up to 3",
+          description: "Select 1 to 3",
           question:
             "Which types of methodology do you use during reading instruction?",
           select: "Multi",
@@ -544,9 +544,9 @@ export default function Questions() {
           max: 3,
           limit: false,
           options: [
-            { id: 1, value: "Orton Gillingham Methodology", check: false },
-            { id: 2, value: "Wilson Methodology", check: false },
-            { id: 3, value: "LiPS Methodology", check: false },
+            { id: 1, value: "ORTON GILLIINGHAM Methodology", check: false },
+            { id: 2, value: "WILSON Methodology", check: false },
+            { id: 3, value: "LIPS Methodology", check: false },
             { id: 4, value: "Visual Aids", check: false },
             { id: 5, value: "Tactile Manipulatives", check: false },
             { id: 6, value: "Concrete Manipulatives", check: false },
@@ -558,7 +558,7 @@ export default function Questions() {
           isUpdated: false,
           questionID: 10,
           subTitle: "Descriptive Rating Chart",
-          description: "Minimum 1",
+          description: "Select 1",
           question: "How would you rate name's progress in decoding?",
           select: "Multi",
           min: 1,
@@ -566,11 +566,11 @@ export default function Questions() {
           limit: false,
           answered: false,
           options: [
-            { id: 1, text: "very little", value: "1", check: false },
-            { id: 2, text: "minimal", value: "2", check: false },
-            { id: 3, text: "some", value: "3", check: false },
-            { id: 4, text: "significant", value: "4", check: false },
-            { id: 5, text: "major", value: "5", check: false },
+            { id: 1, text: "very little", value: "very little", check: false },
+            { id: 2, text: "minimal", value: "minimal", check: false },
+            { id: 3, text: "some", value: "some", check: false },
+            { id: 4, text: "significant", value: "significant", check: false },
+            { id: 5, text: "major", value: "major", check: false },
           ],
         },
         {
@@ -579,7 +579,7 @@ export default function Questions() {
           questionID: 11,
           subTitle: "Decoding Goals",
           description:
-            "Select up to 2 smart goals, and up to 3 goals for each smart goal",
+            "Select 2 smart goals and 3 goals per smart goal",
           question: "What are your decoding goals for the year?",
           select: "Accordian",
           dependQuestion: 2,
@@ -759,7 +759,7 @@ export default function Questions() {
           limit: false,
           questionID: 12,
           subTitle: "Struggles",
-          description: "Minimum 3 up to 5",
+          description: "Select 3 to 5",
           question:
             "Which areas in decoding does your student still struggle with?",
           select: "Accordian",
@@ -1035,9 +1035,9 @@ export default function Questions() {
           isUpdated: false,
           questionID: 13,
           subTitle: "Deficits",
-          description: "Minimum 1",
+          description: "Select 1",
           question:
-            "How would you describe your student's deficits in reading comprehension?",
+            "How would you describe name's deficits in reading comprehension?",
           select: "Multi",
           min: 1,
           max: 1,
@@ -1065,9 +1065,9 @@ export default function Questions() {
           isUpdated: false,
           questionID: 14,
           subTitle: "Range",
-          description: "Minimum 1",
+          description: "Select 1",
           question:
-            "How would you describe your student’s range of difficulties in this domain?",
+            "How would you describe name’s range of difficulties in this domain?",
           select: "Multi",
           min: 1,
           max: 1,
@@ -1095,9 +1095,9 @@ export default function Questions() {
           isUpdated: false,
           questionID: 15,
           subTitle: "Grade Level",
-          description: "Minimum 1",
+          description: "Select 1",
           question:
-            "What is your student’s approximate grade level in reading comprehension performance?",
+            "What is name’s approximate grade level in reading comprehension performance?",
           select: "Multi",
           min: 1,
           max: 1,
@@ -1173,7 +1173,7 @@ export default function Questions() {
           isUpdated: false,
           questionID: 16,
           subTitle: "Techniques",
-          description: "Minimum 2 up to 3",
+          description: "Select 2 to 3",
           question: "Which techniques do you use during your sessions?",
           select: "Multi",
           answered: false,
@@ -1183,47 +1183,47 @@ export default function Questions() {
           options: [
             {
               id: 1,
-              value: "Graphic organizers",
+              value: "graphic organizers",
               check: false,
             },
             {
               id: 2,
-              value: "Highlighting techniques",
+              value: "highlighting techniques",
               check: false,
             },
             {
               id: 3,
-              value: "Picture cards",
+              value: "picture cards",
               check: false,
             },
             {
               id: 3,
-              value: "Visual aids",
+              value: "visual aids",
               check: false,
             },
             {
               id: 3,
-              value: "Checklists",
+              value: "checklists",
               check: false,
             },
             {
               id: 3,
-              value: "Color coding techniques",
+              value: "color coding techniques",
               check: false,
             },
             {
               id: 3,
-              value: "Questioning techniques",
+              value: "questioning techniques",
               check: false,
             },
             {
               id: 3,
-              value: "Story maps",
+              value: "story maps",
               check: false,
             },
             {
               id: 3,
-              value: "Read-alouds",
+              value: "read-alouds",
               check: false,
             },
           ],
@@ -1232,9 +1232,9 @@ export default function Questions() {
           isUpdated: false,
           questionID: 17,
           subTitle: "Progress",
-          description: "Minimum 1",
+          description: "Select 1",
           question:
-            "Describe your student’s progress in reading comprehension:",
+            "Describe name’s progress in reading comprehension:",
           select: "Multi",
           min: 1,
           max: 1,
@@ -1269,8 +1269,8 @@ export default function Questions() {
           questionID: 18,
           subTitle: "Goals",
           description:
-            "Select up to 3 smart goals, and up to 3 goals for each smart goal",
-          question: "What are your Reading Comprehension goals for the year?",
+            "Select 2 smart goals and 3 goals per smart goal",
+          question: "What are your reading comprehension goals for the year?",
           select: "Accordian",
           dependQuestion: 2,
           answered: false,
@@ -1286,7 +1286,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 1,
               subGoals: [
                 "Ask and answer questions about unknown words in a text with prompting and support",
@@ -1314,7 +1314,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 2,
               subGoals: [
                 "Ask and answer questions to help determine or clarify the meaning of words and phrases in a text",
@@ -1340,7 +1340,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 3,
               subGoals: [
                 "Determine the meaning of words and phrases in a text relevant to a grade 2 topic or subject area",
@@ -1365,7 +1365,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 4,
               subGoals: [
                 "Determine the meaning of general academic and domain-specific words and phrases in a text relevant to a grade 3 topic or subject area",
@@ -1392,7 +1392,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 5,
               subGoals: [
                 "Determine the meaning of general academic and domain-specific words or phrases in a text relevant to a grade 4 topic or subject area",
@@ -1417,7 +1417,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 6,
               subGoals: [
                 "Determine the meaning of general academic and domain-specific words and phrases in a text relevant to a grade 5 topic or subject area",
@@ -1443,7 +1443,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 7,
               subGoals: [
                 "Determine the meaning of words and phrases as they are used in a text, including figurative, connotative, and technical meanings",
@@ -1469,7 +1469,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 8,
               subGoals: [
                 "Determine the meaning of words and phrases as they are used in a text, including figurative, connotative, and technical meanings; analyze the impact of a specific word choice on meaning and tone",
@@ -1495,7 +1495,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 9,
               subGoals: [
                 "Determine the meaning of words and phrases as they are used in a text, including figurative, connotative, and technical meanings; analyze the impact of specific word choices on meaning and tone, including analogies or allusions to other texts",
@@ -1519,9 +1519,9 @@ export default function Questions() {
           questionID: 19,
           subTitle: "Struggles",
           description:
-            "Select up to 3 smart goals, and up to 3 goals for each smart goal",
+            "Select 3 smart goals and 3 goals per smart goal",
           question:
-            "Which areas in Reading Comprehension does your student still struggle with?",
+            "Which areas in reading comprehension does your student still struggle with?",
           select: "Accordian",
           dependQuestion: 2,
           answered: false,
@@ -1537,7 +1537,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 1,
               subGoals: [
                 "Ask and answer questions about unknown words in a text with prompting and support",
@@ -1565,7 +1565,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 2,
               subGoals: [
                 "Ask and answer questions to help determine or clarify the meaning of words and phrases in a text",
@@ -1591,7 +1591,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 3,
               subGoals: [
                 "Determine the meaning of words and phrases in a text relevant to a grade 2 topic or subject area",
@@ -1616,7 +1616,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 4,
               subGoals: [
                 "Determine the meaning of general academic and domain-specific words and phrases in a text relevant to a grade 3 topic or subject area",
@@ -1643,7 +1643,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 5,
               subGoals: [
                 "Determine the meaning of general academic and domain-specific words or phrases in a text relevant to a grade 4 topic or subject area",
@@ -1668,7 +1668,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 6,
               subGoals: [
                 "Determine the meaning of general academic and domain-specific words and phrases in a text relevant to a grade 5 topic or subject area",
@@ -1694,7 +1694,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 7,
               subGoals: [
                 "Determine the meaning of words and phrases as they are used in a text, including figurative, connotative, and technical meanings",
@@ -1720,7 +1720,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 8,
               subGoals: [
                 "Determine the meaning of words and phrases as they are used in a text, including figurative, connotative, and technical meanings; analyze the impact of a specific word choice on meaning and tone",
@@ -1746,7 +1746,7 @@ export default function Questions() {
               ],
             },
             {
-              title: "Demonstrating understanding of Craft and Structure:",
+              title: "Demonstrating understanding of craft and structure:",
               level: 9,
               subGoals: [
                 "Determine the meaning of words and phrases as they are used in a text, including figurative, connotative, and technical meanings; analyze the impact of specific word choices on meaning and tone, including analogies or allusions to other texts",
@@ -1774,7 +1774,7 @@ export default function Questions() {
           isUpdated: false,
           questionID: 20,
           subTitle: "Math Skills",
-          description: "Minimum 1",
+          description: "Select 1",
           question: "How would you rate name's math skills?",
           select: "Multi",
           min: 1,
@@ -1784,7 +1784,7 @@ export default function Questions() {
           options: [
             {
               id: 1,
-              value: "Very poor",
+              value: "very poor",
               check: false,
             },
             {
@@ -1808,7 +1808,7 @@ export default function Questions() {
           isUpdated: false,
           questionID: 21,
           subTitle: "Grade Level",
-          description: "Minimum 1",
+          description: "Select 1",
           question: "Select the grade level from the following",
           select: "Multi",
           min: 1,
@@ -1885,7 +1885,7 @@ export default function Questions() {
           isUpdated: false,
           questionID: 22,
           subTitle: "Intervention",
-          description: "Minimum 1",
+          description: "Select 1",
           question: "Which type of aids do you use during intervention?",
           select: "Multi",
           min: 1,
@@ -1900,22 +1900,22 @@ export default function Questions() {
             },
             {
               id: 2,
-              value: "Tactile manipulatives",
+              value: "tactile manipulatives",
               check: false,
             },
             {
               id: 3,
-              value: "Base ten blocks",
+              value: "base ten blocks",
               check: false,
             },
             {
               id: 3,
-              value: "Counters",
+              value: "counters",
               check: false,
             },
             {
               id: 3,
-              value: "Hands-on techniques",
+              value: "hands-on techniques",
               check: false,
             },
           ],
@@ -1924,8 +1924,8 @@ export default function Questions() {
           isUpdated: false,
           questionID: 23,
           subTitle: "Progress",
-          description: "Minimum 1",
-          question: "How would you describe your student's progress in math?",
+          description: "Select 1",
+          question: "How would you describe name's progress in math?",
           select: "Multi",
           min: 1,
           max: 1,
@@ -1960,15 +1960,15 @@ export default function Questions() {
           questionID: 24,
           subTitle: "Math Goals",
           description:
-            "Select up to 3 smart goals and minimum one goals per smart goal, up to 6 goals total",
-          question: "What are your Reading Comprehension goals for the year?",
+            "select 3 smart goals and 1 goals per smart goal",
+          question: "What are your math goals for the year?",
           select: "Accordian",
           answered: false,
           dependQuestion: 1,
           goalQues: [],
           suberGoals: [
             {
-              title: "Know number names and the count sequenc4-e",
+              title: "Know number names and the count sequence",
               level: 1,
               subGoals: [
                 "Count to 100 by ones",
@@ -2633,9 +2633,9 @@ export default function Questions() {
           questionID: 25,
           subTitle: "Struggles",
           description:
-            "Select up to 3 smart goals and minimum one goals per smart goal, up to 6 goals total",
+            "goals total select 3 smart goals and 1 goals per smart goal",
           question:
-            "Which areas in Reading Comprehension does your student still struggle with?",
+            "Which areas in math goals does your student still struggle with?",
           select: "Accordian",
           dependQuestion: 1,
           answered: false,
@@ -2671,7 +2671,7 @@ export default function Questions() {
           ],
           suberGoals: [
             {
-              title: "Know number names and the count sequenc4-e",
+              title: "Know number names and the count sequence",
               level: 1,
               subGoals: [
                 "Count to 100 by ones",
@@ -3341,7 +3341,7 @@ export default function Questions() {
           questionID: 26,
           subTitle: "SLP Services",
           question: "Does name receive SLP (Speech Therapy) services?",
-          description: "Minimum 1",
+          description: "Select 1",
           select: "Multi",
           min: 1,
           max: 1,
@@ -3371,7 +3371,7 @@ export default function Questions() {
           subTitle: "Beneficial",
           question:
             "Do you think your student would benefit from SLP services?",
-          description: "Minimum 1",
+          description: "Select 1",
           select: "Multi",
           min: 1,
           max: 1,
@@ -3395,12 +3395,12 @@ export default function Questions() {
           questionID: 28,
           subTitle: "Frequency",
           question:
-            "How many times a week does your student receive SLP services?",
+            "How many times a week does name receive SLP services?",
           select: "Multi",
           min: 1,
           max: 1,
           limit: false,
-          description: "Minimum 1",
+          description: "Select 1",
           answered: false,
           options: [
             {
@@ -3434,9 +3434,9 @@ export default function Questions() {
           isUpdated: false,
           questionID: 29,
           subTitle: "Skills",
-          question: "Which of these is your student able to do?",
+          question: "Which of these is name able to do?",
           select: "Multi",
-          description: "Select Up to 2",
+          description: "select 2",
           answered: false,
           min: 1,
           max: 2,
@@ -3532,9 +3532,9 @@ export default function Questions() {
           isUpdated: false,
           questionID: 30,
           subTitle: "Struggles",
-          question: "Which of these does your student struggle with?",
+          question: "Which of these does name struggle with?",
           select: "Multi",
-          description: "Minimum 2 to many",
+          description: "Select 2 to many",
           answered: false,
           min: 2,
           max: 14,
@@ -3630,9 +3630,9 @@ export default function Questions() {
           isUpdated: false,
           questionID: 31,
           subTitle: "Strength",
-          question: "Which of these is your student’s strength?",
+          question: "Which of these is name’s strength?",
           select: "Multi",
-          description: "Select, up to 3",
+          description: "Select 1 to 3",
           answered: false,
           min: 1,
           max: 3,
@@ -3674,9 +3674,9 @@ export default function Questions() {
           isUpdated: false,
           questionID: 32,
           subTitle: "Weakness",
-          question: "Which of these is your student's weakness?",
+          question: "Which of these does name struggle with?",
           select: "Multi",
-          description: "Select, up to 3",
+          description: "Select 1 to 3",
           answered: false,
           min: 1,
           max: 3,
@@ -3716,7 +3716,7 @@ export default function Questions() {
         },
       ],
     },
-    {
+    { 
       id: 3,
       title: "Social-emotional",
       questions: [
@@ -3725,9 +3725,9 @@ export default function Questions() {
           questionID: 33,
           subTitle: "Delays",
           question:
-            "Does your student display a delay in any of the following areas? If yes, please specify:",
+            "In which areas does name display delays?",
           select: "Multi",
-          description: "Select, up to 3",
+          description: "Select 1 to 3",
           min: 1,
           max: 3,
           limit: false,
@@ -3735,19 +3735,19 @@ export default function Questions() {
           options: [
             {
               id: 1,
-              value: "Compliance",
+              value: "compliance",
               check: false,
               level: 1,
             },
             {
               id: 2,
-              value: "Emotional Regulation",
+              value: "emotional regulation",
               check: false,
               level: 2,
             },
             {
               id: 3,
-              value: "Social skills",
+              value: "social skills",
               check: false,
               level: 3,
             },
@@ -3769,7 +3769,7 @@ export default function Questions() {
           min: 1,
           max: 1,
           limit: false,
-          description: "Minimum 1",
+          description: "Select 1",
           answered: false,
           options: [
             {
@@ -3796,7 +3796,7 @@ export default function Questions() {
           subTitle: "Concerns",
           question: "Rate your student's progress in each area of concern:",
           select: "Accordian",
-          description: "Single select from each group",
+          description: "select 1 goals per smart goal",
           dependQuestion: 0,
           answered: false,
           goalQues: [],
@@ -3835,7 +3835,7 @@ export default function Questions() {
           limit: false,
           questionID: 36,
           subTitle: "Improvements",
-          description: "Single select from each group",
+          description: "select 1 goals per smart goal",
           question: "Identify areas of improvement",
           select: "Accordian",
           dependQuestion: 0,
@@ -3876,7 +3876,7 @@ export default function Questions() {
           limit: false,
           questionID: 37,
           subTitle: "Struggles",
-          description: "Minimum 2 ",
+          description: "Select 2 ",
           question: "Identify areas of struggle",
           select: "Accordian",
           dependQuestion: 0,
@@ -3997,7 +3997,7 @@ export default function Questions() {
           questionID: 38,
           subTitle: "Benefits",
           question:
-            "How would you describe your student's range of struggles overall",
+            "How would you describe name's range of struggles overall?",
           select: "Multi",
           min: 1,
           max: 1,
@@ -4682,7 +4682,7 @@ export default function Questions() {
         for (const answer of questionObj.answeres) {
           initialData[parent].questions[quesId].options.forEach((val, ind) => {
             initialData[parent].questions[quesId].options[ind].value =
-              val.value.replace("name", response.FirstName );
+              val.value.replace(/name/g, response.FirstName );
           });
           let findOptionIndex = initialData[parent].questions[
             quesId
@@ -4901,6 +4901,7 @@ export default function Questions() {
           setMultiLimitSub={setMultiLimitSub}
           stuDetails={stuDetails}
           QUESTIONS={QUESTIONS}
+          initialData={initialData}
           // filteredJSON={filteredJSON}
           // setFilter={setFilter}
         />
