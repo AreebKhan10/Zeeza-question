@@ -24,6 +24,7 @@ export default function Footer({
   // stuDetails,
   // filteredJSON,
   // setFilter
+  initialData
 }) {
   var {
     stuDetails,
@@ -77,7 +78,7 @@ export default function Footer({
             .filter((x) => x.check === true)
             .map((x) => x.text);
           currentAnswer.push(tempObj);
-          goal.text = goal.text.filter((x) => x.check === true);
+          // goal.text = goal.text.filter((x) => x.check === true);
         }
       } else {
         currentAnswer = Data[id].questions[QuesID].options
@@ -785,7 +786,6 @@ export default function Footer({
         nextQuestion(id, QuesID);
       }
     }
-
     if (id == 4 && QuesID == 0) {
       var allChecked = Data[id].questions[QuesID].options.filter(
         (x) => x.check === true
@@ -1087,42 +1087,60 @@ export default function Footer({
 
 
   useEffect(() => {
+    
+    // var total_question = initialData.length;
+    // const percentages = (id / total_question) * 100;
+    // setPercentage(percentages);
 
-    console.log(Data, "<------filteredJSON");
-    var total_question = QUESTIONS.length;
-    var total_answered = 0;
-    total_answered = filteredJSON.length;
-    const percentages = (total_answered / total_question) * 100;
-    setPercentage(percentages);
+    // if (filteredJSON.length <= 2 && filteredJSON.length > 0) {
+    //   setProgress("w-1/12");
+    // } else if (filteredJSON.length <= 4 && filteredJSON.length > 2) {
+    //   setProgress("w-2/12");
+    // } else if (filteredJSON.length <= 10 && filteredJSON.length > 4) {
+    //   setProgress("w-2/12");
+    // } else if (filteredJSON.length <= 15 && filteredJSON.length > 10) {
+      //   setProgress("w-4/12");
+    // } else if (filteredJSON.length <= 17 && filteredJSON.length > 15) {
+      //   setProgress("w-5/12");
+      // } else if (filteredJSON.length <= 20 && filteredJSON.length > 17) {
+        //   setProgress("w-6/12");
+        // } else if (filteredJSON.length <= 25 && filteredJSON.length > 20) {
+    //   setProgress("w-7/12");
+    // } else if (filteredJSON.length <= 28 && filteredJSON.length > 25) {
+      //   setProgress("w-8/12");
+      // } else if (filteredJSON.length <= 30 && filteredJSON.length > 28) {
+        //   setProgress("w-9/12");
+    // } else if (filteredJSON.length <= 34 && filteredJSON.length > 30) {
+    //   setProgress("w-10/12");
+    // } else if (filteredJSON.length <= 37 && filteredJSON.length > 34) {
+      //   setProgress("w-11/12");
+      // } else if (filteredJSON.length <= 39 && filteredJSON.length > 37) {
+        //   setProgress("w-12/12");
+        // }
+        
+        const percentage = (id / 6 ) * 100
+        setPercentage(percentage);
+    
+        if(id === 1){
+          setProgress("w-1/6");
+        } else if (id === 2){
+          setProgress("w-2/6");
+        }else if (id === 3){
+          setProgress("w-3/6");
+        }else if (id === 4){
+          setProgress("w-4/6");
+        }else if (id === 5){
+          setProgress("w-5/6");
+        }else if (id === 6){
+          setProgress("w-full");
+        }else{
+          setProgress("");
+        }
+     
+    
+    
+  }, [percentage, filteredJSON, id]);
 
-    if (filteredJSON.length <= 2 && filteredJSON.length > 0) {
-      setProgress("w-1/12");
-    } else if (filteredJSON.length <= 4 && filteredJSON.length > 2) {
-      setProgress("w-2/12");
-    } else if (filteredJSON.length <= 10 && filteredJSON.length > 4) {
-      setProgress("w-2/12");
-    } else if (filteredJSON.length <= 15 && filteredJSON.length > 10) {
-      setProgress("w-4/12");
-    } else if (filteredJSON.length <= 17 && filteredJSON.length > 15) {
-      setProgress("w-5/12");
-    } else if (filteredJSON.length <= 20 && filteredJSON.length > 17) {
-      setProgress("w-6/12");
-    } else if (filteredJSON.length <= 25 && filteredJSON.length > 20) {
-      setProgress("w-7/12");
-    } else if (filteredJSON.length <= 28 && filteredJSON.length > 25) {
-      setProgress("w-8/12");
-    } else if (filteredJSON.length <= 30 && filteredJSON.length > 28) {
-      setProgress("w-9/12");
-    } else if (filteredJSON.length <= 34 && filteredJSON.length > 30) {
-      setProgress("w-10/12");
-    } else if (filteredJSON.length <= 37 && filteredJSON.length > 34) {
-      setProgress("w-11/12");
-    } else if (filteredJSON.length <= 39 && filteredJSON.length > 37) {
-      setProgress("w-12/12");
-    }
-  }, [percentage, filteredJSON]);
-
-  console.log(progress, "<----uaddfoa");
 
   const nextQuestion = (parent, question, makeTrue = true) => {
     if(makeTrue) Data[parent].questions[question].answered = true;
@@ -1130,7 +1148,6 @@ export default function Footer({
     var questionLength = Data[parent].questions.length;
     var parentId = parent;
     var questionId = question;
-    console.log(question, "<<<----questionLength");
     // if(totalQuestions.length){
     if (question < questionLength - 1) {
       questionId = questionId + 1;
@@ -1154,40 +1171,57 @@ export default function Footer({
     setID(parentId);
     setQuesID(questionId);
 
-    var total_question = QUESTIONS.length;
-    var total_answered = 0;
-    total_answered = filteredJSON.length;
-    const percentage = (total_answered / total_question) * 100;
+    // var total_question = QUESTIONS.length;
+    // var total_answered = 0;
+    // total_answered = filteredJSON.length;
+    // const percentage = (total_answered / total_question) * 100;
+    // setPercentage(percentage);
+
+
+    // if (filteredJSON.length <= 2 && filteredJSON.length > 0) {
+    //   setProgress("w-1/12");
+    // } else if (filteredJSON.length <= 4 && filteredJSON.length > 2) {
+    //   setProgress("w-2/12");
+    // } else if (filteredJSON.length <= 10 && filteredJSON.length > 4) {
+    //   setProgress("w-2/12");
+    // } else if (filteredJSON.length <= 15 && filteredJSON.length > 10) {
+    //   setProgress("w-4/12");
+    // } else if (filteredJSON.length <= 17 && filteredJSON.length > 15) {
+    //   setProgress("w-5/12");
+    // } else if (filteredJSON.length <= 20 && filteredJSON.length > 17) {
+    //   setProgress("w-6/12");
+    // } else if (filteredJSON.length <= 25 && filteredJSON.length > 20) {
+    //   setProgress("w-7/12");
+    // } else if (filteredJSON.length <= 28 && filteredJSON.length > 25) {
+    //   setProgress("w-8/12");
+    // } else if (filteredJSON.length <= 30 && filteredJSON.length > 28) {
+    //   setProgress("w-9/12");
+    // } else if (filteredJSON.length <= 34 && filteredJSON.length > 30) {
+    //   setProgress("w-10/12");
+    // } else if (filteredJSON.length <= 37 && filteredJSON.length > 34) {
+    //   setProgress("w-11/12");
+    // } else if (filteredJSON.length <= 39 && filteredJSON.length > 37) {
+    //   setProgress("w-12/12");
+    // }
+    
+    const percentage = (id / 6 ) * 100
     setPercentage(percentage);
 
-    if (filteredJSON.length <= 2 && filteredJSON.length > 0) {
-      setProgress("w-1/12");
-    } else if (filteredJSON.length <= 4 && filteredJSON.length > 2) {
-      setProgress("w-2/12");
-    } else if (filteredJSON.length <= 10 && filteredJSON.length > 4) {
-      setProgress("w-2/12");
-    } else if (filteredJSON.length <= 15 && filteredJSON.length > 10) {
-      setProgress("w-4/12");
-    } else if (filteredJSON.length <= 17 && filteredJSON.length > 15) {
-      setProgress("w-5/12");
-    } else if (filteredJSON.length <= 20 && filteredJSON.length > 17) {
-      setProgress("w-6/12");
-    } else if (filteredJSON.length <= 25 && filteredJSON.length > 20) {
-      setProgress("w-7/12");
-    } else if (filteredJSON.length <= 28 && filteredJSON.length > 25) {
-      setProgress("w-8/12");
-    } else if (filteredJSON.length <= 30 && filteredJSON.length > 28) {
-      setProgress("w-9/12");
-    } else if (filteredJSON.length <= 34 && filteredJSON.length > 30) {
-      setProgress("w-10/12");
-    } else if (filteredJSON.length <= 37 && filteredJSON.length > 34) {
-      setProgress("w-11/12");
-    } else if (filteredJSON.length <= 39 && filteredJSON.length > 37) {
-      setProgress("w-12/12");
+    if(id === 1){
+      setProgress("w-1/6");
+    } else if (id === 2){
+      setProgress("w-2/6");
+    }else if (id === 3){
+      setProgress("w-3/6");
+    }else if (id === 4){
+      setProgress("w-4/6");
+    }else if (id === 5){
+      setProgress("w-5/6");
+    }else if (id === 6){
+      setProgress("w-full");
     }
   };
 
-  console.log(progress, "<---progress88");
 
   const getFilteredJSONData = (groupId, questionId) => {
     const groupName = groupNameArray[groupId];
@@ -1231,10 +1265,6 @@ export default function Footer({
       filteredJSONQuestionObj.externalId = QuesID;
       filteredJSONQuestionObj.groupID = groupId;
       filteredJSONQuestionObj.question = getCompletedQuestionFromGroup.question;
-      console.log(
-        "getCompletedQuestionFromGroup.question.select",
-        getCompletedQuestionFromGroup
-      );
 
       if (getCompletedQuestionFromGroup.select === "Accordian") {
         filteredJSONQuestionObj.question =
@@ -1255,7 +1285,7 @@ export default function Footer({
           filteredJSONQuestionObj.answeres.push(tempObj);
           // goal.text = goal.text.filter((x) => x.check === true);
         }
-        console.log("filteredJSONQuestionObj", filteredJSONQuestionObj);
+
       } else {
         filteredJSONQuestionObj.answeres = getCompletedQuestionFromGroup.options
           .filter((x) => x.check === true)
@@ -1266,7 +1296,7 @@ export default function Footer({
             stuDetails.FirstName
           );
       }
-      console.log("filteredJSONQuestionObj", filteredJSONQuestionObj);
+
       // setFilter(filteredJSON.concat(filteredJSONQuestionObj));
       filteredJSON.push(filteredJSONQuestionObj);
       setFilteredJSON(filteredJSON);
