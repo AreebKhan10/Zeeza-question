@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import axios from "axios";
 import { useGlobalContext } from "../context";
+import cogoToast from 'cogo-toast'
 
 export default function Footer({
   setgoalLevel,
@@ -128,7 +129,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < Data[id].questions[QuesID].min) {
-        alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
+        cogoToast.error(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
         if (checkUpdate === false) {
           var toShowOptions = [];
@@ -157,7 +158,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         setUpdateCheck(-1);
         nextQuestion(id, QuesID);
@@ -168,7 +169,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < Data[id].questions[QuesID].min) {
-        alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
+        cogoToast.error(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
         nextQuestion(id, QuesID);
       }
@@ -178,7 +179,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < Data[id].questions[QuesID].min) {
-        alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
+        cogoToast.error(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
         nextQuestion(id, QuesID);
       }
@@ -188,19 +189,18 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         setUpdateCheck(-1);
         nextQuestion(id, QuesID);
       }
     }
-
     if (id == 1 && QuesID == 0) {
       var allChecked = Data[id].questions[QuesID].options.filter(
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         nextQuestion(id, QuesID);
       }
@@ -210,7 +210,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         if (checkUpdate === false) {
           Data[id].questions[QuesID + 1].options.forEach((value, index) => {
@@ -231,7 +231,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         nextQuestion(id, QuesID);
       }
@@ -241,7 +241,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < Data[id].questions[QuesID].min) {
-        alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
+        cogoToast.error(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
         nextQuestion(id, QuesID);
       }
@@ -251,7 +251,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         if (checkUpdate === false) {
           var option = [];
@@ -307,88 +307,107 @@ export default function Footer({
       var allCheckded = Data[id].questions[QuesID].goalQues.filter(
         (x) => x.check === true
       );
-      if (allCheckded.length < 1) {
-        alert("minimum 1 Selection is Required");
-      } else {
-        if (checkUpdate === false) {
-          var allAnsers = [];
-          allCheckded.forEach((value, index) => {
-            value.text.forEach((texval, point) => {
-              
-              if (texval.check === true){
-                allAnsers.push(texval.text);
-              }
-              
-
-            });
-          });
-          
-          console.log(allAnsers, "allAnsers")
-          var option = [];
-          var dependentLevel = Data[id].questions[
-            Data[id].questions[QuesID + 1].dependQuestion
-          ].options.filter((x) => x.check === true);
-          Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
-            var isPresenrt = option.filter((x) => x.value == value.title);
-            if (!isPresenrt.length > 0) {
-              var subGoals = [];
-              value.subGoals.forEach((x) => {
-                var exsitdGoal = subGoals.filter(
-                  (goal) => goal.text == x.title
-                );
-                if (!exsitdGoal.length > 0) {
-                  if (
-                    x.level <= grade + 1 &&
-                    x.level >= dependentLevel[0].level
-                  ) {
-                    if (!allAnsers.includes(x.title)) {
-                      subGoals.push({
-                        text: x.title,
-                        check: false,
-                      });
-                    }
-                  }
-                }
-              });
-              option.push({
-                value: value.title,
-                text: subGoals,
-                check: false,
-              });
-            } else {
-              var superGoalIndex = option.findIndex(
-                (p) => p.value == value.title
-              );
-              value.subGoals.forEach((x) => {
-                var exsitdGoal = option[superGoalIndex].text.filter(
-                  (goal) => goal.text == x.title
-                );
-                if (!exsitdGoal.length > 0) {
-                  if (
-                    x.level <= grade + 1 &&
-                    x.level >= dependentLevel[0].level
-                  ) {
-                    if (!allAnsers.includes(x.title)) {
-                      option[superGoalIndex].text.push({
-                        text: x.title,
-                        check: false,
-                      });
-                    }
-                  }
-                }
-              });
+        //to check subgoal limit
+      let allsublimit = allCheckded.map(x => x.text)
+      let countTrue = 0;
+      for (let array of allsublimit) {
+        if (array.length >= 3) {
+          let trueCount = 0;
+          for (let obj of array) {
+            if (obj.check) {
+              trueCount++;
             }
-          });
-
-          Data[id].questions[QuesID + 1].goalQues = option;
-          console.log(Data,"<----Data")
-          setData(Data);
-          console.log(Data, "this is the data");
+          }
+          if (trueCount >= 3) {
+            countTrue++;
+          }
         }
-        nextQuestion(id, QuesID);
       }
+      if (countTrue === allsublimit.filter(array => array.length >= 3).length) {
+        if (allCheckded.length < 2) {
+          cogoToast.error("minimum 2 Selection is Required");
+        } else {
+          if (checkUpdate === false) {
+            var allAnsers = [];
+            allCheckded.forEach((value, index) => {
+              value.text.forEach((texval, point) => {
+                if (texval.check === true){
+                  allAnsers.push(texval.text);
+                }
+              });
+            });
+            
+            var option = [];
+            var dependentLevel = Data[id].questions[
+              Data[id].questions[QuesID + 1].dependQuestion
+            ].options.filter((x) => x.check === true);
+            Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+              var isPresenrt = option.filter((x) => x.value == value.title);
+              if (!isPresenrt.length > 0) {
+                var subGoals = [];
+                value.subGoals.forEach((x) => {
+                  var exsitdGoal = subGoals.filter(
+                    (goal) => goal.text == x.title
+                  );
+                  if (!exsitdGoal.length > 0) {
+                    if (
+                      x.level <= grade + 1 &&
+                      x.level >= dependentLevel[0].level
+                    ) {
+                      if (!allAnsers.includes(x.title)) {
+                        subGoals.push({
+                          text: x.title,
+                          check: false,
+                        });
+                      }
+                    }
+                  }
+                });
+                option.push({
+                  value: value.title,
+                  text: subGoals,
+                  check: false,
+                });
+              } else {
+                var superGoalIndex = option.findIndex(
+                  (p) => p.value == value.title
+                );
+                value.subGoals.forEach((x) => {
+                  var exsitdGoal = option[superGoalIndex].text.filter(
+                    (goal) => goal.text == x.title
+                  );
+                  if (!exsitdGoal.length > 0) {
+                    if (
+                      x.level <= grade + 1 &&
+                      x.level >= dependentLevel[0].level
+                    ) {
+                      if (!allAnsers.includes(x.title)) {
+                        option[superGoalIndex].text.push({
+                          text: x.title,
+                          check: false,
+                        });
+                      }
+                    }
+                  }
+                });
+              }
+            });
+  
+            Data[id].questions[QuesID + 1].goalQues = option;
+            console.log(Data,"<----Data")
+            setData(Data);
+            console.log(Data, "this is the data");
+          }
+          nextQuestion(id, QuesID);
+        }
+
+      } else {
+        cogoToast.error("select atleast 3 goals from each super goal.");
+      }
+
+
+     
     }
-    
     if (id == 1 && QuesID == 6) {
       var allCheckded = Data[id].questions[QuesID].goalQues.filter(
         (x) => x.check === true
@@ -400,18 +419,17 @@ export default function Footer({
         });
       });
       if (allsubChecked < 3) {
-        alert("minimum 3 Required");
+        cogoToast.error("minimum 3 Required");
       } else {
         nextQuestion(id, QuesID);
       }
     }
-
     if (id == 2 && QuesID == 0) {
       var allChecked = Data[id].questions[QuesID].options.filter(
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         nextQuestion(id, QuesID);
       }
@@ -421,7 +439,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         if (checkUpdate === false) {
           Data[id].questions[QuesID + 1].options.forEach((value, index) => {
@@ -442,7 +460,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         nextQuestion(id, QuesID);
       }
@@ -452,7 +470,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < Data[id].questions[QuesID].min) {
-        alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
+        cogoToast.error(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
         nextQuestion(id, QuesID);
       }
@@ -462,7 +480,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         if (checkUpdate === false) {
           var option = [];
@@ -518,87 +536,132 @@ export default function Footer({
       var allCheckded = Data[id].questions[QuesID].goalQues.filter(
         (x) => x.check === true
       );
-      if (allCheckded < 1) {
-        alert("Required");
-      } else {
-        if (checkUpdate === false) {
-          var allAnsers = [];
-          allCheckded.forEach((value, index) => {
-            value.text.forEach((texval, point) => {
-              if (texval.check === true) allAnsers.push(texval.text);
-            });
-          });
-          var option = [];
-          var dependentLevel = Data[id].questions[
-            Data[id].questions[QuesID + 1].dependQuestion
-          ].options.filter((x) => x.check === true);
-          Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
-            if (
-              value.level <= grade + 1 &&
-              value.level >= dependentLevel[0].level
-            ) {
-              var isPresenrt = option.filter((x) => x.value == value.title);
-              if (!isPresenrt.length > 0) {
-                var subGoals = [];
-                value.subGoals.forEach((x) => {
-                  var exsitdGoal = subGoals.filter((goal) => goal.text == x);
-                  if (!exsitdGoal.length > 0) {
-                    if (!allAnsers.includes(x)) {
-                      subGoals.push({
-                        text: x,
-                        check: false,
-                      });
-                    }
-                  }
-                });
-                option.push({
-                  value: value.title,
-                  text: subGoals,
-                  check: false,
-                });
-              } else {
-                var superGoalIndex = option.findIndex(
-                  (p) => p.value == value.title
-                );
-                value.subGoals.forEach((x) => {
-                  var exsitdGoal = option[superGoalIndex].text.filter(
-                    (goal) => goal.text == x
-                  );
-                  if (!exsitdGoal.length > 0) {
-                    if (!allAnsers.includes(x)) {
-                      option[superGoalIndex].text.push({
-                        text: x,
-                        check: false,
-                      });
-                    }
-                  }
-                });
-              }
-            }
-          });
-          Data[id].questions[QuesID + 1].goalQues = option;
-          setData(Data);
-        }
-        nextQuestion(id, QuesID);
+       //to check subgoal limit
+       let allsublimit = allCheckded.map(x => x.text)
+       let countTrue = 0;
+       for (let array of allsublimit) {
+         if (array.length >= 3) {
+           let trueCount = 0;
+           for (let obj of array) {
+             if (obj.check) {
+               trueCount++;
+             }
+           }
+           if (trueCount >= 3) {
+             countTrue++;
+           }
+         }
+       }
+       if (countTrue === allsublimit.filter(array => array.length >= 3).length) {
+
+         if (allCheckded.length < 2) {
+           cogoToast.error("Two main super goals Required");
+         } else {
+           if (checkUpdate === false) {
+             var allAnsers = [];
+             allCheckded.forEach((value, index) => {
+               value.text.forEach((texval, point) => {
+                 if (texval.check === true) allAnsers.push(texval.text);
+               });
+             });
+             var option = [];
+             var dependentLevel = Data[id].questions[
+               Data[id].questions[QuesID + 1].dependQuestion
+             ].options.filter((x) => x.check === true);
+             Data[id].questions[QuesID + 1].suberGoals.forEach((value, index) => {
+               if (
+                 value.level <= grade + 1 &&
+                 value.level >= dependentLevel[0].level
+               ) {
+                 var isPresenrt = option.filter((x) => x.value == value.title);
+                 if (!isPresenrt.length > 0) {
+                   var subGoals = [];
+                   value.subGoals.forEach((x) => {
+                     var exsitdGoal = subGoals.filter((goal) => goal.text == x);
+                     if (!exsitdGoal.length > 0) {
+                       if (!allAnsers.includes(x)) {
+                         subGoals.push({
+                           text: x,
+                           check: false,
+                         });
+                       }
+                     }
+                   });
+                   option.push({
+                     value: value.title,
+                     text: subGoals,
+                     check: false,
+                   });
+                 } else {
+                   var superGoalIndex = option.findIndex(
+                     (p) => p.value == value.title
+                   );
+                   value.subGoals.forEach((x) => {
+                     var exsitdGoal = option[superGoalIndex].text.filter(
+                       (goal) => goal.text == x
+                     );
+                     if (!exsitdGoal.length > 0) {
+                       if (!allAnsers.includes(x)) {
+                         option[superGoalIndex].text.push({
+                           text: x,
+                           check: false,
+                         });
+                       }
+                     }
+                   });
+                 }
+               }
+             });
+             Data[id].questions[QuesID + 1].goalQues = option;
+             setData(Data);
+           }
+           nextQuestion(id, QuesID);
+         }
+
+       }else {
+        cogoToast.error("select atleast 3 goals from each super goal.");
       }
     }
     if (id == 2 && QuesID == 6) {
       var allCheckded = Data[id].questions[QuesID].goalQues.filter(
         (x) => x.check === true
       );
-      if (allCheckded < 1) {
-        alert("Required");
-      } else {
-        nextQuestion(id, QuesID);
+      //to check subgoal limit
+      let allsublimit = allCheckded.map(x => x.text)
+      let countTrue = 0;
+      for (let array of allsublimit) {
+        if (array.length >= 3) {
+          let trueCount = 0;
+          for (let obj of array) {
+            if (obj.check) {
+              trueCount++;
+            }
+          }
+          if (trueCount >= 3) {
+            countTrue++;
+          }
+        }
       }
-    }
+      if (countTrue === allsublimit.filter(array => array.length >= 3).length) {
 
+        if (allCheckded.length < 3) {
+          cogoToast.error("Two main super goals Required");
+        } else {
+          nextQuestion(id, QuesID);
+        }
+
+      }else {
+        cogoToast.error("select atleast 3 goals from each super goal.");
+      }
+
+
+    }
     if (id == 3 && QuesID == 0) {
       var allChecked = Data[id].questions[QuesID].options.filter(
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         if (checkUpdate === false) {
           Data[id].questions[QuesID + 1].options.forEach((value, index) => {
@@ -619,7 +682,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         nextQuestion(id, QuesID);
       }
@@ -629,7 +692,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         nextQuestion(id, QuesID);
       }
@@ -639,7 +702,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         if (checkUpdate === false) {
           var option = [];
@@ -695,8 +758,8 @@ export default function Footer({
       var allCheckded = Data[id].questions[QuesID].goalQues.filter(
         (x) => x.check === true
       );
-      if (allCheckded < 1) {
-        alert("Required");
+      if (allCheckded.length < 3) {
+        cogoToast.error("Three super goals required");
       } else {
         if (checkUpdate === false) {
           var allAnsers = [];
@@ -780,8 +843,8 @@ export default function Footer({
       var allCheckded = Data[id].questions[QuesID].goalQues.filter(
         (x) => x.check === true
       );
-      if (allCheckded < 1) {
-        alert("Required");
+      if (allCheckded.length < 3) {
+        cogoToast.error("Three super goals required");
       } else {
         nextQuestion(id, QuesID);
       }
@@ -791,7 +854,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
 
         if (allChecked[0].value == "Yes") {
@@ -807,7 +870,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         if (allChecked[0].value == "No") {
           nextQuestion(id, Data[id].questions.length - 1);
@@ -821,7 +884,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         nextQuestion(id, QuesID);
       }
@@ -831,7 +894,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < Data[id].questions[QuesID].min) {
-        alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
+        cogoToast.error(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
         if (checkUpdate === false) {
           var toHideOptions = [];
@@ -856,7 +919,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < Data[id].questions[QuesID].min) {
-        alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
+        cogoToast.error(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
         nextQuestion(id, QuesID);
       }
@@ -866,7 +929,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < Data[id].questions[QuesID].min) {
-        alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
+        cogoToast.error(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
         if (checkUpdate === false) {
           var toHideOptions = [];
@@ -891,7 +954,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < Data[id].questions[QuesID].min) {
-        alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
+        cogoToast.error(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
         nextQuestion(id, QuesID);
       }
@@ -902,7 +965,7 @@ export default function Footer({
       );
       console.log("all checked",allChecked)
       if (allChecked.length < Data[id].questions[QuesID].min) {
-        alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
+        cogoToast.error(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
         if (allChecked.length == 1 && allChecked[0].value == "none") {
           console.log(Data[id].questions[4], "<----answered");
@@ -953,7 +1016,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         if (checkUpdate === false) {
           var option = [];
@@ -994,7 +1057,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allCheckded.length < Data[id].questions[QuesID].goalQues.length) {
-        alert("Required");
+        cogoToast.error("Required");
       } else {
         if (checkUpdate === false) {
           var option = [];
@@ -1035,7 +1098,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allCheckded.length < Data[id].questions[QuesID].goalQues.length) {
-        alert("Required");
+        cogoToast.error("Required");
       } else {
         if (checkUpdate === false) {
           var allCheckded = Data[id].questions[QuesID].goalQues.filter(
@@ -1096,7 +1159,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allCheckded.length < Data[id].questions[QuesID].goalQues.length) {
-        alert("Required");
+        cogoToast.error("Required");
       } else {
         nextQuestion(id, QuesID);
       }
@@ -1106,7 +1169,7 @@ export default function Footer({
         (x) => x.check === true
       );
       if (allChecked.length < 1) {
-        alert(`Required`);
+        cogoToast.error(`Required`);
       } else {
         Data[id].questions[QuesID].answered = true;
         setData(Data);
@@ -1119,37 +1182,6 @@ export default function Footer({
 
 
   useEffect(() => {
-    
-    // var total_question = initialData.length;
-    // const percentages = (id / total_question) * 100;
-    // setPercentage(percentages);
-
-    // if (filteredJSON.length <= 2 && filteredJSON.length > 0) {
-    //   setProgress("w-1/12");
-    // } else if (filteredJSON.length <= 4 && filteredJSON.length > 2) {
-    //   setProgress("w-2/12");
-    // } else if (filteredJSON.length <= 10 && filteredJSON.length > 4) {
-    //   setProgress("w-2/12");
-    // } else if (filteredJSON.length <= 15 && filteredJSON.length > 10) {
-      //   setProgress("w-4/12");
-    // } else if (filteredJSON.length <= 17 && filteredJSON.length > 15) {
-      //   setProgress("w-5/12");
-      // } else if (filteredJSON.length <= 20 && filteredJSON.length > 17) {
-        //   setProgress("w-6/12");
-        // } else if (filteredJSON.length <= 25 && filteredJSON.length > 20) {
-    //   setProgress("w-7/12");
-    // } else if (filteredJSON.length <= 28 && filteredJSON.length > 25) {
-      //   setProgress("w-8/12");
-      // } else if (filteredJSON.length <= 30 && filteredJSON.length > 28) {
-        //   setProgress("w-9/12");
-    // } else if (filteredJSON.length <= 34 && filteredJSON.length > 30) {
-    //   setProgress("w-10/12");
-    // } else if (filteredJSON.length <= 37 && filteredJSON.length > 34) {
-      //   setProgress("w-11/12");
-      // } else if (filteredJSON.length <= 39 && filteredJSON.length > 37) {
-        //   setProgress("w-12/12");
-        // }
-        
         const percentage = (id / 6 ) * 100
         setPercentage(percentage);
     
@@ -1175,7 +1207,7 @@ export default function Footer({
 
 
   const nextQuestion = (parent, question, makeTrue = true) => {
-    console.log("questionaw",question,parent)
+    
     if(makeTrue) Data[parent].questions[question].answered = true;
     console.log("Ddddd",Data)
     setData(Data);
@@ -1205,38 +1237,7 @@ export default function Footer({
     setID(parentId);
     setQuesID(questionId);
 
-    // var total_question = QUESTIONS.length;
-    // var total_answered = 0;
-    // total_answered = filteredJSON.length;
-    // const percentage = (total_answered / total_question) * 100;
-    // setPercentage(percentage);
-
-
-    // if (filteredJSON.length <= 2 && filteredJSON.length > 0) {
-    //   setProgress("w-1/12");
-    // } else if (filteredJSON.length <= 4 && filteredJSON.length > 2) {
-    //   setProgress("w-2/12");
-    // } else if (filteredJSON.length <= 10 && filteredJSON.length > 4) {
-    //   setProgress("w-2/12");
-    // } else if (filteredJSON.length <= 15 && filteredJSON.length > 10) {
-    //   setProgress("w-4/12");
-    // } else if (filteredJSON.length <= 17 && filteredJSON.length > 15) {
-    //   setProgress("w-5/12");
-    // } else if (filteredJSON.length <= 20 && filteredJSON.length > 17) {
-    //   setProgress("w-6/12");
-    // } else if (filteredJSON.length <= 25 && filteredJSON.length > 20) {
-    //   setProgress("w-7/12");
-    // } else if (filteredJSON.length <= 28 && filteredJSON.length > 25) {
-    //   setProgress("w-8/12");
-    // } else if (filteredJSON.length <= 30 && filteredJSON.length > 28) {
-    //   setProgress("w-9/12");
-    // } else if (filteredJSON.length <= 34 && filteredJSON.length > 30) {
-    //   setProgress("w-10/12");
-    // } else if (filteredJSON.length <= 37 && filteredJSON.length > 34) {
-    //   setProgress("w-11/12");
-    // } else if (filteredJSON.length <= 39 && filteredJSON.length > 37) {
-    //   setProgress("w-12/12");
-    // }
+    
     
     const percentage = (id / 6 ) * 100
     setPercentage(percentage);

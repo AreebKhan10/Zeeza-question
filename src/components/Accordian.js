@@ -3,6 +3,8 @@ import ChevronClosed from "../assets/ChevronClosed.svg";
 import ChevronOpen from "../assets/ChevronOpen.svg";
 import check from "../assets/check.png";
 import uncheck from "../assets/uncheck.png";
+import cogoToast from 'cogo-toast'
+
 
 export default function Accordian({
   title,
@@ -74,9 +76,6 @@ export default function Accordian({
         );
         totalsuperchecked = totalsupergoalselected.length;
        
-
-
-
         if (totalsuperchecked < 3) {
           // Data[ID].questions[QuesID].goalQues[subgoal].text[i] = {
           //   ...Data[ID].questions[QuesID].goalQues[subgoal].text[i],
@@ -94,7 +93,7 @@ export default function Accordian({
               Data[ID].questions[QuesID].goalQues[subgoal].check = false;
               setData(Data);
             }
-            alert(" only 6 allow");
+            cogoToast.error(" only 6 allow");
           }
         } else {
           if (getallchecked == 0) {
@@ -102,7 +101,7 @@ export default function Accordian({
             setData(Data);
           }
           
-          alert(" only 3 allow");
+          cogoToast.error(" only 3 allow");
         }
         
       }
@@ -165,14 +164,14 @@ export default function Accordian({
               Data[ID].questions[QuesID].goalQues[subgoal].check = false;
               setData(Data);
             }
-            alert(" only 6 allow");
+            cogoToast.error(" only 6 allow");
           }
         } else {
           if (getallchecked == 0) {
             Data[ID].questions[QuesID].goalQues[subgoal].check = false;
             setData(Data);
           }
-          alert(" only 3 allow");
+          cogoToast.error(" only 3 allow");
           Data[ID].questions[QuesID].limit = true
         }
       }
@@ -246,7 +245,7 @@ export default function Accordian({
               setData(Data);
             }
             Data[ID].questions[QuesID].limit = true
-            alert(" only 6 allow");
+            cogoToast.error(" only 6 allow");
           }
         } else {
           if (getallchecked == 0) {
@@ -254,7 +253,7 @@ export default function Accordian({
             setData(Data);
           }
           Data[ID].questions[QuesID].limit = true
-          alert(" only 3 allow");
+          cogoToast.error(" only 3 allow");
         }
         console.log(getallchecked,"<---getallchecked")
         
@@ -332,7 +331,7 @@ export default function Accordian({
               setData(Data);
             }
             Data[ID].questions[QuesID].limit = true
-            alert(" only 6 allow");
+            cogoToast.error(" only 6 allow");
           }
         } else {
           if (getallchecked == 0) {
@@ -340,7 +339,7 @@ export default function Accordian({
             setData(Data);
           }
           
-          alert(" only 3 allow");
+          cogoToast.error(" only 3 allow");
         }
       }
 
@@ -411,14 +410,14 @@ export default function Accordian({
               setData(Data);
             }
             Data[ID].questions[QuesID].limit = true
-            alert(" only 6 allow");
+            cogoToast.error(" only 6 allow");
           }
         } else {
           if (getallchecked == 0) {
             Data[ID].questions[QuesID].goalQues[subgoal].check = false;
             setData(Data);
           }
-          alert(" only 3 allow");
+          cogoToast.error(" only 3 allow");
         }
       }
 
@@ -488,14 +487,14 @@ export default function Accordian({
               setData(Data);
             }
             Data[ID].questions[QuesID].limit = true
-            alert(" only 6 allow");
+            cogoToast.error(" only 6 allow");
           }
         } else {
           if (getallchecked == 0) {
             Data[ID].questions[QuesID].goalQues[subgoal].check = false;
             setData(Data);
           }
-          alert(" only 3 allow");
+          cogoToast.error(" only 3 allow");
         }
       }
       var totalSelected = 0 ;
@@ -572,14 +571,14 @@ export default function Accordian({
               setData(Data);
             }
             Data[ID].questions[QuesID].limit = true
-            alert(" only 6 allow");
+            cogoToast.error(" only 6 allow");
           }
         } else {
           if (getallchecked == 0) {
             Data[ID].questions[QuesID].goalQues[subgoal].check = false;
             setData(Data);
           }
-          alert(" only 3 allow");
+          cogoToast.error(" only 3 allow");
         }
       }
     }
@@ -636,14 +635,14 @@ export default function Accordian({
               setData(Data);
             }
             Data[ID].questions[QuesID].limit = true
-            alert(" only 6 allow");
+            cogoToast.error(" only 6 allow");
           }
         } else {
           if (getallchecked == 0) {
             Data[ID].questions[QuesID].goalQues[subgoal].check = false;
             setData(Data);
           }
-          alert(" only 3 allow");
+          cogoToast.error(" only 3 allow");
         }
       }
     }
@@ -700,14 +699,14 @@ export default function Accordian({
               setData(Data);
             }
             Data[ID].questions[QuesID].limit = true
-            alert(" only 6 allow");
+            cogoToast.error(" only 6 allow");
           }
         } else {
           if (getallchecked == 0) {
             Data[ID].questions[QuesID].goalQues[subgoal].check = false;
             setData(Data);
           }
-          alert(" only 3 allow");
+          cogoToast.error(" only 3 allow");
         }
       }
     }

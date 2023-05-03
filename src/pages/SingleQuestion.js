@@ -5,6 +5,7 @@ import axios from "axios";
 import AccordianComponent from "../components/Accordian";
 import menu from "../assets/menu.png";
 import { useGlobalContext } from "../context";
+import cogoToast from 'cogo-toast'
 
 export default function SingleQuestion({
   setgoalLevel,
@@ -72,7 +73,7 @@ useEffect(()=>{
           };
           setData(Data);
         } else {
-          alert(`Only ${Data[ID].questions[QuesID].max} Allowed`);
+          cogoToast.error(`Only ${Data[ID].questions[QuesID].max} Allowed`);
         }
       }
     }
@@ -118,7 +119,7 @@ useEffect(()=>{
           };
           setData(Data);
         } else {
-          alert(`Only ${Data[ID].questions[QuesID].max} Allowed`);
+          cogoToast.error(`Only ${Data[ID].questions[QuesID].max} Allowed`);
         }
       }
     }
@@ -145,7 +146,7 @@ useEffect(()=>{
           };
           setData(Data);
         } else {
-          alert(`Only ${Data[ID].questions[QuesID].max} Allowed`);
+          cogoToast.error(`Only ${Data[ID].questions[QuesID].max} Allowed`);
         }
       }
     }
@@ -259,7 +260,7 @@ useEffect(()=>{
           };
           setData(Data);
         } else {
-          alert(`Only ${Data[ID].questions[QuesID].max} Allowed`);
+          cogoToast.error(`Only ${Data[ID].questions[QuesID].max} Allowed`);
         }
       }
     }
@@ -360,7 +361,7 @@ useEffect(()=>{
           };
           setData(Data);
         } else {
-          alert(`Only ${Data[ID].questions[QuesID].max} Allowed`);
+          cogoToast.error(`Only ${Data[ID].questions[QuesID].max} Allowed`);
         }
       }
     }
@@ -533,7 +534,7 @@ useEffect(()=>{
           };
           setData(Data);
         } else {
-          alert(`Only ${Data[ID].questions[QuesID].max} Allowed`);
+          cogoToast.error(`Only ${Data[ID].questions[QuesID].max} Allowed`);
         }
       }
     }
@@ -560,7 +561,7 @@ useEffect(()=>{
           };
           setData(Data);
         } else {
-          alert(`Only ${Data[ID].questions[QuesID].max} Allowed`);
+          cogoToast.error(`Only ${Data[ID].questions[QuesID].max} Allowed`);
         }
       }
     }
@@ -587,7 +588,7 @@ useEffect(()=>{
           };
           setData(Data);
         } else {
-          alert(`Only ${Data[ID].questions[QuesID].max} Allowed`);
+          cogoToast.error(`Only ${Data[ID].questions[QuesID].max} Allowed`);
         }
       }
     }
@@ -614,7 +615,7 @@ useEffect(()=>{
           };
           setData(Data);
         } else {
-          alert(`Only ${Data[ID].questions[QuesID].max} Allowed`);
+          cogoToast.error(`Only ${Data[ID].questions[QuesID].max} Allowed`);
         }
       }
     }
@@ -655,7 +656,7 @@ useEffect(()=>{
             setData(Data);
            
           } else {
-            alert(`Only ${Data[ID].questions[QuesID].max} Allowed`);
+            cogoToast.error(`Only ${Data[ID].questions[QuesID].max} Allowed`);
           }
         } else {
           Data[ID].questions[QuesID].options.forEach((option, key) => {
