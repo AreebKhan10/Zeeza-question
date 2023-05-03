@@ -25,8 +25,6 @@ export default function Accordian({
 
   useEffect(() => {
     setData(Data);
-    console.log(ID, "<---ID");
-    console.log(MultiLimit, "<----- INDEXX");
   }, [MultiLimit, MultiLimitSub]);
 
   const HandleOpening = (index) => {
@@ -522,6 +520,10 @@ export default function Accordian({
         subgoal
       ].text.filter((x) => x.check == true).length;
 
+      console.log("Qaccordian",Data[ID])
+
+      console.log("titleeee",title)
+
       var currentvalue =
         Data[ID].questions[QuesID].goalQues[subgoal].text[i].check;
 
@@ -720,7 +722,9 @@ export default function Accordian({
   return (
     <>
       {title?.goalQues?.map((record, index) => (
+     
         <div className="selectWrapper">
+            { console.log("titlewaaa",title)}
         <div
           onClick={() => HandleOpening(index)}
           className="selectBorder"

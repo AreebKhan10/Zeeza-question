@@ -453,7 +453,7 @@ body {
 } */
 
 footer {
-    padding: 32px;
+    padding: 10px;
     box-shadow: 0px -10px 10px rgb(38 50 56 / 8%);
     position: fixed;
     bottom: 0;
@@ -464,6 +464,8 @@ footer .percentageRatio {
     max-width: 400px;
     border-radius: 12px;
     padding: 12px 16px;
+    margin-left: 58px;
+
 }
 
 footer .percentageRatio p {

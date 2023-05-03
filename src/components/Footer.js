@@ -106,18 +106,18 @@ export default function Footer({
   const GradeLevels = [
     ["Nursery"],
     ["Kindergarten", "Pre1-A"],
-    ["1"],
-    ["2"],
-    ["3"],
-    ["4"],
-    ["5"],
-    ["6"],
-    ["7"],
-    ["8"],
-    ["9"],
-    ["10"],
-    ["11"],
-    ["12"],
+    ["1",1],
+    ["2",2],
+    ["3",3],
+    [4,"4"],
+    ["5",5],
+    ["6",6],
+    ["7",7],
+    ["8",8],
+    ["9",9],
+    ["10",10],
+    ["11",11],
+    ["12",12],
   ];
 
   const handleNext = () => {
@@ -900,6 +900,7 @@ export default function Footer({
       var allChecked = Data[id].questions[QuesID].options.filter(
         (x) => x.check === true
       );
+      console.log("all checked",allChecked)
       if (allChecked.length < Data[id].questions[QuesID].min) {
         alert(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
@@ -912,6 +913,37 @@ export default function Footer({
           Data[id].questions[4].answered = false;
           setData(Data);
         } else {
+          // if (checkUpdate === false) {
+            var option = [];
+            var checkedLevel = Data[id].questions[
+              Data[id].questions[QuesID + 2].dependQuestion
+            ].options.filter((x) => x.check === true);
+  
+            var DependentLevel = [];
+            checkedLevel.forEach((value, index) => {
+              if (value.check === true) DependentLevel.push(value.level);
+            });
+  
+            Data[id].questions[QuesID + 2].suberGoals.forEach((value, index) => {
+              if (DependentLevel.includes(value.level)) {
+                var subGoals = [];
+                value.subGoals.forEach((x) => {
+                  subGoals.push({
+                    text: x,
+                    check: false,
+                  });
+                });
+                option.push({
+                  value: value.title,
+                  text: subGoals,
+                  check: false,
+                });
+              }
+            });
+  
+            Data[id].questions[QuesID + 2].goalQues = option;
+            setData(Data);
+          // }
           nextQuestion(id, QuesID);
         }
       }
@@ -1143,7 +1175,9 @@ export default function Footer({
 
 
   const nextQuestion = (parent, question, makeTrue = true) => {
+    console.log("questionaw",question,parent)
     if(makeTrue) Data[parent].questions[question].answered = true;
+    console.log("Ddddd",Data)
     setData(Data);
     var questionLength = Data[parent].questions.length;
     var parentId = parent;
@@ -1219,6 +1253,12 @@ export default function Footer({
       setProgress("w-5/6");
     }else if (id === 6){
       setProgress("w-full");
+    }
+
+    // scroll to top func
+
+    if(window){
+      window.scroll(0,0) 
     }
   };
 
@@ -1360,6 +1400,9 @@ export default function Footer({
 
   const handleBack = () => {
     // console.log(Data, "<---DATA in back")
+    if(window){
+      window.scroll(0,0) 
+    }
     const back = true;
     // if (filteredJSON.length) {
     //   const groupName = groupNameArray[id];

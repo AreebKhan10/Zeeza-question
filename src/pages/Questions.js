@@ -3674,7 +3674,7 @@ export default function Questions() {
           isUpdated: false,
           questionID: 32,
           subTitle: "Weakness",
-          question: "Which of these does name struggle with?",
+          question: "Which of these is your name's weakness? ",
           select: "Multi",
           description: "Select 1 to 3",
           answered: false,
@@ -4034,6 +4034,7 @@ export default function Questions() {
 
   initialData.map((item) => {
     item.questions.map((it) => {
+      console.log("questions item",it)
       QUESTIONS.push(it.question);
     });
   });
@@ -4641,18 +4642,18 @@ export default function Questions() {
   const GradeLevels = [
     ["Nursery"],
     ["Kindergarten", "Pre1-A"],
-    ["1"],
-    ["2"],
-    ["3"],
-    ["4"],
-    ["5"],
-    ["6"],
-    ["7"],
-    ["8"],
-    ["9"],
-    ["10"],
-    ["11"],
-    ["12"],
+    ["1",1],
+    ["2",2],
+    ["3",3],
+    ["4",4],
+    ["5",5],
+    ["6",6],
+    ["7",7],
+    ["8",8],
+    ["9",9],
+    ["10",10],
+    ["11",11],
+    ["12",12],
   ];
 
   const setQuestions = (response) => {
@@ -4669,7 +4670,7 @@ export default function Questions() {
       setQuesID(0);
     } else {
       setID(parent_id);
-      setQuesID(lastitem?.externalId + 1);
+      setQuesID(lastitem?.externalId);
     }
 
     for (const questionObj of Responsedata) {
@@ -4679,6 +4680,7 @@ export default function Questions() {
       let quesId = questionObj.externalId;
 
       if (initialData[parent].questions[quesId].select !== "Accordian") {
+
         for (const answer of questionObj.answeres) {
           initialData[parent].questions[quesId].options.forEach((val, ind) => {
             initialData[parent].questions[quesId].options[ind].value =
@@ -4693,6 +4695,7 @@ export default function Questions() {
           initialData[parent].questions[quesId].options[
             findOptionIndex
           ].check = true;
+         
         }
       } else {
         for (const answer of questionObj.answeres) {
@@ -4739,6 +4742,7 @@ export default function Questions() {
         setStuDetails(res.data);
 
         if (res.data.questions.length) {
+          console.log(res.data, "<------res.data")
           setQuestions(res.data);
           // setFilteredJSON(res.data.questions)
         } else {

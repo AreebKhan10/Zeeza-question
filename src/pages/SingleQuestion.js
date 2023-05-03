@@ -24,7 +24,6 @@ export default function SingleQuestion({
   const [status, setStatus] = useState(false);
   const { disable, setDisable, setUpdate } = useGlobalContext();
 
-  console.log(Data[ID]?.questions[QuesID], "<----Data");
   const Option = singleQuestion?.question[QuesID]?.options?.map(
     (option) => option?.value
   );
@@ -37,7 +36,9 @@ export default function SingleQuestion({
     "options" in Data[ID]?.questions[QuesID]
       ? Data[ID]?.questions[QuesID].options.findIndex((p) => p.check == true)
       : -1;
-
+useEffect(()=>{
+  console.log("quessss",quesTitle)
+})
   useEffect(() => {
     setData(Data);
     console.log(Data, "---helloooo");
@@ -216,6 +217,7 @@ export default function SingleQuestion({
       }
     }
     if (ID == 1 && QuesID == 2) {
+      console.log("this  is woRKing for id 1 and ques 2")
       var isChecked = Data[ID].questions[QuesID].options[index].check;
       var allChecked = Data[ID].questions[QuesID].options.filter(
         (x) => x.check === true
@@ -620,9 +622,13 @@ export default function SingleQuestion({
     if (ID == 5 && QuesID == 0) {
       var isChecked = Data[ID].questions[QuesID].options[index].check;
       var currentValue = Data[ID].questions[QuesID].options[index].value;
+
+      
+
       var allChecked = Data[ID].questions[QuesID].options.filter(
         (x) => x.check === true
       );
+     
       if (isChecked) {
         Data[ID].questions[QuesID].options[index] = {
           ...Data[ID].questions[QuesID].options[index],
@@ -631,6 +637,7 @@ export default function SingleQuestion({
         Data[ID].questions[QuesID].limit = false;
         setData(Data);
       } else {
+        console.log("not checked")
         if (allChecked.length === Data[ID].questions[QuesID].max - 1) {
           Data[ID].questions[QuesID].limit = true;
         }
@@ -646,6 +653,7 @@ export default function SingleQuestion({
               check: true,
             };
             setData(Data);
+           
           } else {
             alert(`Only ${Data[ID].questions[QuesID].max} Allowed`);
           }
@@ -731,6 +739,7 @@ export default function SingleQuestion({
               <>
                 {singleQuestion?.question[QuesID]?.options?.map(
                   (option, index) => {
+                    
                     if (!("isHidden" in option) || option.isHidden === false) {
                       return (
                         <div className={"selectWrapper"}>
@@ -770,6 +779,7 @@ export default function SingleQuestion({
               </>
             ) : (
               <>
+              {console.log("componenT rendering")}
                 <>
                   {singleQuestion?.question[QuesID]?.options?.map(
                     (option, index) => {
