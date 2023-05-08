@@ -862,6 +862,7 @@ useEffect(()=>{
               Data={Data}
               MultiLimitSub={MultiLimitSub}
               setMultiLimitSub={setMultiLimitSub}
+              studentDetails = {stuDetails}
             />
           </>
         ) : (

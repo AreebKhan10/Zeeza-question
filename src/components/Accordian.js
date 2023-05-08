@@ -3,8 +3,7 @@ import ChevronClosed from "../assets/ChevronClosed.svg";
 import ChevronOpen from "../assets/ChevronOpen.svg";
 import check from "../assets/check.png";
 import uncheck from "../assets/uncheck.png";
-import cogoToast from 'cogo-toast'
-
+import cogoToast from "cogo-toast";
 
 export default function Accordian({
   title,
@@ -17,6 +16,7 @@ export default function Accordian({
   setData,
   MultiLimitSub,
   setMultiLimitSub,
+  studentDetails,
 }) {
   const [isOpened, setOpened] = useState(false);
   const [height, setHeight] = useState("0px");
@@ -24,6 +24,7 @@ export default function Accordian({
   const [tileQues, settitleQues] = useState([]);
   const [contentQues, setContentQues] = useState([]);
   const [subgoal, setSubgoal] = useState(0);
+  console.log("student dtails", studentDetails);
 
   useEffect(() => {
     setData(Data);
@@ -75,7 +76,7 @@ export default function Accordian({
           (x) => x.check == true
         );
         totalsuperchecked = totalsupergoalselected.length;
-       
+
         if (totalsuperchecked < 3) {
           // Data[ID].questions[QuesID].goalQues[subgoal].text[i] = {
           //   ...Data[ID].questions[QuesID].goalQues[subgoal].text[i],
@@ -100,19 +101,16 @@ export default function Accordian({
             Data[ID].questions[QuesID].goalQues[subgoal].check = false;
             setData(Data);
           }
-          
+
           cogoToast.error(" only 3 allow");
         }
-        
       }
-      
-              if(totalsubchecked == 5 ){
-                
-                Data[ID].questions[QuesID].limit = true  
-              }else{
-                
-                Data[ID].questions[QuesID].limit = false
-              }
+
+      if (totalsubchecked == 5) {
+        Data[ID].questions[QuesID].limit = true;
+      } else {
+        Data[ID].questions[QuesID].limit = false;
+      }
     }
     if (ID === 1 && QuesID === 6) {
       var getallchecked = Data[ID].questions[QuesID].goalQues[
@@ -172,7 +170,7 @@ export default function Accordian({
             setData(Data);
           }
           cogoToast.error(" only 3 allow");
-          Data[ID].questions[QuesID].limit = true
+          Data[ID].questions[QuesID].limit = true;
         }
       }
 
@@ -181,15 +179,15 @@ export default function Accordian({
         let filteredvalues = element.text.filter((x) => x.check == true);
         totalsubcheckedlimit += filteredvalues.length;
       });
-      
-      if( totalsubcheckedlimit == 5 ){
-        console.log(totalsubchecked, "<----totalsubchecked")
-        
-        Data[ID].questions[QuesID].limit = true  
-      }else{
-        console.log(totalsubchecked, "<----totalsubchecked")
 
-        Data[ID].questions[QuesID].limit = false
+      if (totalsubcheckedlimit == 5) {
+        console.log(totalsubchecked, "<----totalsubchecked");
+
+        Data[ID].questions[QuesID].limit = true;
+      } else {
+        console.log(totalsubchecked, "<----totalsubchecked");
+
+        Data[ID].questions[QuesID].limit = false;
       }
     }
     if (ID === 2 && QuesID === 5) {
@@ -244,7 +242,7 @@ export default function Accordian({
               Data[ID].questions[QuesID].goalQues[subgoal].check = false;
               setData(Data);
             }
-            Data[ID].questions[QuesID].limit = true
+            Data[ID].questions[QuesID].limit = true;
             cogoToast.error(" only 6 allow");
           }
         } else {
@@ -252,31 +250,25 @@ export default function Accordian({
             Data[ID].questions[QuesID].goalQues[subgoal].check = false;
             setData(Data);
           }
-          Data[ID].questions[QuesID].limit = true
+          Data[ID].questions[QuesID].limit = true;
           cogoToast.error(" only 3 allow");
         }
-        console.log(getallchecked,"<---getallchecked")
-        
-        var totalSelected = 0 ;
-        Data[ID].questions[QuesID].goalQues.filter(x => x.check === true).forEach((val,index) => {
-          totalSelected += val.text.filter(y => y.check === true).length;
-        });
+        console.log(getallchecked, "<---getallchecked");
 
-        console.log(totalSelected, "<----totalsubchecked")
-        if(totalSelected == 9){
-            Data[ID].questions[QuesID].limit = true  
-          }else{
-          
-    
-            Data[ID].questions[QuesID].limit = false
-          
+        var totalSelected = 0;
+        Data[ID].questions[QuesID].goalQues
+          .filter((x) => x.check === true)
+          .forEach((val, index) => {
+            totalSelected += val.text.filter((y) => y.check === true).length;
+          });
+
+        console.log(totalSelected, "<----totalsubchecked");
+        if (totalSelected == 9) {
+          Data[ID].questions[QuesID].limit = true;
+        } else {
+          Data[ID].questions[QuesID].limit = false;
         }
-
-
       }
-
-
-
     }
     if (ID === 2 && QuesID === 6) {
       var getallchecked = Data[ID].questions[QuesID].goalQues[
@@ -330,7 +322,7 @@ export default function Accordian({
               Data[ID].questions[QuesID].goalQues[subgoal].check = false;
               setData(Data);
             }
-            Data[ID].questions[QuesID].limit = true
+            Data[ID].questions[QuesID].limit = true;
             cogoToast.error(" only 6 allow");
           }
         } else {
@@ -338,26 +330,24 @@ export default function Accordian({
             Data[ID].questions[QuesID].goalQues[subgoal].check = false;
             setData(Data);
           }
-          
+
           cogoToast.error(" only 3 allow");
         }
       }
 
-      var totalSelected = 0 ;
-        Data[ID].questions[QuesID].goalQues.filter(x => x.check === true).forEach((val,index) => {
-          totalSelected += val.text.filter(y => y.check === true).length;
+      var totalSelected = 0;
+      Data[ID].questions[QuesID].goalQues
+        .filter((x) => x.check === true)
+        .forEach((val, index) => {
+          totalSelected += val.text.filter((y) => y.check === true).length;
         });
 
-        console.log(totalSelected, "<----totalsubchecked")
-        if(totalSelected == 9){
-            Data[ID].questions[QuesID].limit = true  
-          }else{
-          
-    
-            Data[ID].questions[QuesID].limit = false
-          
-        }
-     
+      console.log(totalSelected, "<----totalsubchecked");
+      if (totalSelected == 9) {
+        Data[ID].questions[QuesID].limit = true;
+      } else {
+        Data[ID].questions[QuesID].limit = false;
+      }
     }
     if (ID === 3 && QuesID === 4) {
       var getallchecked = Data[ID].questions[QuesID].goalQues[
@@ -409,7 +399,7 @@ export default function Accordian({
               Data[ID].questions[QuesID].goalQues[subgoal].check = false;
               setData(Data);
             }
-            Data[ID].questions[QuesID].limit = true
+            Data[ID].questions[QuesID].limit = true;
             cogoToast.error(" only 6 allow");
           }
         } else {
@@ -421,19 +411,18 @@ export default function Accordian({
         }
       }
 
-      var totalSelected = 0 ;
-      Data[ID].questions[QuesID].goalQues.filter(x => x.check === true).forEach((val,index) => {
-        totalSelected += val.text.filter(y => y.check === true).length;
-      });
+      var totalSelected = 0;
+      Data[ID].questions[QuesID].goalQues
+        .filter((x) => x.check === true)
+        .forEach((val, index) => {
+          totalSelected += val.text.filter((y) => y.check === true).length;
+        });
 
-      console.log(totalSelected, "<----totalsubchecked")
-      if(totalSelected == 6){
-          Data[ID].questions[QuesID].limit = true  
-        }else{
-        
-  
-          Data[ID].questions[QuesID].limit = false
-        
+      console.log(totalSelected, "<----totalsubchecked");
+      if (totalSelected == 6) {
+        Data[ID].questions[QuesID].limit = true;
+      } else {
+        Data[ID].questions[QuesID].limit = false;
       }
     }
     if (ID === 3 && QuesID === 5) {
@@ -486,7 +475,7 @@ export default function Accordian({
               Data[ID].questions[QuesID].goalQues[subgoal].check = false;
               setData(Data);
             }
-            Data[ID].questions[QuesID].limit = true
+            Data[ID].questions[QuesID].limit = true;
             cogoToast.error(" only 6 allow");
           }
         } else {
@@ -497,20 +486,17 @@ export default function Accordian({
           cogoToast.error(" only 3 allow");
         }
       }
-      var totalSelected = 0 ;
-      Data[ID].questions[QuesID].goalQues.filter(x => x.check === true).forEach((val,index) => {
-        totalSelected += val.text.filter(y => y.check === true).length;
-      });
+      var totalSelected = 0;
+      Data[ID].questions[QuesID].goalQues
+        .filter((x) => x.check === true)
+        .forEach((val, index) => {
+          totalSelected += val.text.filter((y) => y.check === true).length;
+        });
 
-
-
-       if(totalSelected == 6){
-          Data[ID].questions[QuesID].limit = true  
-        }else{
-        
-  
-          Data[ID].questions[QuesID].limit = false
-        
+      if (totalSelected == 6) {
+        Data[ID].questions[QuesID].limit = true;
+      } else {
+        Data[ID].questions[QuesID].limit = false;
       }
     }
 
@@ -519,9 +505,9 @@ export default function Accordian({
         subgoal
       ].text.filter((x) => x.check == true).length;
 
-      console.log("Qaccordian",Data[ID])
+      console.log("Qaccordian", Data[ID]);
 
-      console.log("titleeee",title)
+      console.log("titleeee", title);
 
       var currentvalue =
         Data[ID].questions[QuesID].goalQues[subgoal].text[i].check;
@@ -570,7 +556,7 @@ export default function Accordian({
               Data[ID].questions[QuesID].goalQues[subgoal].check = false;
               setData(Data);
             }
-            Data[ID].questions[QuesID].limit = true
+            Data[ID].questions[QuesID].limit = true;
             cogoToast.error(" only 6 allow");
           }
         } else {
@@ -634,7 +620,7 @@ export default function Accordian({
               Data[ID].questions[QuesID].goalQues[subgoal].check = false;
               setData(Data);
             }
-            Data[ID].questions[QuesID].limit = true
+            Data[ID].questions[QuesID].limit = true;
             cogoToast.error(" only 6 allow");
           }
         } else {
@@ -698,7 +684,7 @@ export default function Accordian({
               Data[ID].questions[QuesID].goalQues[subgoal].check = false;
               setData(Data);
             }
-            Data[ID].questions[QuesID].limit = true
+            Data[ID].questions[QuesID].limit = true;
             cogoToast.error(" only 6 allow");
           }
         } else {
@@ -721,79 +707,101 @@ export default function Accordian({
   return (
     <>
       {title?.goalQues?.map((record, index) => (
-     
         <div className="selectWrapper">
-            { console.log("titlewaaa",title)}
-        <div
-          onClick={() => HandleOpening(index)}
-          className="selectBorder"
-        >
-          <div className={"outboxes flex justify-between items-center"}>
-            <li className="flex flex-row">
-              {record.check === true ? (
-                <div className="checkBox" onClick={() => handleCheckSupergoal(index)}>
-                                  
-                </div>
-                // <img
-                //   src={check}
-                //   className={"h-8 mr-2"}
-                //   onClick={() => handleCheckSupergoal(index)}
-                // />
-              ) : (
-                <div className={Data[ID].questions[QuesID].limit === true ? "Disable" :"UncheckBox"} onClick={() => handleCheckSupergoal(index)}>
-                                  
-                </div>
-              
-                // <img
-                //   src={uncheck}
-                //   className={"h-8 mr-2"}
-                //   onClick={() => handleCheckSupergoal(index)}
-                // />
-              )}
+          {console.log("titlewaaa", title)}
+          <div onClick={() => HandleOpening(index)} className="selectBorder">
+            <div className={"outboxes flex justify-between items-center"}>
+              <li className="flex flex-row">
+                {record.check === true ? (
+                  <div
+                    className="checkBox"
+                    onClick={() => handleCheckSupergoal(index)}
+                  ></div>
+                ) : (
+                  // <img
+                  //   src={check}
+                  //   className={"h-8 mr-2"}
+                  //   onClick={() => handleCheckSupergoal(index)}
+                  // />
+                  <div
+                    className={
+                      Data[ID].questions[QuesID].limit === true
+                        ? "Disable"
+                        : "UncheckBox"
+                    }
+                    onClick={() => handleCheckSupergoal(index)}
+                  ></div>
 
-              {record.value}
-            </li>
-            {/* {isOpened ? <ChevronOpen /> : <ChevronClosed />} */}
-          </div>  
-          <>
-            {subgoal === index &&
-              record.text?.map((rec, i) => (
-                <div
-                  ref={contentElement}
-                  // style=  {{ height: height }}
-                  className="innerBoxes overflow-hidden transition-all duration-200 items-center"
-                >
+                  // <img
+                  //   src={uncheck}
+                  //   className={"h-8 mr-2"}
+                  //   onClick={() => handleCheckSupergoal(index)}
+                  // />
+                )}
+
+                {record.value}
+              </li>
+              {/* {isOpened ? <ChevronOpen /> : <ChevronClosed />} */}
+            </div>
+            <>
+              {subgoal === index &&
+                record.text?.map((rec, i) => (
+                  <div
+                    ref={contentElement}
+                    // style=  {{ height: height }}
+                    className="innerBoxes overflow-hidden transition-all duration-200 items-center"
+                  >
                     {/* <label class="inline-flex items-center p-2"></label> */}
 
-                    <li className="flex flex-row">
+                    <li className="flex flex-row areeb">
                       {rec.check === true ? (
-                          <div className="checkBox"  onClick={() => handleCheckSubGoal(i)}>
-                                  
-                          </div>
-                     
+                        <div
+                          className="checkBox"
+                          onClick={() => handleCheckSubGoal(i)}
+                        ></div>
+                      ) : (
                         // <img
                         //   src={check}
                         //   className={"h-8 mr-2"}
                         //   onClick={() => handleCheckSubGoal(i)}
                         // />
-                      ) : (
-                        <div className={Data[ID].questions[QuesID].limit === true ? "Disable" :"UncheckBox" } onClick={() => handleCheckSubGoal(i)}>
-                                  
-                        </div>
+                        <div
+                          className={
+                            Data[ID].questions[QuesID].limit === true
+                              ? "Disable"
+                              : "UncheckBox"
+                          }
+                          onClick={() => handleCheckSubGoal(i)}
+                        ></div>
                         // <img
                         //   src={uncheck}
                         //   className={"h-8 mr-2"}
                         //   onClick={() => handleCheckSubGoal(i)}
                         // />
                       )}
-                        <p> 
-                      {rec.text}
-                  </p>
+                      <p>
+                        {studentDetails.Gender === "Male"
+                          ? rec.text.includes("P1")
+                            ? rec.text.replace("P1", "he")
+                            : rec.text.includes("P2")
+                            ? rec.text.replace("P2", "him")
+                            : rec.text.includes("P3")
+                            ? rec.text.replace("P3", "his")
+                            : rec.text
+                          : rec.text.includes("P1")
+                          ? rec.text.replace("P1", "she")
+                          : rec.text.includes("P2")
+                          ? rec.text.replace("P2", "her")
+                          : rec.text.includes("P3")
+                          ? rec.text.replace("P3", "her")
+                          : rec.text}
+                        {/* {rec.text} */}
+                      </p>
                     </li>
-                </div>
-              ))}
-          </>
-        </div>
+                  </div>
+                ))}
+            </>
+          </div>
         </div>
       ))}
     </>

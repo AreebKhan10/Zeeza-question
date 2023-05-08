@@ -124,6 +124,7 @@ export default function Footer({
   const handleNext = () => {
     const grade = GradeLevels.findIndex((x) => x.includes(stuDetails.Grade));
     const checkUpdate = isQuestionUpdate(id, QuesID);
+    changeQuestionToGender(id, QuesID);
     if (id == 0 && QuesID == 0) {
       var allChecked = Data[id].questions[QuesID].options.filter(
         (x) => x.check === true
@@ -418,8 +419,8 @@ export default function Footer({
           if (textval.check === true) allsubChecked += 1;
         });
       });
-      if (allsubChecked < 3) {
-        cogoToast.error("minimum 3 Required");
+      if ( allsubChecked < 1) {
+        cogoToast.error(" Required atleast 1");
       } else {
         nextQuestion(id, QuesID);
       }
@@ -645,7 +646,7 @@ export default function Footer({
       if (countTrue === allsublimit.filter(array => array.length >= 3).length) {
 
         if (allCheckded.length < 3) {
-          cogoToast.error("Two main super goals Required");
+          cogoToast.error("Three super goals Required");
         } else {
           nextQuestion(id, QuesID);
         }
@@ -758,7 +759,7 @@ export default function Footer({
       var allCheckded = Data[id].questions[QuesID].goalQues.filter(
         (x) => x.check === true
       );
-      if (allCheckded.length < 3) {
+      if (allCheckded < 3) {
         cogoToast.error("Three super goals required");
       } else {
         if (checkUpdate === false) {
@@ -1059,7 +1060,8 @@ export default function Footer({
       if (allCheckded.length < Data[id].questions[QuesID].goalQues.length) {
         cogoToast.error("Required");
       } else {
-        if (checkUpdate === false) {
+        console.log(checkUpdate,"<--checkUpdate")
+        //if (checkUpdate === false) {
           var option = [];
           var checkedLevel = Data[id].questions[
             Data[id].questions[QuesID + 1].dependQuestion
@@ -1089,7 +1091,7 @@ export default function Footer({
 
           Data[id].questions[QuesID + 1].goalQues = option;
           setData(Data);
-        }
+        //}
         nextQuestion(id, QuesID);
       }
     }
@@ -1097,6 +1099,9 @@ export default function Footer({
       var allCheckded = Data[id].questions[QuesID].goalQues.filter(
         (x) => x.check === true
       );
+
+
+
       if (allCheckded.length < Data[id].questions[QuesID].goalQues.length) {
         cogoToast.error("Required");
       } else {
@@ -1149,6 +1154,8 @@ export default function Footer({
           });
 
           Data[id].questions[QuesID + 1].goalQues = option;
+          console.log(Data[id].questions[QuesID + 1].goalQues, "<---goalQues")
+
           setData(Data);
         }
         nextQuestion(id, QuesID);
@@ -1232,7 +1239,7 @@ export default function Footer({
     ) {
       questionId = questionId + 1;
     }
-    changeQuestionToGender(parentId, questionId);
+    
     PostData(parentId, questionId);
     setID(parentId);
     setQuesID(questionId);
@@ -1313,6 +1320,7 @@ export default function Footer({
             "name",
             stuDetails.FirstName
           );
+
         const getSelectedGoals = getCompletedQuestionFromGroup.goalQues.filter(
           (x) => x.check === true
         );
@@ -1325,13 +1333,17 @@ export default function Footer({
             .map((x) => x.text);
           filteredJSONQuestionObj.answeres.push(tempObj);
           // goal.text = goal.text.filter((x) => x.check === true);
+
+
+
+
         }
 
       } else {
         filteredJSONQuestionObj.answeres = getCompletedQuestionFromGroup.options
           .filter((x) => x.check === true)
           .map((x) => x.value);
-        filteredJSONQuestionObj.question =
+          filteredJSONQuestionObj.question =
           filteredJSONQuestionObj.question.replace(
             "name",
             stuDetails.FirstName
@@ -1341,18 +1353,14 @@ export default function Footer({
       // setFilter(filteredJSON.concat(filteredJSONQuestionObj));
       filteredJSON.push(filteredJSONQuestionObj);
       setFilteredJSON(filteredJSON);
-
-      console.log("filteredJSONddd", filteredJSON);
     }
   };
 
   const PostData = (parent, ques) => {
     getFilteredJSONData(id, QuesID);
     if (filteredJSON.length) {
-      console.log("filteredJSON++++", filteredJSON, QuesID);
-
+      console.log(filteredJSON, "<-----filteredJSON")
       const searchParams = new URLSearchParams(document.location.search);
-      console.log("filteredJSON", filteredJSON);
       const updatedData = filteredJSON;
       const body = JSON.stringify({
         ...stuDetails,
@@ -1449,20 +1457,109 @@ export default function Footer({
 
   const changeQuestionToGender = (parent, question) => {
     var studentName = stuDetails.FirstName;
+    var studentGender = stuDetails.Gender;
     Data[parent].questions[question].question = Data[parent].questions[
       question
     ].question.replace("name", `${studentName}`);
 
+    //convering gender in questions
+    if(studentGender.toLowerCase() === "male"){
+      Data[parent].questions[question].question = Data[parent].questions[
+        question
+      ].question.replace("P1", 'he');
+      Data[parent].questions[question].question = Data[parent].questions[
+        question
+      ].question.replace("P2", 'him');
+      Data[parent].questions[question].question = Data[parent].questions[
+        question
+      ].question.replace("P3", 'his');
+    }else{
+      Data[parent].questions[question].question = Data[parent].questions[
+        question
+      ].question.replace("P1", 'she');
+      Data[parent].questions[question].question = Data[parent].questions[
+        question
+      ].question.replace("P2", 'her');
+      Data[parent].questions[question].question = Data[parent].questions[
+        question
+      ].question.replace("P3", 'her');
+    }
+
+    
     if (Data[parent].questions[question].select != "Accordian") {
-      Data[parent].questions[question].options.forEach((val, index) => {
+        Data[parent].questions[question].options.forEach((val, index) => {
         Data[parent].questions[question].options[index].value =
           val.value.replace("name", `${studentName}`);
       });
-    }
+
+      if(studentGender.toLowerCase() === "male" ){
+        Data[parent].questions[question].options.forEach((val, index) => {
+        Data[parent].questions[question].options[index].value =
+          val.value.replace("P1", 'he');
+        });
+        Data[parent].questions[question].options.forEach((val, index) => {
+          Data[parent].questions[question].options[index].value =
+            val.value.replace("P2", 'him');
+          });
+          Data[parent].questions[question].options.forEach((val, index) => {
+            Data[parent].questions[question].options[index].value =
+              val.value.replace("P3", 'his');
+            });
+        }else{
+          Data[parent].questions[question].options.forEach((val, index) => {
+            Data[parent].questions[question].options[index].value =
+              val.value.replace("P1", 'she');
+            });
+            Data[parent].questions[question].options.forEach((val, index) => {
+              Data[parent].questions[question].options[index].value =
+                val.value.replace("P2", 'her');
+              });
+              Data[parent].questions[question].options.forEach((val, index) => {
+                Data[parent].questions[question].options[index].value =
+                  val.value.replace("P3", 'her');
+                });
+        }
+     }else{
+
+      if(studentGender.toLowerCase() === "male" ){
+        Data[parent].questions[question].suberGoals.forEach((val, index) => {
+          Data[parent].questions[question].suberGoals[index].subGoals.forEach((innserVal,i)=>{
+            if(typeof Data[parent].questions[question].suberGoals[index].subGoals[i] === 'object'){ 
+              console.log(Data[parent].questions[question].suberGoals[index].subGoals[i].title, "<TITLE") 
+              Data[parent].questions[question].suberGoals[index].subGoals[i].title = Data[parent].questions[question].suberGoals[index].subGoals[i].title.replace("P1", "he")
+              Data[parent].questions[question].suberGoals[index].subGoals[i].title = Data[parent].questions[question].suberGoals[index].subGoals[i].title.replace("P2", "him")
+              Data[parent].questions[question].suberGoals[index].subGoals[i].title = Data[parent].questions[question].suberGoals[index].subGoals[i].title.replace("P3", "his")
+
+            }else{
+              console.log("<-------->")
+                Data[parent].questions[question].suberGoals[index].subGoals[i] = Data[parent].questions[question].suberGoals[index].subGoals[i].replace("P1", "he")
+                Data[parent].questions[question].suberGoals[index].subGoals[i] = Data[parent].questions[question].suberGoals[index].subGoals[i].replace("P2", "him")
+                Data[parent].questions[question].suberGoals[index].subGoals[i] = Data[parent].questions[question].suberGoals[index].subGoals[i].replace("P3", "his")
+                
+              
+          }
+        }) 
+      });
+      }else{
+        Data[parent].questions[question].suberGoals.forEach((val, index) => {
+          Data[parent].questions[question].suberGoals[index].subGoals.forEach((innserVal,i)=>{
+            if(typeof Data[parent].questions[question].suberGoals[index].subGoals[i] === 'object'){  
+              Data[parent].questions[question].suberGoals[index].subGoals[i].title = innserVal.title.replace("P1", "she")
+              Data[parent].questions[question].suberGoals[index].subGoals[i].title = innserVal.title.replace("P2", "her")
+              Data[parent].questions[question].suberGoals[index].subGoals[i].title = innserVal.title.replace("P3", "her")
+            }else{
+            Data[parent].questions[question].suberGoals[index].subGoals[i] = innserVal.replace("P1", "she")
+            // Data[parent].questions[question].suberGoals[index].subGoals[i] = innserVal.replace("P2", "her")
+            // Data[parent].questions[question].suberGoals[index].subGoals[i] = innserVal.replace("P3", "her")
+          }
+        }) 
+      });
+      }
+     }
 
     setData(Data);
   };
-
+  
   const PreviousQues = (parent, question) => {
     // if (Data[parent].questions[question].answered) {
     //   console.log('aaa')

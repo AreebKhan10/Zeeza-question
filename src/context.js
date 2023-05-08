@@ -15,7 +15,6 @@ const AppProvider = ({ children }) => {
   // var filteredJSON = [];
 
 
-
   useEffect(() => {
     const searchParams = new URLSearchParams(document.location.search);
    

@@ -8,6 +8,7 @@ import axios from "axios";
 import menu from "../assets/menu.png";
 import Loading from "../components/Loading";
 import { useGlobalContext } from "../context";
+import { data } from "autoprefixer";
 
 export default function Questions() {
   const [id, setID] = useState(0);
@@ -25,8 +26,6 @@ export default function Questions() {
     select: "",
   });
   const [currentNav, setCurrentNav] = useState(0);
-
-  // console.log(filteredJSON)
 
   var { filteredJSON, setFilteredJSON, update } = useGlobalContext();
 
@@ -3462,7 +3461,7 @@ export default function Questions() {
             },
             {
               id: 3,
-              value: "express needs and wants",
+              value: "express P3 needs and wants",
               check: false,
               doHide: [3],
             },
@@ -3846,18 +3845,19 @@ export default function Questions() {
               title: "Which improvements were noticed in Compliance?",
               level: 1,
               subGoals: [
-                "Complying with teacher requests agrees with",
-                "Complying with the school rules + agrees with",
-                "Complying with principal requests + agrees with",
+                
+                `Complying with teacher request P1 agrees with`,
+                "Complying with the school rules P1 agrees with",
+                "Complying with principal requests P1 agrees with",
               ],
             },
             {
               title: "Which improvements were noticed in Emotional Regulation?",
               level: 2,
               subGoals: [
-                "recognizing + emotions",
-                "labeling + emotions",
-                "verbalizing + feelings",
+                "recognizing P3 emotions",
+                "labeling P3 emotions",
+                "verbalizing P3 feelings",
               ],
             },
             {
@@ -3889,28 +3889,28 @@ export default function Questions() {
               subGoals: [
                 {
                   title:
-                    "Complying with teacher requests even if + agrees with it",
+                    "Complying with teacher requests even if P1 agrees with it",
                   hideIf: ["Complying with teacher requests agrees with"],
                 },
                 {
-                  title: "Complying with school rules even if + agrees with it",
-                  hideIf: ["Complying with the school rules + agrees with"],
+                  title: "Complying with school rules even if P1 agrees with it",
+                  hideIf: ["Complying with the school rules P1 agrees with"],
                 },
                 {
                   title:
-                    "Complying with principal requests even if + agrees with it",
-                  hideIf: ["Complying with principal requests + agrees with"],
+                    "Complying with principal requests even if P1 agrees with it",
+                  hideIf: ["Complying with principal requests P1 agrees with"],
                 },
                 {
-                  title: "Complying with teacher requests + disagrees with",
+                  title: "Complying with teacher requests P1 disagrees with",
                   hideIf: [],
                 },
                 {
-                  title: "Complying with school rules + disagrees with",
+                  title: "Complying with school rules P1 disagrees with",
                   hideIf: [],
                 },
                 {
-                  title: "Complying with principal requests + disagrees with",
+                  title: "Complying with principal requests P1 disagrees with",
                   hideIf: [],
                 },
               ],
@@ -3920,19 +3920,19 @@ export default function Questions() {
               level: 2,
               subGoals: [
                 {
-                  title: "recognizing + emotions",
-                  hideIf: ["recognizing + emotions"],
+                  title: "recognizing P3 emotions",
+                  hideIf: ["recognizing P3 emotions"],
                 },
                 {
-                  title: "labeling + emotions",
-                  hideIf: ["labeling + emotions"],
+                  title: "labeling P3 emotions",
+                  hideIf: ["labeling P3 emotions"],
                 },
                 {
-                  title: "verbalizing + feelings",
-                  hideIf: ["verbalizing + feelings"],
+                  title: "verbalizing P3 feelings",
+                  hideIf: ["verbalizing P3 feelings"],
                 },
                 {
-                  title: "Expressing + emotions in an appropriate manner",
+                  title: "Expressing P3 emotions in an appropriate manner",
                   hideIf: [],
                 },
                 {
@@ -4029,6 +4029,8 @@ export default function Questions() {
       ],
     },
   ];
+
+  
 
   const QUESTIONS = [];
 
@@ -4656,9 +4658,59 @@ export default function Questions() {
     ["12",12],
   ];
 
+  
+
+useEffect(()=>{
+
+  if (Data[id].questions[QuesID].select === "Accordian") {
+    if(stuDetails.Gender.toLowerCase() === "male" ){
+  
+      Data[id].questions[QuesID].suberGoals.forEach((val, index) => {
+        Data[id].questions[QuesID].suberGoals[index].subGoals.forEach((innserVal,i)=>{
+        Data[id].questions[QuesID].suberGoals[index].subGoals[i] = innserVal.replace("P1", "he")
+      }) 
+    });
+  
+      Data[id].questions[QuesID].suberGoals.forEach((val, index) => {
+        Data[id].questions[QuesID].suberGoals[index ].subGoals.forEach((innserVal,i)=>{
+            Data[id].questions[QuesID].suberGoals[index ].subGoals[i] = innserVal.replace("P3", "his")
+            
+      }) 
+    });
+    }
+  
+    setData(Data)
+  
+      // else{
+      //   Data[parent].questions[quesId].suberGoals.forEach((val, index) => {
+      //     Data[parent].questions[quesId].suberGoals[index].subGoals.forEach((innserVal,i)=>{
+      //       if(typeof Data[parent].questions[quesId].suberGoals[index].subGoals[i] === 'object'){  
+      //         Data[parent].questions[quesId].suberGoals[index].subGoals[i].title = innserVal.title.replace("P1", "she")
+      //         Data[parent].questions[quesId].suberGoals[index].subGoals[i].title = innserVal.title.replace("P2", "her")
+      //         Data[parent].questions[quesId].suberGoals[index].subGoals[i].title = innserVal.title.replace("P3", "her")
+      //       }else{
+      //       Data[parent].questions[quesId].suberGoals[index].subGoals[i] = innserVal.replace("P1", "she")
+      //       // Data[parent].questions[question].suberGoals[index].subGoals[i] = innserVal.replace("P2", "her")
+      //       // Data[parent].questions[question].suberGoals[index].subGoals[i] = innserVal.replace("P3", "her")
+      //     }
+      //   }) 
+      // });
+      // }
+    }
+
+},[Data ])
+
+
+
+
+
+
+
+
   const setQuestions = (response) => {
     setFilteredJSON(response.questions);
     let Responsedata = response.questions;
+    var studentGender = response.Gender
     var lastitem = Responsedata[Responsedata.length - 1];
     let parent_id = initialData.findIndex(
       (x) => x.title.toLowerCase() === lastitem.groupName.toLowerCase()
@@ -4686,6 +4738,36 @@ export default function Questions() {
             initialData[parent].questions[quesId].options[ind].value =
               val.value.replace(/name/g, response.FirstName );
           });
+          if(response.Gender.toLowerCase() === "male" ){
+            initialData[parent].questions[quesId].options.forEach((val, ind) => {
+              initialData[parent].questions[quesId].options[ind].value =
+                val.value.replace("P1","he");
+            });
+            initialData[parent].questions[quesId].options.forEach((val, ind) => {
+              initialData[parent].questions[quesId].options[ind].value =
+                val.value.replace("P2","him");
+            });
+            initialData[parent].questions[quesId].options.forEach((val, ind) => {
+              initialData[parent].questions[quesId].options[ind].value =
+                val.value.replace("P2","his");
+            });
+          }else{
+            initialData[parent].questions[quesId].options.forEach((val, ind) => {
+              initialData[parent].questions[quesId].options[ind].value =
+                val.value.replace("P1","she");
+            });
+            initialData[parent].questions[quesId].options.forEach((val, ind) => {
+              initialData[parent].questions[quesId].options[ind].value =
+                val.value.replace("P2","her");
+            });
+            initialData[parent].questions[quesId].options.forEach((val, ind) => {
+              initialData[parent].questions[quesId].options[ind].value =
+                val.value.replace("P2","her");
+            });
+          }
+
+
+
           let findOptionIndex = initialData[parent].questions[
             quesId
           ].options.findIndex(
@@ -4719,6 +4801,43 @@ export default function Questions() {
               child_index
             ].check = true;
           }
+        }
+        console.log(studentGender.toLowerCase(), "<<<GEN")  
+      
+        if(studentGender.toLowerCase() === "male" ){
+          initialData[parent].questions[quesId].suberGoals.forEach((val, index) => {
+            initialData[parent].questions[quesId].suberGoals[index].subGoals.forEach((innserVal,i)=>{
+              if(typeof initialData[parent].questions[quesId].suberGoals[index].subGoals[i] === 'object'){  
+                initialData[parent].questions[quesId].suberGoals[index].subGoals[i].title = initialData[parent].questions[quesId].suberGoals[index].subGoals[i].title.replace("P1", "he")
+                initialData[parent].questions[quesId].suberGoals[index].subGoals[i].title = initialData[parent].questions[quesId].suberGoals[index].subGoals[i].title.replace("P2", "him")
+                initialData[parent].questions[quesId].suberGoals[index].subGoals[i].title = initialData[parent].questions[quesId].suberGoals[index].subGoals[i].title.replace("P3", "his")
+  
+              }else{
+                if(initialData[parent].questions[quesId].suberGoals[index].subGoals[i]){
+                  console.log(initialData[parent].questions[quesId].suberGoals[index].subGoals[i], "<-----absdoadfoh")
+                  Data[parent].questions[quesId].suberGoals[index].subGoals[i] = Data[parent].questions[quesId].suberGoals[index].subGoals[i].replace("P1", "he")
+                  Data[parent].questions[quesId].suberGoals[index].subGoals[i] = Data[parent].questions[quesId].suberGoals[index].subGoals[i].replace("P2", "him")
+                  Data[parent].questions[quesId].suberGoals[index].subGoals[i] = Data[parent].questions[quesId].suberGoals[index].subGoals[i].replace("P3", "his")
+                  debugger
+                  
+                }
+            }
+          }) 
+        });
+        }else{
+          Data[parent].questions[quesId].suberGoals.forEach((val, index) => {
+            Data[parent].questions[quesId].suberGoals[index].subGoals.forEach((innserVal,i)=>{
+              if(typeof Data[parent].questions[quesId].suberGoals[index].subGoals[i] === 'object'){  
+                Data[parent].questions[quesId].suberGoals[index].subGoals[i].title = innserVal.title.replace("P1", "she")
+                Data[parent].questions[quesId].suberGoals[index].subGoals[i].title = innserVal.title.replace("P2", "her")
+                Data[parent].questions[quesId].suberGoals[index].subGoals[i].title = innserVal.title.replace("P3", "her")
+              }else{
+              Data[parent].questions[quesId].suberGoals[index].subGoals[i] = innserVal.replace("P1", "she")
+              // Data[parent].questions[question].suberGoals[index].subGoals[i] = innserVal.replace("P2", "her")
+              // Data[parent].questions[question].suberGoals[index].subGoals[i] = innserVal.replace("P3", "her")
+            }
+          }) 
+        });
         }
       }
 
