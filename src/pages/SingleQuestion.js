@@ -770,7 +770,26 @@ useEffect(()=>{
                               //   onClick={() => handleCheck(index)}
                               // />
                             )}
-                            <p>{option.value}</p>
+                            {/* <span class="ml-2">{option.value}</span> */}
+                            <p>
+
+                            {stuDetails.Gender === "Male"
+                                        ? option.value.includes("P1")
+                                          ? option.value.replace("P1", "he")
+                                          : option.value.includes("P2")
+                                          ? option.value.replace("P2", "him")
+                                          : option.value.includes("P3")
+                                          ? option.value.replace("P3", "his")
+                                          : option.value
+                                        : option.value.includes("P1")
+                                        ? option.value.replace("P1", "she")
+                                        : option.value.includes("P2")
+                                        ? option.value.replace("P2", "her")
+                                        : option.value.includes("P3")
+                                        ? option.value.replace("P3", "her")
+                                        : option.value}
+                            </p>
+                            {/* <p>{option.value}</p> */}
                           </li>
                         </div>
                       );
@@ -817,7 +836,26 @@ useEffect(()=>{
                                 //   onClick={() => handleCheck(index)}
                                 // />
                               )}
-                              <p>{option.value}</p>
+                              {/* <span class="ml-2">{option.value}</span> */}
+                              <p>
+
+                              {stuDetails.Gender === "Male"
+                                        ? option.value.includes("P1")
+                                          ? option.value.replace("P1", "he")
+                                          : option.value.includes("P2")
+                                          ? option.value.replace("P2", "him")
+                                          : option.value.includes("P3")
+                                          ? option.value.replace("P3", "his")
+                                          : option.value
+                                        : option.value.includes("P1")
+                                        ? option.value.replace("P1", "she")
+                                        : option.value.includes("P2")
+                                        ? option.value.replace("P2", "her")
+                                        : option.value.includes("P3")
+                                        ? option.value.replace("P3", "her")
+                                        : option.value}
+                              </p>
+                              {/* <p>{option.value}</p> */}
                             </li>
                           </div>
                         );
@@ -964,7 +1002,22 @@ useEffect(()=>{
                                       for={`singlecheckradio${index}`}
                                     >
                                       {/* <span class="ml-2">{option.value}</span> */}
-                                      {option.value}
+                                      {stuDetails.Gender === "Male"
+                                        ? option.value.includes("P1")
+                                          ? option.value.replace("P1", "he")
+                                          : option.value.includes("P2")
+                                          ? option.value.replace("P2", "him")
+                                          : option.value.includes("P3")
+                                          ? option.value.replace("P3", "his")
+                                          : option.value
+                                        : option.value.includes("P1")
+                                        ? option.value.replace("P1", "she")
+                                        : option.value.includes("P2")
+                                        ? option.value.replace("P2", "her")
+                                        : option.value.includes("P3")
+                                        ? option.value.replace("P3", "her")
+                                        : option.value}
+                                      {/* {option.value} */}
                                     </label>
                                   </div>
                                 </li>

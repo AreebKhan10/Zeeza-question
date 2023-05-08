@@ -4658,54 +4658,6 @@ export default function Questions() {
     ["12",12],
   ];
 
-  
-
-useEffect(()=>{
-
-  if (Data[id].questions[QuesID].select === "Accordian") {
-    if(stuDetails.Gender.toLowerCase() === "male" ){
-  
-      Data[id].questions[QuesID].suberGoals.forEach((val, index) => {
-        Data[id].questions[QuesID].suberGoals[index].subGoals.forEach((innserVal,i)=>{
-        Data[id].questions[QuesID].suberGoals[index].subGoals[i] = innserVal.replace("P1", "he")
-      }) 
-    });
-  
-      Data[id].questions[QuesID].suberGoals.forEach((val, index) => {
-        Data[id].questions[QuesID].suberGoals[index ].subGoals.forEach((innserVal,i)=>{
-            Data[id].questions[QuesID].suberGoals[index ].subGoals[i] = innserVal.replace("P3", "his")
-            
-      }) 
-    });
-    }
-  
-    setData(Data)
-  
-      // else{
-      //   Data[parent].questions[quesId].suberGoals.forEach((val, index) => {
-      //     Data[parent].questions[quesId].suberGoals[index].subGoals.forEach((innserVal,i)=>{
-      //       if(typeof Data[parent].questions[quesId].suberGoals[index].subGoals[i] === 'object'){  
-      //         Data[parent].questions[quesId].suberGoals[index].subGoals[i].title = innserVal.title.replace("P1", "she")
-      //         Data[parent].questions[quesId].suberGoals[index].subGoals[i].title = innserVal.title.replace("P2", "her")
-      //         Data[parent].questions[quesId].suberGoals[index].subGoals[i].title = innserVal.title.replace("P3", "her")
-      //       }else{
-      //       Data[parent].questions[quesId].suberGoals[index].subGoals[i] = innserVal.replace("P1", "she")
-      //       // Data[parent].questions[question].suberGoals[index].subGoals[i] = innserVal.replace("P2", "her")
-      //       // Data[parent].questions[question].suberGoals[index].subGoals[i] = innserVal.replace("P3", "her")
-      //     }
-      //   }) 
-      // });
-      // }
-    }
-
-},[Data ])
-
-
-
-
-
-
-
 
   const setQuestions = (response) => {
     setFilteredJSON(response.questions);
@@ -4738,6 +4690,7 @@ useEffect(()=>{
             initialData[parent].questions[quesId].options[ind].value =
               val.value.replace(/name/g, response.FirstName );
           });
+
           if(response.Gender.toLowerCase() === "male" ){
             initialData[parent].questions[quesId].options.forEach((val, ind) => {
               initialData[parent].questions[quesId].options[ind].value =
@@ -4749,7 +4702,7 @@ useEffect(()=>{
             });
             initialData[parent].questions[quesId].options.forEach((val, ind) => {
               initialData[parent].questions[quesId].options[ind].value =
-                val.value.replace("P2","his");
+                val.value.replace("P3","his");
             });
           }else{
             initialData[parent].questions[quesId].options.forEach((val, ind) => {
@@ -4765,9 +4718,6 @@ useEffect(()=>{
                 val.value.replace("P2","her");
             });
           }
-
-
-
           let findOptionIndex = initialData[parent].questions[
             quesId
           ].options.findIndex(
@@ -4802,7 +4752,6 @@ useEffect(()=>{
             ].check = true;
           }
         }
-        console.log(studentGender.toLowerCase(), "<<<GEN")  
       
         if(studentGender.toLowerCase() === "male" ){
           initialData[parent].questions[quesId].suberGoals.forEach((val, index) => {
@@ -4818,7 +4767,6 @@ useEffect(()=>{
                   Data[parent].questions[quesId].suberGoals[index].subGoals[i] = Data[parent].questions[quesId].suberGoals[index].subGoals[i].replace("P1", "he")
                   Data[parent].questions[quesId].suberGoals[index].subGoals[i] = Data[parent].questions[quesId].suberGoals[index].subGoals[i].replace("P2", "him")
                   Data[parent].questions[quesId].suberGoals[index].subGoals[i] = Data[parent].questions[quesId].suberGoals[index].subGoals[i].replace("P3", "his")
-                  debugger
                   
                 }
             }

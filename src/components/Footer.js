@@ -62,12 +62,12 @@ export default function Footer({
 
   const isQuestionUpdate = (id, QuesID) => {
     if (Data[id].questions[QuesID].answered === true) {
-      let parent = groupNameArray[id];
+    let parent = groupNameArray[id];
+      const question = QuesID
       var oldAnswer = filteredJSON.filter(
         (x) => x.groupName == parent && x.externalId == QuesID
       );
       let currentAnswer = [];
-      console.log(filteredJSON, "<---filteredJSON");
       if (Data[id].questions[QuesID].select == "Accordian") {
         const getSelectedGoals = Data[id].questions[QuesID].goalQues.filter(
           (x) => x.check === true
@@ -81,17 +81,12 @@ export default function Footer({
           currentAnswer.push(tempObj);
           // goal.text = goal.text.filter((x) => x.check === true);
         }
+
       } else {
         currentAnswer = Data[id].questions[QuesID].options
           .filter((x) => x.check === true)
           .map((x) => x.value);
       }
-
-      console.log(
-        JSON.stringify(oldAnswer),
-        JSON.stringify(currentAnswer),
-        "<---oldAnswer === currentAnswer"
-      );
       if (
         JSON.stringify(oldAnswer[0].answeres) == JSON.stringify(currentAnswer)
       ) {
@@ -120,6 +115,8 @@ export default function Footer({
     ["11",11],
     ["12",12],
   ];
+
+
 
   const handleNext = () => {
     const grade = GradeLevels.findIndex((x) => x.includes(stuDetails.Grade));
@@ -154,6 +151,7 @@ export default function Footer({
         nextQuestion(id, QuesID);
       }
     }
+    
     if (id == 0 && QuesID == 1) {
       var allChecked = Data[id].questions[QuesID].options.filter(
         (x) => x.check === true
@@ -702,7 +700,7 @@ export default function Footer({
       var allChecked = Data[id].questions[QuesID].options.filter(
         (x) => x.check === true
       );
-      if (allChecked.length < 1) {
+      if (allChecked < 1) {
         cogoToast.error(`Required`);
       } else {
         if (checkUpdate === false) {
@@ -1357,16 +1355,59 @@ export default function Footer({
   };
 
   const PostData = (parent, ques) => {
+    var studentGender = stuDetails.Gender;
     getFilteredJSONData(id, QuesID);
     if (filteredJSON.length) {
-      console.log(filteredJSON, "<-----filteredJSON")
       const searchParams = new URLSearchParams(document.location.search);
       const updatedData = filteredJSON;
-      const body = JSON.stringify({
+      let body = JSON.stringify({
         ...stuDetails,
         questions: updatedData,
       });
 
+      body = JSON.parse(body)
+
+      //replacing gender pronouns
+
+      if(studentGender.toLowerCase() === "male" ){
+        body.questions.forEach((question,index)=>{
+          question.answeres.forEach((answer,answerIndex)=>{
+              if(answer.subAnswers){
+                  answer.subAnswers.forEach((subAnswer,subAnswerIndex)=>{
+                      if(subAnswer.includes("P1")){
+                          body.questions[index].answeres[answerIndex].subAnswers[subAnswerIndex] = subAnswer.replace("P1","he")
+                      }
+                      if(subAnswer.includes("P2")){
+                        body.questions[index].answeres[answerIndex].subAnswers[subAnswerIndex] = subAnswer.replace("P2","his")
+                    }
+                    if(subAnswer.includes("P3")){
+                      body.questions[index].answeres[answerIndex].subAnswers[subAnswerIndex] = subAnswer.replace("P3","him")
+                  }
+                  })
+              }
+          })
+      })
+  }else{
+    body.questions.forEach((question,index)=>{
+      question.answeres.forEach((answer,answerIndex)=>{
+          if(answer.subAnswers){
+              answer.subAnswers.forEach((subAnswer,subAnswerIndex)=>{
+                  if(subAnswer.includes("P1")){
+                      body.questions[index].answeres[answerIndex].subAnswers[subAnswerIndex] = subAnswer.replace("P1","she")
+                  }
+                  if(subAnswer.includes("P2")){
+                    body.questions[index].answeres[answerIndex].subAnswers[subAnswerIndex] = subAnswer.replace("P2","her")
+                }
+                if(subAnswer.includes("P3")){
+                  body.questions[index].answeres[answerIndex].subAnswers[subAnswerIndex] = subAnswer.replace("P3","her")
+              }
+              })
+          }
+      })
+  })
+
+  }
+    body = JSON.stringify(body)
       var config = {
         method: "POST",
         maxBodyLength: Infinity,
@@ -1391,6 +1432,8 @@ export default function Footer({
         url: `https://eo1uo5aa7h7sqbm.m.pipedream.net`,
         data: body,
       };
+
+      console.log("body",JSON.parse(body))
 
       axios(config)
         .then(function (response) {
@@ -1484,8 +1527,6 @@ export default function Footer({
         question
       ].question.replace("P3", 'her');
     }
-
-    
     if (Data[parent].questions[question].select != "Accordian") {
         Data[parent].questions[question].options.forEach((val, index) => {
         Data[parent].questions[question].options[index].value =
@@ -1504,6 +1545,7 @@ export default function Footer({
           Data[parent].questions[question].options.forEach((val, index) => {
             Data[parent].questions[question].options[index].value =
               val.value.replace("P3", 'his');
+              
             });
         }else{
           Data[parent].questions[question].options.forEach((val, index) => {
@@ -1556,7 +1598,6 @@ export default function Footer({
       });
       }
      }
-
     setData(Data);
   };
   
