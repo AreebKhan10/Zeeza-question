@@ -37,13 +37,15 @@ export default function SingleQuestion({
     "options" in Data[ID]?.questions[QuesID]
       ? Data[ID]?.questions[QuesID].options.findIndex((p) => p.check == true)
       : -1;
-useEffect(()=>{
-  console.log("quessss",quesTitle)
-})
+
+      useEffect(()=>{
+        console.log(singleQuestion, "<---Options");
+
+      },[])
   useEffect(() => {
     setData(Data);
-    console.log(Data, "---helloooo");
     setDisable(false);
+    
   }, [Data, MultiLimit, MultiLimitSub]);
 
   const handleCheck = (index) => {
@@ -280,6 +282,33 @@ useEffect(()=>{
         });
         Data[ID].questions[QuesID].options[index].check = true;
         setData(Data);
+      }
+    }
+    if (ID == 1 && QuesID == 6) {
+      var isChecked = Data[ID].questions[QuesID].options[index].check;
+      var allChecked = Data[ID].questions[QuesID].options.filter(
+        (x) => x.check === true
+      );
+      if (isChecked) {
+        Data[ID].questions[QuesID].options[index] = {
+          ...Data[ID].questions[QuesID].options[index],
+          check: false,
+        };
+        Data[ID].questions[QuesID].limit = false;
+        setData(Data);
+      } else {
+        if (allChecked.length === Data[ID].questions[QuesID].max - 1) {
+          Data[ID].questions[QuesID].limit = true;
+        }
+        if (allChecked.length < Data[ID].questions[QuesID].max) {
+          Data[ID].questions[QuesID].options[index] = {
+            ...Data[ID].questions[QuesID].options[index],
+            check: true,
+          };
+          setData(Data);
+        } else {
+          cogoToast.error(`Only ${Data[ID].questions[QuesID].max} Allowed`);
+        }
       }
     }
 
@@ -728,7 +757,7 @@ useEffect(()=>{
       </div>
       <div className="studentContentBottom">
         <p className="text-xl text-[#002B48]">
-          {value[QuesID]?.replace("name", `${stuDetails.FirstName}`)}
+          {value[QuesID]?.replace(/name/g, `${stuDetails.FirstName}`)}
         </p>
         <p className="text-blue-800">
           {Data[ID].questions[QuesID].description}
@@ -780,16 +809,18 @@ useEffect(()=>{
                                           ? option.value.replace("P2", "him")
                                           : option.value.includes("P3")
                                           ? option.value.replace("P3", "his")
-                                          : option.value
+                                          : option.value.replace(/name/g, `${stuDetails.FirstName}`)
                                         : option.value.includes("P1")
                                         ? option.value.replace("P1", "she")
                                         : option.value.includes("P2")
                                         ? option.value.replace("P2", "her")
                                         : option.value.includes("P3")
                                         ? option.value.replace("P3", "her")
-                                        : option.value}
+                                        : option.value.replace(/name/g, `${stuDetails.FirstName}`)
+                                        }
                             </p>
-                            {/* <p>{option.value}</p> */}
+                            {/* <p>{option.value.replace("name", `${stuDetails.FirstName}`)
+                            }</p> */}
                           </li>
                         </div>
                       );
@@ -799,7 +830,7 @@ useEffect(()=>{
               </>
             ) : (
               <>
-              {console.log("componenT rendering")}
+              
                 <>
                   {singleQuestion?.question[QuesID]?.options?.map(
                     (option, index) => {
@@ -846,14 +877,15 @@ useEffect(()=>{
                                           ? option.value.replace("P2", "him")
                                           : option.value.includes("P3")
                                           ? option.value.replace("P3", "his")
-                                          : option.value
+                                          : option.value.replace(/name/g, `${stuDetails.FirstName}`)
                                         : option.value.includes("P1")
                                         ? option.value.replace("P1", "she")
                                         : option.value.includes("P2")
                                         ? option.value.replace("P2", "her")
                                         : option.value.includes("P3")
                                         ? option.value.replace("P3", "her")
-                                        : option.value}
+                                        : option.value.replace(/name/g, `${stuDetails.FirstName}`)
+                                        }
                               </p>
                               {/* <p>{option.value}</p> */}
                             </li>
@@ -1009,7 +1041,7 @@ useEffect(()=>{
                                           ? option.value.replace("P2", "him")
                                           : option.value.includes("P3")
                                           ? option.value.replace("P3", "his")
-                                          : option.value
+                                          : option.value.replace
                                         : option.value.includes("P1")
                                         ? option.value.replace("P1", "she")
                                         : option.value.includes("P2")

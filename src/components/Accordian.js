@@ -112,84 +112,84 @@ export default function Accordian({
         Data[ID].questions[QuesID].limit = false;
       }
     }
-    if (ID === 1 && QuesID === 6) {
-      var getallchecked = Data[ID].questions[QuesID].goalQues[
-        subgoal
-      ].text.filter((x) => x.check == true).length;
+    // if (ID === 1 && QuesID === 6) {
+    //   var getallchecked = Data[ID].questions[QuesID].goalQues[
+    //     subgoal
+    //   ].text.filter((x) => x.check == true).length;
 
-      var currentvalue =
-        Data[ID].questions[QuesID].goalQues[subgoal].text[i].check;
+    //   var currentvalue =
+    //     Data[ID].questions[QuesID].goalQues[subgoal].text[i].check;
 
-      var totalsubchecked = 0;
-      Data[ID].questions[QuesID].goalQues.forEach((element) => {
-        var filteredvalues = element.text.filter((x) => x.check == true);
-        totalsubchecked += filteredvalues.length;
-      });
+    //   var totalsubchecked = 0;
+    //   Data[ID].questions[QuesID].goalQues.forEach((element) => {
+    //     var filteredvalues = element.text.filter((x) => x.check == true);
+    //     totalsubchecked += filteredvalues.length;
+    //   });
 
-      if (currentvalue === true) {
-        Data[ID].questions[QuesID].goalQues[subgoal].text[i] = {
-          ...Data[ID].questions[QuesID].goalQues[subgoal].text[i],
-          check: false,
-        };
-        if (getallchecked == 1) {
-          Data[ID].questions[QuesID].goalQues[subgoal].check = false;
-        }
-        setData(Data);
-      } else {
-        if (getallchecked == 0) {
-          Data[ID].questions[QuesID].goalQues[subgoal].check = true;
-          setData(Data);
-        }
-        var totalsuperchecked = 0;
-        var totalsupergoalselected = Data[ID].questions[QuesID].goalQues.filter(
-          (x) => x.check == true
-        );
-        totalsuperchecked = totalsupergoalselected.length;
-        if (totalsuperchecked < 4) {
-          // Data[ID].questions[QuesID].goalQues[subgoal].text[i] = {
-          //   ...Data[ID].questions[QuesID].goalQues[subgoal].text[i],
-          //   check: true,
-          // };
-          // setData(Data);
-          if (totalsubchecked < 5) {
-            Data[ID].questions[QuesID].goalQues[subgoal].text[i] = {
-              ...Data[ID].questions[QuesID].goalQues[subgoal].text[i],
-              check: true,
-            };
-            setData(Data);
-          } else {
-            if (getallchecked == 0) {
-              Data[ID].questions[QuesID].goalQues[subgoal].check = false;
-              setData(Data);
-            }
-            cogoToast.error(" only 6 allow");
-          }
-        } else {
-          if (getallchecked == 0) {
-            Data[ID].questions[QuesID].goalQues[subgoal].check = false;
-            setData(Data);
-          }
-          cogoToast.error(" only 3 allow");
-          Data[ID].questions[QuesID].limit = true;
-        }
-      }
+    //   if (currentvalue === true) {
+    //     Data[ID].questions[QuesID].goalQues[subgoal].text[i] = {
+    //       ...Data[ID].questions[QuesID].goalQues[subgoal].text[i],
+    //       check: false,
+    //     };
+    //     if (getallchecked == 1) {
+    //       Data[ID].questions[QuesID].goalQues[subgoal].check = false;
+    //     }
+    //     setData(Data);
+    //   } else {
+    //     if (getallchecked == 0) {
+    //       Data[ID].questions[QuesID].goalQues[subgoal].check = true;
+    //       setData(Data);
+    //     }
+    //     var totalsuperchecked = 0;
+    //     var totalsupergoalselected = Data[ID].questions[QuesID].goalQues.filter(
+    //       (x) => x.check == true
+    //     );
+    //     totalsuperchecked = totalsupergoalselected.length;
+    //     if (totalsuperchecked < 4) {
+    //       // Data[ID].questions[QuesID].goalQues[subgoal].text[i] = {
+    //       //   ...Data[ID].questions[QuesID].goalQues[subgoal].text[i],
+    //       //   check: true,
+    //       // };
+    //       // setData(Data);
+    //       if (totalsubchecked < 5) {
+    //         Data[ID].questions[QuesID].goalQues[subgoal].text[i] = {
+    //           ...Data[ID].questions[QuesID].goalQues[subgoal].text[i],
+    //           check: true,
+    //         };
+    //         setData(Data);
+    //       } else {
+    //         if (getallchecked == 0) {
+    //           Data[ID].questions[QuesID].goalQues[subgoal].check = false;
+    //           setData(Data);
+    //         }
+    //         cogoToast.error(" only 6 allow");
+    //       }
+    //     } else {
+    //       if (getallchecked == 0) {
+    //         Data[ID].questions[QuesID].goalQues[subgoal].check = false;
+    //         setData(Data);
+    //       }
+    //       cogoToast.error(" only 3 allow");
+    //       Data[ID].questions[QuesID].limit = true;
+    //     }
+    //   }
 
-      var totalsubcheckedlimit = 0;
-      Data[ID].questions[QuesID].goalQues.forEach((element) => {
-        let filteredvalues = element.text.filter((x) => x.check == true);
-        totalsubcheckedlimit += filteredvalues.length;
-      });
+    //   var totalsubcheckedlimit = 0;
+    //   Data[ID].questions[QuesID].goalQues.forEach((element) => {
+    //     let filteredvalues = element.text.filter((x) => x.check == true);
+    //     totalsubcheckedlimit += filteredvalues.length;
+    //   });
 
-      if (totalsubcheckedlimit == 5) {
-        console.log(totalsubchecked, "<----totalsubchecked");
+    //   if (totalsubcheckedlimit == 5) {
+    //     console.log(totalsubchecked, "<----totalsubchecked");
 
-        Data[ID].questions[QuesID].limit = true;
-      } else {
-        console.log(totalsubchecked, "<----totalsubchecked");
+    //     Data[ID].questions[QuesID].limit = true;
+    //   } else {
+    //     console.log(totalsubchecked, "<----totalsubchecked");
 
-        Data[ID].questions[QuesID].limit = false;
-      }
-    }
+    //     Data[ID].questions[QuesID].limit = false;
+    //   }
+    // }
     if (ID === 2 && QuesID === 5) {
       var getallchecked = Data[ID].questions[QuesID].goalQues[
         subgoal

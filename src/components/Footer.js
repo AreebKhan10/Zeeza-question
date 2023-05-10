@@ -296,8 +296,6 @@ export default function Footer({
           });
           Data[id].questions[QuesID + 1].goalQues = option;
           setData(Data);
-
-          console.log("---------updated data");
         }
         nextQuestion(id, QuesID);
       }
@@ -355,7 +353,7 @@ export default function Footer({
                     ) {
                       if (!allAnsers.includes(x.title)) {
                         subGoals.push({
-                          text: x.title,
+                          value: x.title,
                           check: false,
                         });
                       }
@@ -364,7 +362,7 @@ export default function Footer({
                 });
                 option.push({
                   value: value.title,
-                  text: subGoals,
+                  value: subGoals,
                   check: false,
                 });
               } else {
@@ -392,10 +390,10 @@ export default function Footer({
               }
             });
   
-            Data[id].questions[QuesID + 1].goalQues = option;
-            console.log(Data,"<----Data")
+            Data[id].questions[QuesID + 1].options = option[0].value;
+            console.log(option,"<----option")
             setData(Data);
-            console.log(Data, "this is the data");
+            console.log(Data[id].questions[QuesID + 1].options, "this is the data");
           }
           nextQuestion(id, QuesID);
         }
@@ -408,17 +406,11 @@ export default function Footer({
      
     }
     if (id == 1 && QuesID == 6) {
-      var allCheckded = Data[id].questions[QuesID].goalQues.filter(
+      var allChecked = Data[id].questions[QuesID].options.filter(
         (x) => x.check === true
       );
-      var allsubChecked = 0;
-      allCheckded.forEach((value, index) => {
-        value.text.forEach((textval, textindex) => {
-          if (textval.check === true) allsubChecked += 1;
-        });
-      });
-      if ( allsubChecked < 1) {
-        cogoToast.error(" Required atleast 1");
+      if (allChecked.length < Data[id].questions[QuesID].min) {
+        cogoToast.error(`Minimum ${Data[id].questions[QuesID].min} Required`);
       } else {
         nextQuestion(id, QuesID);
       }

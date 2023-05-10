@@ -1,3 +1,4 @@
+
 import React from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -5,13 +6,18 @@ import Questions from "../pages/Questions";
 import StudentDetails from "../components/StudentDetails";
 import Loading from "../components/Loading";
 import { useGlobalContext } from "../context";
+import Logo from "../assets/loader.gif";
 
 export default function FullLayout() {
-  var { loading, submit } = useGlobalContext();
+  var { loading, submit, setSubmit } = useGlobalContext();
 
   if (loading) {
     return <Loading />;
   }
+
+  const hideModal = () => {
+    setSubmit(false);
+  };
 
   return (
     <>
@@ -26,25 +32,29 @@ export default function FullLayout() {
         role="dialog"
         aria-modal="true"
       >
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        {/* <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div> */}
 
-        <div class="fixed inset-0 z-10 overflow-y-auto">
-          <div class="flex min-h-full items-end justify-center p- text-center sm:items-center sm:p-0">
-            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-              <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div class="sm:flex sm:items-start">
-                  <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left pb-4">
-                    <div class="mt-2">
-                      <p class="text-sm text-gray-500">
-                        The report has been submitted. Thank you!
-                      </p>
-                    </div>
-                  </div>
-                </div>
+         <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="bg-white p-6 py-8 relative transform shadow-xl transition-all w-full min-h-full flex items-center justify-center">
+              <div class="text-center max-w-3xl w-full">
+                <img src={Logo} class="mx-auto mb-4 w-28" />
+                <h3 class="text-4xl sm:text-5xl md:text-6xl font-bold text-[#002B48] mb-4">
+                  Thank You
+                </h3>
+                <p class="text-lg md:text-xl text-black mb-4">
+                  The report has been submitted. Thank you!
+                </p>
+                <button
+                  type="button"
+                  class="bg-[#DE706C] rounded-md justify-center text-white text-lg flex flex-row items-center p-2 px-4 mx-auto border border-[#DE706C] hover:bg-transparent hover:text-[#002B48]"
+                  onClick={() => hideModal()}
+                >
+                  Back to Report
+                </button>
               </div>
             </div>
           </div>
-        </div>
+        
       </div>}
     </>
   );
